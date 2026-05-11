@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """v2kit utils."""
+import json
 import base64
 from typing import Iterable
 from urllib.parse import urlparse
@@ -109,42 +110,6 @@ def _get_protocol(config: str) -> Protocol:
     return Protocol(protocol)
 
 
-def is_vmess(config: str) -> bool:
-    """
-    Check whether config is VMESS.
-
-    :param config: V2Ray config.
-    """
-    return _get_protocol(config) == Protocol.VMESS
-
-
-def is_vless(config: str) -> bool:
-    """
-    Check whether config is VLESS.
-
-    :param config: V2Ray config.
-    """
-    return _get_protocol(config) == Protocol.VLESS
-
-
-def is_trojan(config: str) -> bool:
-    """
-    Check whether config is Trojan.
-
-    :param config: V2Ray config.
-    """
-    return _get_protocol(config) == Protocol.TROJAN
-
-
-def is_ss(config: str) -> bool:
-    """
-    Check whether config is Shadowsocks.
-
-    :param config: V2Ray config.
-    """
-    return _get_protocol(config) == Protocol.SHADOWSOCKS
-
-
 def _relabel_vmess(config: str, label: str) -> str:
     """
     Relabel VMESS config.
@@ -182,65 +147,3 @@ def _relabel_tag(config: str, label: str) -> str:
     base = config.split("#", 1)[0]
 
     return f"{base}#{label}"
-
-
-def relabel(config: str, label: str) -> str:
-    """
-    Relabel any supported config.
-
-    :type config: str
-    :type label: str
-    """
-    protocol = _get_protocol(config)
-
-    if protocol == Protocol.VMESS:
-        return _relabel_vmess(config, label)
-
-    return _relabel_tag(config, label)
-
-
-def encode_subscription(
-    configs: Iterable[str],
-    validate: bool = True,
-) -> str:
-    """
-    Encode configs as V2Ray subscription.
-
-    :param configs: Iterable of configs.
-    :param validate: Validate configs before encoding.
-    """
-    config_list = list(configs)
-
-    if validate:
-        for config in config_list:
-            _validate_config(config)
-
-    subscription = "\n".join(config_list)
-
-    return _encode_base64(subscription)
-
-
-def decode_subscription(
-    subscription: str,
-    validate: bool = True,
-) -> list[str]:
-    """
-    Decode V2Ray subscription.
-
-    :param subscription: Base64 subscription.
-    :param validate: Validate decoded configs.
-    """
-    if not isinstance(subscription, str):
-        raise TypeError(
-            "Subscription must be str."
-        )
-
-    decoded = _decode_base64(subscription)
-
-    configs = decoded.splitlines()
-
-    if validate:
-        for config in configs:
-            _validate_config(config)
-
-    return configs
