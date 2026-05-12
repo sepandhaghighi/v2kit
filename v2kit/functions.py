@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """v2kit functions."""
+from typing import Iterable
 from .params import Protocol
 from .utils import _get_protocol
 from .utils import _relabel_vmess, _relabel_tag
