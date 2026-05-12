@@ -1,5 +1,5 @@
 <div align="center">
-<h1>V2Kit: TODO</h1>
+<h1>V2Kit: A Lightweight Toolkit for V2Ray Config Manipulation</h1>
 <br/>
 <a href="https://www.python.org/"><img src="https://img.shields.io/badge/built%20with-Python3-green.svg" alt="built with Python3"></a>
 <a href="https://github.com/sepandhaghighi/v2kit"><img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/sepandhaghighi/v2kit"></a>
@@ -8,8 +8,8 @@
 				
 ## Overview	
 
-<p align="justify">		
-TODO
+<p align="justify">	
+V2Kit is a lightweight and extensible Python toolkit for working with V2Ray proxy configurations and subscriptions. It provides a clean API for common operations such as protocol detection, configuration validation, config relabeling, and subscription encoding/decoding. The project is designed with simplicity, predictability, and composability in mind, making it suitable for automation scripts, proxy pipelines, networking tools, and future extensions around V2Ray ecosystem utilities.
 </p>
 
 <table>
@@ -52,7 +52,25 @@ TODO
 
 ## Usage
 
-TODO
+```python
+from v2kit import (
+    decode_subscription,
+    encode_subscription,
+    is_vmess,
+    relabel,
+)
+
+config = "vmess://eyJhZGQiOiIxMjcuMC4wLjEiLCJwcyI6Im9sZCJ9"
+
+new_config = relabel(config, "Germany-1")
+
+if is_vmess(new_config):
+    print("VMESS config detected")
+
+subscription = encode_subscription([new_config])
+
+configs = decode_subscription(subscription)
+```
 
 ## Issues & Bug Reports			
 
