@@ -34,7 +34,7 @@ def is_trojan(config: str) -> bool:
     return _is_protocol(config, Protocol.TROJAN)
 
 
-def is_ss(config: str) -> bool:
+def is_shadowsocks(config: str) -> bool:
     """
     Check whether config is Shadowsocks.
 
