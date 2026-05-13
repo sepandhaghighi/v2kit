@@ -47,8 +47,8 @@ def relabel(config: str, label: str) -> str:
     """
     Relabel any supported config.
 
-    :type config: str
-    :type label: str
+    :param config: V2Ray config.
+    :param label: New label.
     """
     protocol = _get_protocol(config)
 
