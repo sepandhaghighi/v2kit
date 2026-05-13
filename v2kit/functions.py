@@ -7,6 +7,7 @@ from .utils import _relabel_vmess, _relabel_tag
 from .utils import _encode_base64, _decode_base64
 from .utils import _validate_config
 
+
 def is_vmess(config: str) -> bool:
     """
     Check whether config is VMESS.
