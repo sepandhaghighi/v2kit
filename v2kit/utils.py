@@ -147,3 +147,16 @@ def _relabel_tag(config: str, label: str) -> str:
     base = config.split("#", 1)[0]
 
     return f"{base}#{label}"
+
+
+def _is_protocol(config: str, protocol: Protocol) -> bool:
+    """
+    Check whether config uses given protocol.
+
+    :param config: V2Ray config.
+    :param protocol: Target protocol.
+    """
+    try:
+        return _get_protocol(config) == protocol
+    except Exception:
+        return False
