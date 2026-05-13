@@ -24,14 +24,17 @@ def read_description() -> str:
             description += c.read()
         return description
     except Exception:
-        return '''TODO'''
+        return '''V2Kit is a lightweight and extensible Python toolkit for working with V2Ray proxy configurations and subscriptions.
+        It provides a clean API for common operations such as protocol detection, configuration validation, config relabeling,
+        and subscription encoding/decoding. The project is designed with simplicity, predictability, and composability in mind,
+        making it suitable for automation scripts, proxy pipelines, networking tools, and future extensions around V2Ray ecosystem utilities.'''
 
 
 setup(
     name='v2kit',
     packages=['v2kit'],
     version='0.1',
-    description='TODO',
+    description='V2Kit: A Lightweight Toolkit for V2Ray Config Manipulation',
     long_description=read_description(),
     long_description_content_type='text/markdown',
     include_package_data=True,
@@ -39,7 +42,7 @@ setup(
     author_email='me@sepand.tech',
     url='https://github.com/sepandhaghighi/v2kit',
     download_url='https://github.com/sepandhaghighi/v2kit/tarball/v0.1',
-    keywords="TODO",
+    keywords="v2ray v2ray-config v2ray-tools vmess vless trojan shadowsocks proxy subscription network",
     project_urls={
         'Source': 'https://github.com/sepandhaghighi/v2kit'},
     install_requires=get_requires(),
@@ -58,13 +61,8 @@ setup(
         'Programming Language :: Python :: 3.13',
         'Programming Language :: Python :: 3.14',
         'Intended Audience :: Developers',
-        'Intended Audience :: Education',
-        'Intended Audience :: End Users/Desktop',
-        'Intended Audience :: Other Audience',
         'Topic :: Utilities',
+        'Topic :: Internet',
+        'Topic :: Internet :: Proxy Servers',
     ],
-    license='MIT',
-    entry_points={
-        'console_scripts': [
-            'v2kit = v2kit.cli:main',
-        ]})
+    license='MIT')
