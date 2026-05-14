@@ -2,10 +2,11 @@
 """v2kit functions."""
 from typing import Iterable
 from .params import Protocol
-from .utils import _get_protocol
+from .utils import _get_protocol, _is_protocol
 from .utils import _relabel_vmess, _relabel_tag
 from .utils import _encode_base64, _decode_base64
 from .utils import _validate_config
+
 
 def is_vmess(config: str) -> bool:
     """
@@ -13,7 +14,7 @@ def is_vmess(config: str) -> bool:
 
     :param config: V2Ray config.
     """
-    return _get_protocol(config) == Protocol.VMESS
+    return _is_protocol(config, Protocol.VMESS)
 
 
 def is_vless(config: str) -> bool:
@@ -22,7 +23,7 @@ def is_vless(config: str) -> bool:
 
     :param config: V2Ray config.
     """
-    return _get_protocol(config) == Protocol.VLESS
+    return _is_protocol(config, Protocol.VLESS)
 
 
 def is_trojan(config: str) -> bool:
@@ -31,24 +32,24 @@ def is_trojan(config: str) -> bool:
 
     :param config: V2Ray config.
     """
-    return _get_protocol(config) == Protocol.TROJAN
+    return _is_protocol(config, Protocol.TROJAN)
 
 
-def is_ss(config: str) -> bool:
+def is_shadowsocks(config: str) -> bool:
     """
     Check whether config is Shadowsocks.
 
     :param config: V2Ray config.
     """
-    return _get_protocol(config) == Protocol.SHADOWSOCKS
+    return _is_protocol(config, Protocol.SHADOWSOCKS)
 
 
 def relabel(config: str, label: str) -> str:
     """
     Relabel any supported config.
 
-    :type config: str
-    :type label: str
+    :param config: V2Ray config.
+    :param label: New label.
     """
     protocol = _get_protocol(config)
 
