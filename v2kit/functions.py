@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """v2kit functions."""
-from typing import Iterable
+from typing import Iterable, List
 from .params import Protocol
 from .utils import _get_protocol, _is_protocol
 from .utils import _relabel_vmess, _relabel_tag
@@ -83,7 +83,7 @@ def encode_subscription(
 def decode_subscription(
     subscription: str,
     validate: bool = True,
-) -> list[str]:
+) -> List[str]:
     """
     Decode V2Ray subscription.
 
