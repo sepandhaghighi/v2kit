@@ -6,9 +6,7 @@ V2KIT_VERSION = "0.1"
 
 
 class Protocol(str, Enum):
-    """
-    Supported V2Ray protocols.
-    """
+    """Supported V2Ray protocols."""
 
     VMESS = "vmess"
     VLESS = "vless"
