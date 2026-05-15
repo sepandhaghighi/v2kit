@@ -5,12 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-## [0.1] - 2026-xx-xx
+## [0.1] - 2026-05-16
 ### Added
-- Item1
-- Item2
-- Item3
-- Item4
+- `is_vmess` function
+- `is_vless` function
+- `is_trojan` function
+- `is_shadowsocks` function
+- `relabel` function
+- `encode_subscription` function
+- `decode_subscription` function
 
 [Unreleased]: https://github.com/sepandhaghighi/v2kit/compare/v0.1...dev
 [0.1]: https://github.com/sepandhaghighi/v2kit/compare/bb5a2cb...v0.1
