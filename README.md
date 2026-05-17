@@ -38,6 +38,14 @@ V2Kit is a lightweight and extensible Python toolkit for working with V2Ray prox
 	</tr>
 </table>
 
+<table>
+    <tr> 
+        <td align="center">Code Quality</td>
+        <td align="center"><a href="https://app.codacy.com/gh/sepandhaghighi/v2kit/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade"><img src="https://app.codacy.com/project/badge/Grade/c0b30b55e04740b2894fe1aa4eef6589"></a></td>
+        <td align="center"><a href="https://www.codefactor.io/repository/github/sepandhaghighi/v2kit"><img src="https://www.codefactor.io/repository/github/sepandhaghighi/v2kit/badge" alt="CodeFactor"></a></td>
+    </tr>
+</table>
+
 ## Installation		
 
 ### Source Code
