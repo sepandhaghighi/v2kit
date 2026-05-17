@@ -41,22 +41,22 @@ def _add_base64_padding(data: str) -> str:
     return data + "=" * (-len(data) % 4)
 
 
-def _validate_config(config: str) -> None:
+def _validate_config(uri: str) -> None:
     """
-    Validate V2Ray config format.
+    Validate V2Ray URI format.
 
-    :param config: V2Ray config.
+    :param uri: V2Ray URI.
     """
-    if not isinstance(config, str):
+    if not isinstance(uri, str):
         raise TypeError("Config must be str.")
 
-    if len(config) == 0:
+    if len(uri) == 0:
         raise ValueError("Config cannot be empty.")
 
-    if "://" not in config:
+    if "://" not in uri:
         raise ValueError("Invalid config format.")
 
-    parsed = urlparse(config)
+    parsed = urlparse(uri)
 
     try:
         Protocol(parsed.scheme)
@@ -67,7 +67,7 @@ def _validate_config(config: str) -> None:
 
     if parsed.scheme == Protocol.VMESS.value:
         try:
-            _, encoded = config.split("://", 1)
+            _, encoded = uri.split("://", 1)
 
             encoded = _add_base64_padding(encoded)
 
@@ -86,9 +86,9 @@ def _validate_config(config: str) -> None:
 
 def _validate_label(label: str) -> None:
     """
-    Validate config label.
+    Validate URI label.
 
-    :param label: Config label.
+    :param label: URI label.
     """
     if not isinstance(label, str):
         raise TypeError("Label must be str.")
@@ -97,30 +97,30 @@ def _validate_label(label: str) -> None:
         raise ValueError("Label cannot be empty.")
 
 
-def _get_protocol(config: str) -> Protocol:
+def _get_protocol(uri: str) -> Protocol:
     """
-    Extract protocol from config.
+    Extract protocol from URI.
 
-    :param config: V2Ray config.
+    :param uri: V2Ray URI.
     """
-    _validate_config(config)
+    _validate_config(uri)
 
-    protocol = config.split("://", 1)[0]
+    protocol = uri.split("://", 1)[0]
 
     return Protocol(protocol)
 
 
-def _relabel_vmess(config: str, label: str) -> str:
+def _relabel_vmess(uri: str, label: str) -> str:
     """
-    Relabel VMESS config.
+    Relabel VMESS URI.
 
-    :param config: VMESS config.
+    :param uri: VMESS URI.
     :param label: New label.
     """
-    _validate_config(config)
+    _validate_config(uri)
     _validate_label(label)
 
-    protocol, encoded = config.split("://", 1)
+    protocol, encoded = uri.split("://", 1)
 
     decoded = _decode_base64(encoded)
 
@@ -135,28 +135,28 @@ def _relabel_vmess(config: str, label: str) -> str:
     return f"{protocol}://{encoded_new}"
 
 
-def _relabel_tag(config: str, label: str) -> str:
+def _relabel_tag(uri: str, label: str) -> str:
     """
-    Relabel VLESS, Trojan and Shadowsocks configs.
+    Relabel VLESS, Trojan and Shadowsocks URIs.
 
-    :param config: Input config.
+    :param uri: Input URI.
     :param label: New label.
     """
-    _validate_config(config)
+    _validate_config(uri)
     _validate_label(label)
-    base = config.split("#", 1)[0]
+    base = uri.split("#", 1)[0]
 
     return f"{base}#{label}"
 
 
-def _is_protocol(config: str, protocol: Protocol) -> bool:
+def _is_protocol(uri: str, protocol: Protocol) -> bool:
     """
-    Check whether config uses given protocol.
+    Check whether URI uses given protocol.
 
-    :param config: V2Ray config.
+    :param uri: V2Ray URI.
     :param protocol: Target protocol.
     """
     try:
-        return _get_protocol(config) == protocol
+        return _get_protocol(uri) == protocol
     except Exception:
         return False
