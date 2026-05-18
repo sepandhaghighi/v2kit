@@ -11,7 +11,7 @@ INVALID_PROTOCOL = "http://example.com"
 INVALID_VMESS = "vmess://invalid-base64"
 
 VALID_VLESS = (
-    "vless://uuid@example.com:443"
+    "vless://1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45@example.com:443"
     "?security=tls#test"
 )
 
