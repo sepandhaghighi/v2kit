@@ -4,15 +4,8 @@
 import json
 from typing import Optional
 from .params import Protocol
-from .validators import (
-    _validate_uuid,
-    _validate_port,
-    _validate_host,
-    _validate_label,
-)
-from .utils import (
-    _encode_base64,
-)
+from .validators import _validate_uuid, _validate_port, _validate_host, _validate_label
+from .utils import _encode_base64
 
 
 class BaseConfig:
@@ -345,9 +338,7 @@ class TrojanConfig(BaseConfig):
         password: str,
     ):
         if not isinstance(password, str):
-            raise TypeError(
-                "Password must be str."
-            )
+            raise TypeError("Password must be str.")
 
         self._password = password
 
@@ -453,9 +444,7 @@ class ShadowsocksConfig(BaseConfig):
         method: str,
     ):
         if not isinstance(method, str):
-            raise TypeError(
-                "Method must be str."
-            )
+            raise TypeError("Method must be str.")
 
         self._method = method
 
@@ -466,9 +455,7 @@ class ShadowsocksConfig(BaseConfig):
         password: str,
     ):
         if not isinstance(password, str):
-            raise TypeError(
-                "Password must be str."
-            )
+            raise TypeError("Password must be str.")
 
         self._password = password
 
@@ -517,10 +504,7 @@ class ShadowsocksConfig(BaseConfig):
             userinfo
         )
 
-        label = (
-            f"#{self.label}"
-            if self.label else ""
-        )
+        label = f"#{self.label}" if self.label else ""
 
         return (
             f"ss://{encoded}@"
