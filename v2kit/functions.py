@@ -8,74 +8,74 @@ from .utils import _encode_base64, _decode_base64
 from .utils import _validate_config
 
 
-def is_vmess(config: str) -> bool:
+def is_vmess(uri: str) -> bool:
     """
-    Check whether config is VMESS.
+    Check whether URI is VMESS.
 
-    :param config: V2Ray config.
+    :param uri: V2Ray URI.
     """
-    return _is_protocol(config, Protocol.VMESS)
+    return _is_protocol(uri, Protocol.VMESS)
 
 
-def is_vless(config: str) -> bool:
+def is_vless(uri: str) -> bool:
     """
-    Check whether config is VLESS.
+    Check whether URI is VLESS.
 
-    :param config: V2Ray config.
+    :param uri: V2Ray URI.
     """
-    return _is_protocol(config, Protocol.VLESS)
+    return _is_protocol(uri, Protocol.VLESS)
 
 
-def is_trojan(config: str) -> bool:
+def is_trojan(uri: str) -> bool:
     """
-    Check whether config is Trojan.
+    Check whether URI is Trojan.
 
-    :param config: V2Ray config.
+    :param uri: V2Ray URI.
     """
-    return _is_protocol(config, Protocol.TROJAN)
+    return _is_protocol(uri, Protocol.TROJAN)
 
 
-def is_shadowsocks(config: str) -> bool:
+def is_shadowsocks(uri: str) -> bool:
     """
-    Check whether config is Shadowsocks.
+    Check whether URI is Shadowsocks.
 
-    :param config: V2Ray config.
+    :param uri: V2Ray URI.
     """
-    return _is_protocol(config, Protocol.SHADOWSOCKS)
+    return _is_protocol(uri, Protocol.SHADOWSOCKS)
 
 
-def relabel(config: str, label: str) -> str:
+def relabel(uri: str, label: str) -> str:
     """
-    Relabel any supported config.
+    Relabel any supported URI.
 
-    :param config: V2Ray config.
+    :param uri: V2Ray URI.
     :param label: New label.
     """
-    protocol = _get_protocol(config)
+    protocol = _get_protocol(uri)
 
     if protocol == Protocol.VMESS:
-        return _relabel_vmess(config, label)
+        return _relabel_vmess(uri, label)
 
-    return _relabel_tag(config, label)
+    return _relabel_tag(uri, label)
 
 
 def encode_subscription(
-    configs: Iterable[str],
+    entries: Iterable[str],
     validate: bool = True,
 ) -> str:
     """
-    Encode configs as V2Ray subscription.
+    Encode entries as V2Ray subscription.
 
-    :param configs: Iterable of configs.
-    :param validate: Validate configs before encoding.
+    :param entries: Iterable of entries.
+    :param validate: Validate entries before encoding.
     """
-    config_list = list(configs)
+    uri_list = list(entries)
 
     if validate:
-        for config in config_list:
-            _validate_config(config)
+        for uri in uri_list:
+            _validate_config(uri)
 
-    subscription = "\n".join(config_list)
+    subscription = "\n".join(uri_list)
 
     return _encode_base64(subscription)
 
@@ -88,7 +88,7 @@ def decode_subscription(
     Decode V2Ray subscription.
 
     :param subscription: Base64 subscription.
-    :param validate: Validate decoded configs.
+    :param validate: Validate decoded URI list.
     """
     if not isinstance(subscription, str):
         raise TypeError(
@@ -97,10 +97,10 @@ def decode_subscription(
 
     decoded = _decode_base64(subscription)
 
-    configs = decoded.splitlines()
+    uri_list = decoded.splitlines()
 
     if validate:
-        for config in configs:
-            _validate_config(config)
+        for uri in uri_list:
+            _validate_config(uri)
 
-    return configs
+    return uri_list
