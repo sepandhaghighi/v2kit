@@ -2,19 +2,10 @@
 """v2kit parsers."""
 
 import json
-from urllib.parse import (
-    urlparse,
-)
+from urllib.parse import urlparse
 from .params import Protocol
-from .models import (
-    VMESSConfig,
-    VLESSConfig,
-    TrojanConfig,
-    ShadowsocksConfig,
-)
-from .utils import (
-    _decode_base64,
-)
+from .models import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig
+from .utils import _decode_base64
 
 
 def parse(uri: str):
@@ -22,19 +13,13 @@ def parse(uri: str):
     Parse V2Ray URI.
     """
     if not isinstance(uri, str):
-        raise TypeError(
-            "URI must be str."
-        )
+        raise TypeError("URI must be str.")
 
     if len(uri.strip()) == 0:
-        raise ValueError(
-            "URI cannot be empty."
-        )
+        raise ValueError("URI cannot be empty.")
 
     if "://" not in uri:
-        raise ValueError(
-            "Invalid URI format."
-        )
+        raise ValueError("Invalid URI format.")
 
     parsed = urlparse(uri)
 
@@ -85,9 +70,7 @@ def _parse_vmess(
         data = json.loads(decoded)
 
     except Exception as exc:
-        raise ValueError(
-            "Invalid VMESS URI."
-        ) from exc
+        raise ValueError("Invalid VMESS URI.") from exc
 
     return VMESSConfig(
         uuid=data.get("id", ""),
@@ -151,9 +134,7 @@ def _parse_shadowsocks(
         )
 
     except Exception as exc:
-        raise ValueError(
-            "Invalid Shadowsocks URI."
-        ) from exc
+        raise ValueError("Invalid Shadowsocks URI.") from exc
 
     return ShadowsocksConfig(
         method=method,

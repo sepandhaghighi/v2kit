@@ -92,10 +92,7 @@ def encode_subscription(
 
             continue
 
-        raise TypeError(
-            "Items must be str or "
-            "BaseConfig."
-        )
+        raise TypeError("Items must be str or BaseConfig.")
 
     subscription = "\n".join(
         uri_list
@@ -120,9 +117,7 @@ def decode_subscription(
         subscription,
         str,
     ):
-        raise TypeError(
-            "Subscription must be str."
-        )
+        raise TypeError("Subscription must be str.")
 
     decoded = _decode_base64(
         subscription
