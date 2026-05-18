@@ -42,7 +42,7 @@ class BaseConfig:
         self,
         label: Optional[str],
     ):
-        validate_label(label)
+        _validate_label(label)
 
         self._label = label
 
@@ -129,7 +129,7 @@ class VMESSConfig(BaseConfig):
         self,
         uuid: str,
     ):
-        validate_uuid(uuid)
+        _validate_uuid(uuid)
 
         self._uuid = uuid
 
@@ -139,7 +139,7 @@ class VMESSConfig(BaseConfig):
         self,
         host: str,
     ):
-        validate_host(host)
+        _validate_host(host)
 
         self._host = host
 
@@ -149,16 +149,16 @@ class VMESSConfig(BaseConfig):
         self,
         port: int,
     ):
-        validate_port(port)
+        _validate_port(port)
 
         self._port = port
 
         return self
 
     def validate(self) -> None:
-        validate_uuid(self.uuid)
-        validate_host(self.host)
-        validate_port(self.port)
+        _validate_uuid(self.uuid)
+        _validate_host(self.host)
+        _validate_port(self.port)
 
     def to_dict(self) -> dict:
         data = (
@@ -238,7 +238,7 @@ class VLESSConfig(BaseConfig):
         self,
         uuid: str,
     ):
-        validate_uuid(uuid)
+        _validate_uuid(uuid)
 
         self._uuid = uuid
 
@@ -248,7 +248,7 @@ class VLESSConfig(BaseConfig):
         self,
         host: str,
     ):
-        validate_host(host)
+        _validate_host(host)
 
         self._host = host
 
@@ -258,16 +258,16 @@ class VLESSConfig(BaseConfig):
         self,
         port: int,
     ):
-        validate_port(port)
+        _validate_port(port)
 
         self._port = port
 
         return self
 
     def validate(self) -> None:
-        validate_uuid(self.uuid)
-        validate_host(self.host)
-        validate_port(self.port)
+        _validate_uuid(self.uuid)
+        _validate_host(self.host)
+        _validate_port(self.port)
 
     def to_dict(self) -> dict:
         return {
@@ -357,7 +357,7 @@ class TrojanConfig(BaseConfig):
         self,
         host: str,
     ):
-        validate_host(host)
+        _validate_host(host)
 
         self._host = host
 
@@ -367,15 +367,15 @@ class TrojanConfig(BaseConfig):
         self,
         port: int,
     ):
-        validate_port(port)
+        _validate_port(port)
 
         self._port = port
 
         return self
 
     def validate(self) -> None:
-        validate_host(self.host)
-        validate_port(self.port)
+        _validate_host(self.host)
+        _validate_port(self.port)
 
     def to_dict(self) -> dict:
         return {
@@ -478,7 +478,7 @@ class ShadowsocksConfig(BaseConfig):
         self,
         host: str,
     ):
-        validate_host(host)
+        _validate_host(host)
 
         self._host = host
 
@@ -488,15 +488,15 @@ class ShadowsocksConfig(BaseConfig):
         self,
         port: int,
     ):
-        validate_port(port)
+        _validate_port(port)
 
         self._port = port
 
         return self
 
     def validate(self) -> None:
-        validate_host(self.host)
-        validate_port(self.port)
+        _validate_host(self.host)
+        _validate_port(self.port)
 
     def to_dict(self) -> dict:
         return {
