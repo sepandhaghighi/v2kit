@@ -70,7 +70,7 @@ def encode_subscription(
     """
     uri_list = []
 
-    for item in configs:
+    for item in entries:
         if isinstance(
             item,
             BaseConfig,
