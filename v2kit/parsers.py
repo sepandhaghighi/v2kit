@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """v2kit parsers."""
 
+from typing import Union
 import json
 from urllib.parse import urlparse
 from .params import Protocol
@@ -8,9 +9,11 @@ from .models import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig
 from .utils import _decode_base64
 
 
-def parse(uri: str):
+def parse(uri: str) -> Union[VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig]:
     """
     Parse V2Ray URI.
+
+    :param uri: V2Ray URI.
     """
     if not isinstance(uri, str):
         raise TypeError("URI must be str.")
@@ -57,6 +60,11 @@ def parse(uri: str):
 def _parse_vmess(
     uri: str,
 ) -> VMESSConfig:
+    """
+    Parse VMESS URI.
+
+    :param uri: VMESS URI.
+    """
     try:
         _, encoded = uri.split(
             "://",
@@ -97,6 +105,11 @@ def _parse_vmess(
 def _parse_vless(
     parsed,
 ) -> VLESSConfig:
+    """
+    Parse VLESS URI.
+
+    :param parsed: Parsed URI object.
+    """
     return VLESSConfig(
         uuid=parsed.username or "",
         host=parsed.hostname or "",
@@ -121,6 +134,11 @@ def _parse_trojan(
 def _parse_shadowsocks(
     parsed,
 ) -> ShadowsocksConfig:
+    """
+    Parse Trojan URI.
+
+    :param parsed: Parsed URI object.
+    """
     try:
         userinfo = _decode_base64(
             parsed.username
