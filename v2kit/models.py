@@ -22,7 +22,7 @@ class BaseConfig:
         label: Optional[str] = None,
     ):
         """
-        BaseConfig initiator.
+        Base config initiator.
         
         :param protocol: Config protocol.
         :param label: Config label.
@@ -635,6 +635,7 @@ class ShadowsocksConfig(BaseConfig):
         return self
 
     def validate(self) -> None:
+        """Validate Shadowsocks config."""
         _validate_host(self.host)
         _validate_port(self.port)
 
