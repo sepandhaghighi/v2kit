@@ -10,7 +10,10 @@ from .utils import _encode_base64
 
 class BaseConfig:
     """
-    Base config model.
+    Base class for all V2Ray config models.
+
+    Provides shared validation, label management,
+    and URI serialization interface.
     """
 
     def __init__(
@@ -35,6 +38,11 @@ class BaseConfig:
         self,
         label: Optional[str],
     ):
+        """
+        Update config label.
+
+        :param label: New label.
+        """
         _validate_label(label)
 
         self._label = label
@@ -43,7 +51,7 @@ class BaseConfig:
 
     def validate(self) -> None:
         """
-        Validate config.
+        Validate config fields.
         """
 
     def to_uri(self) -> str:
@@ -54,7 +62,7 @@ class BaseConfig:
 
     def to_dict(self) -> dict:
         """
-        Convert config to dict.
+        Convert config to dictionary.
         """
         raise NotImplementedError
 
@@ -62,6 +70,9 @@ class BaseConfig:
 class VMESSConfig(BaseConfig):
     """
     VMESS config model.
+
+    Represents a VMESS configuration and provides
+    validation, serialization, and URI generation.
     """
 
     def __init__(
@@ -122,6 +133,11 @@ class VMESSConfig(BaseConfig):
         self,
         uuid: str,
     ):
+        """
+        Update UUID.
+
+        :param uuid: New UUID.
+        """
         _validate_uuid(uuid)
 
         self._uuid = uuid
@@ -132,6 +148,11 @@ class VMESSConfig(BaseConfig):
         self,
         host: str,
     ):
+        """
+        Update host.
+
+        :param host: New host.
+        """
         _validate_host(host)
 
         self._host = host
@@ -142,6 +163,11 @@ class VMESSConfig(BaseConfig):
         self,
         port: int,
     ):
+        """
+        Update port.
+
+        :param port: New port.
+        """
         _validate_port(port)
 
         self._port = port
@@ -149,11 +175,17 @@ class VMESSConfig(BaseConfig):
         return self
 
     def validate(self) -> None:
+        """
+        Validate VMESS config.
+        """
         _validate_uuid(self.uuid)
         _validate_host(self.host)
         _validate_port(self.port)
 
     def to_dict(self) -> dict:
+        """
+        Convert VMESS config to dictionary.
+        """
         data = (
             self._raw_data.copy()
             if self._raw_data else {}
@@ -173,6 +205,9 @@ class VMESSConfig(BaseConfig):
         return data
 
     def to_uri(self) -> str:
+        """
+        Convert VMESS config to URI.
+        """
         encoded = _encode_base64(
             json.dumps(
                 self.to_dict(),
@@ -186,6 +221,9 @@ class VMESSConfig(BaseConfig):
 class VLESSConfig(BaseConfig):
     """
     VLESS config model.
+
+    Represents a VLESS configuration and provides
+    validation, serialization, and URI generation.
     """
 
     def __init__(
@@ -293,6 +331,9 @@ class VLESSConfig(BaseConfig):
 class TrojanConfig(BaseConfig):
     """
     Trojan config model.
+
+    Represents a Trojan configuration and provides
+    validation, serialization, and URI generation.
     """
 
     def __init__(
@@ -337,6 +378,11 @@ class TrojanConfig(BaseConfig):
         self,
         password: str,
     ):
+        """
+        Update password.
+
+        :param password: New password.
+        """
         if not isinstance(password, str):
             raise TypeError("Password must be str.")
 
@@ -399,6 +445,9 @@ class TrojanConfig(BaseConfig):
 class ShadowsocksConfig(BaseConfig):
     """
     Shadowsocks config model.
+
+    Represents a Shadowsocks configuration and provides
+    validation, serialization, and URI generation.
     """
 
     def __init__(
@@ -443,6 +492,11 @@ class ShadowsocksConfig(BaseConfig):
         self,
         method: str,
     ):
+        """
+        Update encryption method.
+
+        :param method: New encryption method.
+        """
         if not isinstance(method, str):
             raise TypeError("Method must be str.")
 
@@ -496,6 +550,9 @@ class ShadowsocksConfig(BaseConfig):
         }
 
     def to_uri(self) -> str:
+        """
+        Convert config to URI.
+        """
         userinfo = (
             f"{self.method}:{self.password}"
         )
