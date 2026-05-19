@@ -22,7 +22,7 @@ class BaseConfig:
         label: Optional[str] = None,
     ):
         """
-        Base config initiator.
+        Config initiator.
         
         :param protocol: Config protocol.
         :param label: Config label.
