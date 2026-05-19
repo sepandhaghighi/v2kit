@@ -122,6 +122,11 @@ def _parse_vless(
 def _parse_trojan(
     parsed,
 ) -> TrojanConfig:
+    """
+    Parse Trojan URI.
+
+    :param parsed: Parsed URI object.
+    """
     return TrojanConfig(
         password=parsed.username or "",
         host=parsed.hostname or "",
@@ -135,7 +140,7 @@ def _parse_shadowsocks(
     parsed,
 ) -> ShadowsocksConfig:
     """
-    Parse Trojan URI.
+    Parse Shadowsocks URI.
 
     :param parsed: Parsed URI object.
     """

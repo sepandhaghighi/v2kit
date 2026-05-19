@@ -6,6 +6,8 @@ import uuid
 def _validate_uuid(value: str) -> None:
     """
     Validate UUID.
+
+    :param value: UUID string.
     """
     if not isinstance(value, str):
         raise TypeError("UUID must be str.")
@@ -19,6 +21,8 @@ def _validate_uuid(value: str) -> None:
 def _validate_port(port: int) -> None:
     """
     Validate port.
+
+    :param port: Network port.
     """
     if not isinstance(port, int):
         raise TypeError("Port must be int.")
@@ -30,6 +34,8 @@ def _validate_port(port: int) -> None:
 def _validate_host(host: str) -> None:
     """
     Validate host.
+
+    :param host: Host address.
     """
     if not isinstance(host, str):
         raise TypeError("Host must be str.")
@@ -41,6 +47,8 @@ def _validate_host(host: str) -> None:
 def _validate_label(label: Optional[str]) -> None:
     """
     Validate label.
+
+    :param label: Config label.
     """
     if label is None:
         return
