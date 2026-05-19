@@ -12,7 +12,7 @@ def create_vmess(label="test"):
         "ps": label,
         "add": "example.com",
         "port": "443",
-        "id": "11111111-1111-1111-1111-111111111111",
+        "id": "1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
         "aid": "0",
         "net": "ws",
         "type": "none",
@@ -29,7 +29,7 @@ def create_vmess(label="test"):
 VMESS_CONFIG = create_vmess()
 
 VLESS_CONFIG = (
-    "vless://uuid@example.com:443"
+    "vless://1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45@example.com:443"
     "?security=tls#vless-test"
 )
 

@@ -3,9 +3,9 @@
 from typing import Iterable, List
 from .params import Protocol
 from .utils import _get_protocol, _is_protocol
-from .utils import _relabel_vmess, _relabel_tag
 from .utils import _encode_base64, _decode_base64
-from .utils import _validate_config
+from .parsers import parse
+from .models import BaseConfig
 
 
 def is_vmess(uri: str) -> bool:
@@ -51,12 +51,11 @@ def relabel(uri: str, label: str) -> str:
     :param uri: V2Ray URI.
     :param label: New label.
     """
-    protocol = _get_protocol(uri)
+    config = parse(uri)
 
-    if protocol == Protocol.VMESS:
-        return _relabel_vmess(uri, label)
+    config.update_label(label)
 
-    return _relabel_tag(uri, label)
+    return config.to_uri()
 
 
 def encode_subscription(
@@ -69,15 +68,39 @@ def encode_subscription(
     :param entries: Iterable of entries.
     :param validate: Validate entries before encoding.
     """
-    uri_list = list(entries)
+    uri_list = []
 
-    if validate:
-        for uri in uri_list:
-            _validate_config(uri)
+    for item in entries:
+        if isinstance(
+            item,
+            BaseConfig,
+        ):
+            if validate:
+                item.validate()
 
-    subscription = "\n".join(uri_list)
+            uri_list.append(
+                item.to_uri()
+            )
 
-    return _encode_base64(subscription)
+            continue
+
+        if isinstance(item, str):
+            if validate:
+                parse(item)
+
+            uri_list.append(item)
+
+            continue
+
+        raise TypeError("Items must be str or BaseConfig.")
+
+    subscription = "\n".join(
+        uri_list
+    )
+
+    return _encode_base64(
+        subscription
+    )
 
 
 def decode_subscription(
@@ -90,17 +113,20 @@ def decode_subscription(
     :param subscription: Base64 subscription.
     :param validate: Validate decoded URI list.
     """
-    if not isinstance(subscription, str):
-        raise TypeError(
-            "Subscription must be str."
-        )
+    if not isinstance(
+        subscription,
+        str,
+    ):
+        raise TypeError("Subscription must be str.")
 
-    decoded = _decode_base64(subscription)
+    decoded = _decode_base64(
+        subscription
+    )
 
-    uri_list = decoded.splitlines()
+    uris = decoded.splitlines()
 
     if validate:
-        for uri in uri_list:
-            _validate_config(uri)
+        for uri in uris:
+            parse(uri)
 
-    return uri_list
+    return uris
