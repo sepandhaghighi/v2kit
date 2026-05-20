@@ -599,12 +599,14 @@ class ShadowsocksConfig(BaseConfig):
             label=label,
         )
 
-        self._method = method
-        self._password = password
+        self._method = None
+        self._password = None
 
         self._host = None
         self._port = None
 
+        self.update_method(method)
+        self.update_password(password)
         self.update_host(host)
         self.update_port(port)
 
@@ -637,8 +639,7 @@ class ShadowsocksConfig(BaseConfig):
 
         :param method: New encryption method.
         """
-        if not isinstance(method, str):
-            raise TypeError("Method must be str.")
+        _validate_method(method)
 
         self._method = method
 
@@ -653,8 +654,7 @@ class ShadowsocksConfig(BaseConfig):
 
         :param password: New password.
         """
-        if not isinstance(password, str):
-            raise TypeError("Password must be str.")
+        _validate_password(password)
 
         self._password = password
 
