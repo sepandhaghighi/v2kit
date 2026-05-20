@@ -3,6 +3,7 @@
 from typing import Optional
 import uuid
 
+
 def _validate_query(query: str) -> None:
     """
     Validate query string.
@@ -12,6 +13,7 @@ def _validate_query(query: str) -> None:
     if not isinstance(query, str):
         raise TypeError("Query must be str.")
 
+
 def _validate_tls(tls: str) -> None:
     """
     Validate TLS mode.
@@ -20,6 +22,7 @@ def _validate_tls(tls: str) -> None:
     """
     if not isinstance(tls, str):
         raise TypeError("TLS must be str.")
+
 
 def _validate_network(network: str) -> None:
     """
@@ -33,6 +36,7 @@ def _validate_network(network: str) -> None:
     if len(network.strip()) == 0:
         raise ValueError("Network cannot be empty.")
 
+
 def _validate_method(method: str) -> None:
     """
     Validate Shadowsocks method.
@@ -45,6 +49,7 @@ def _validate_method(method: str) -> None:
     if len(method.strip()) == 0:
         raise ValueError("Method cannot be empty.")
 
+
 def _validate_password(password: str) -> None:
     """
     Validate password.
@@ -56,6 +61,7 @@ def _validate_password(password: str) -> None:
 
     if len(password.strip()) == 0:
         raise ValueError("Password cannot be empty.")
+
 
 def _validate_uuid(value: str) -> None:
     """

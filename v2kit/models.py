@@ -34,7 +34,7 @@ class BaseConfig(ABC):
     ):
         """
         Config initiator.
-        
+
         :param protocol: Config protocol.
         :param label: Config label.
         """
@@ -100,7 +100,7 @@ class VMESSConfig(BaseConfig):
     ):
         """
         VMESS config initiator.
-        
+
         :param uuid: Config uuid.
         :param host: Config host.
         :param port: Config port.
@@ -205,7 +205,7 @@ class VMESSConfig(BaseConfig):
         self._port = port
 
         return self
-    
+
     def update_network(
         self,
         network: str,
@@ -220,7 +220,7 @@ class VMESSConfig(BaseConfig):
         self._network = network
 
         return self
-    
+
     def update_tls(
         self,
         tls: str,
@@ -286,7 +286,7 @@ class VLESSConfig(BaseConfig):
     ):
         """
         VLESS config initiator.
-        
+
         :param uuid: Config uuid.
         :param host: Config host.
         :param port: Config port.
@@ -372,7 +372,7 @@ class VLESSConfig(BaseConfig):
         self._port = port
 
         return self
-    
+
     def update_query(
         self,
         query: str,
@@ -436,7 +436,7 @@ class TrojanConfig(BaseConfig):
     ):
         """
         Trojan config initiator.
-        
+
         :param password: Config password.
         :param host: Config host.
         :param port: Config port.
@@ -451,8 +451,6 @@ class TrojanConfig(BaseConfig):
         self._port = None
         self._password = None
         self._query = None
-
-
 
         self.update_host(host)
         self.update_port(port)
@@ -523,7 +521,7 @@ class TrojanConfig(BaseConfig):
         self._port = port
 
         return self
-    
+
     def update_query(
         self,
         query: str,
@@ -587,7 +585,7 @@ class ShadowsocksConfig(BaseConfig):
     ):
         """
         Shadowsocks config initiator.
-        
+
         :param method: Config encryption method.
         :param password: Config password.
         :param host: Config host.
