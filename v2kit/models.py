@@ -10,7 +10,10 @@ from .utils import _encode_base64
 
 class BaseConfig:
     """
-    Base config model.
+    Base class for all V2Ray config models.
+
+    Provides shared validation, label management,
+    and URI serialization interface.
     """
 
     def __init__(
@@ -18,6 +21,12 @@ class BaseConfig:
         protocol: Protocol,
         label: Optional[str] = None,
     ):
+        """
+        Config initiator.
+        
+        :param protocol: Config protocol.
+        :param label: Config label.
+        """
         self._protocol = protocol
         self._label = None
 
@@ -25,16 +34,23 @@ class BaseConfig:
 
     @property
     def protocol(self) -> Protocol:
+        """Get the config protocol."""
         return self._protocol
 
     @property
     def label(self) -> Optional[str]:
+        """Get the config label."""
         return self._label
 
     def update_label(
         self,
         label: Optional[str],
     ):
+        """
+        Update config label.
+
+        :param label: New label.
+        """
         _validate_label(label)
 
         self._label = label
@@ -42,26 +58,23 @@ class BaseConfig:
         return self
 
     def validate(self) -> None:
-        """
-        Validate config.
-        """
+        """Validate config fields."""
 
     def to_uri(self) -> str:
-        """
-        Convert config to URI.
-        """
+        """Convert config to URI."""
         raise NotImplementedError
 
     def to_dict(self) -> dict:
-        """
-        Convert config to dict.
-        """
+        """Convert config to dictionary."""
         raise NotImplementedError
 
 
 class VMESSConfig(BaseConfig):
     """
     VMESS config model.
+
+    Represents a VMESS configuration and provides
+    validation, serialization, and URI generation.
     """
 
     def __init__(
@@ -75,6 +88,18 @@ class VMESSConfig(BaseConfig):
         tls: str = "",
         raw_data: Optional[dict] = None,
     ):
+        """
+        VMESS config initiator.
+        
+        :param uuid: Config uuid.
+        :param host: Config host.
+        :param port: Config port.
+        :param label: Config label.
+        :param aid: Config aid.
+        :param network: Config network.
+        :param tls: Config tls.
+        :param raw_data: Config raw data.
+        """
         super().__init__(
             protocol=Protocol.VMESS,
             label=label,
@@ -96,32 +121,43 @@ class VMESSConfig(BaseConfig):
 
     @property
     def uuid(self) -> str:
+        """Get the config uuid."""
         return self._uuid
 
     @property
     def host(self) -> str:
+        """Get the config host."""
         return self._host
 
     @property
     def port(self) -> int:
+        """Get the config port."""
         return self._port
 
     @property
     def aid(self) -> int:
+        """Get the config aid."""
         return self._aid
 
     @property
     def network(self) -> str:
+        """Get the config network."""
         return self._network
 
     @property
     def tls(self) -> str:
+        """Get the config tls."""
         return self._tls
 
     def update_uuid(
         self,
         uuid: str,
     ):
+        """
+        Update UUID.
+
+        :param uuid: New UUID.
+        """
         _validate_uuid(uuid)
 
         self._uuid = uuid
@@ -132,6 +168,11 @@ class VMESSConfig(BaseConfig):
         self,
         host: str,
     ):
+        """
+        Update host.
+
+        :param host: New host.
+        """
         _validate_host(host)
 
         self._host = host
@@ -142,6 +183,11 @@ class VMESSConfig(BaseConfig):
         self,
         port: int,
     ):
+        """
+        Update port.
+
+        :param port: New port.
+        """
         _validate_port(port)
 
         self._port = port
@@ -149,11 +195,13 @@ class VMESSConfig(BaseConfig):
         return self
 
     def validate(self) -> None:
+        """Validate VMESS config."""
         _validate_uuid(self.uuid)
         _validate_host(self.host)
         _validate_port(self.port)
 
     def to_dict(self) -> dict:
+        """Convert VMESS config to dictionary."""
         data = (
             self._raw_data.copy()
             if self._raw_data else {}
@@ -173,6 +221,7 @@ class VMESSConfig(BaseConfig):
         return data
 
     def to_uri(self) -> str:
+        """Convert VMESS config to URI."""
         encoded = _encode_base64(
             json.dumps(
                 self.to_dict(),
@@ -186,6 +235,9 @@ class VMESSConfig(BaseConfig):
 class VLESSConfig(BaseConfig):
     """
     VLESS config model.
+
+    Represents a VLESS configuration and provides
+    validation, serialization, and URI generation.
     """
 
     def __init__(
@@ -196,6 +248,15 @@ class VLESSConfig(BaseConfig):
         label: Optional[str] = None,
         query: str = "",
     ):
+        """
+        VLESS config initiator.
+        
+        :param uuid: Config uuid.
+        :param host: Config host.
+        :param port: Config port.
+        :param label: Config label.
+        :param query: Config query.
+        """
         super().__init__(
             protocol=Protocol.VLESS,
             label=label,
@@ -213,24 +274,33 @@ class VLESSConfig(BaseConfig):
 
     @property
     def uuid(self) -> str:
+        """Get the config uuid."""
         return self._uuid
 
     @property
     def host(self) -> str:
+        """Get the config host."""
         return self._host
 
     @property
     def port(self) -> int:
+        """Get the config port."""
         return self._port
 
     @property
     def query(self) -> str:
+        """Get the config query."""
         return self._query
 
     def update_uuid(
         self,
         uuid: str,
     ):
+        """
+        Update UUID.
+
+        :param uuid: New UUID.
+        """
         _validate_uuid(uuid)
 
         self._uuid = uuid
@@ -241,6 +311,11 @@ class VLESSConfig(BaseConfig):
         self,
         host: str,
     ):
+        """
+        Update host.
+
+        :param host: New host.
+        """
         _validate_host(host)
 
         self._host = host
@@ -251,6 +326,11 @@ class VLESSConfig(BaseConfig):
         self,
         port: int,
     ):
+        """
+        Update port.
+
+        :param port: New port.
+        """
         _validate_port(port)
 
         self._port = port
@@ -258,11 +338,13 @@ class VLESSConfig(BaseConfig):
         return self
 
     def validate(self) -> None:
+        """Validate VLESS config."""
         _validate_uuid(self.uuid)
         _validate_host(self.host)
         _validate_port(self.port)
 
     def to_dict(self) -> dict:
+        """Convert VLESS config to dictionary."""
         return {
             "protocol": "vless",
             "uuid": self.uuid,
@@ -273,6 +355,7 @@ class VLESSConfig(BaseConfig):
         }
 
     def to_uri(self) -> str:
+        """Convert VLESS config to URI."""
         query = (
             f"?{self.query}"
             if self.query else ""
@@ -293,6 +376,9 @@ class VLESSConfig(BaseConfig):
 class TrojanConfig(BaseConfig):
     """
     Trojan config model.
+
+    Represents a Trojan configuration and provides
+    validation, serialization, and URI generation.
     """
 
     def __init__(
@@ -303,6 +389,15 @@ class TrojanConfig(BaseConfig):
         label: Optional[str] = None,
         query: str = "",
     ):
+        """
+        Trojan config initiator.
+        
+        :param password: Config password.
+        :param host: Config host.
+        :param port: Config port.
+        :param label: Config label.
+        :param query: Config query.
+        """
         super().__init__(
             protocol=Protocol.TROJAN,
             label=label,
@@ -319,24 +414,33 @@ class TrojanConfig(BaseConfig):
 
     @property
     def password(self) -> str:
+        """Get the config password."""
         return self._password
 
     @property
     def host(self) -> str:
+        """Get the config host."""
         return self._host
 
     @property
     def port(self) -> int:
+        """Get the config port."""
         return self._port
 
     @property
     def query(self) -> str:
+        """Get the config query."""
         return self._query
 
     def update_password(
         self,
         password: str,
     ):
+        """
+        Update password.
+
+        :param password: New password.
+        """
         if not isinstance(password, str):
             raise TypeError("Password must be str.")
 
@@ -348,6 +452,11 @@ class TrojanConfig(BaseConfig):
         self,
         host: str,
     ):
+        """
+        Update host.
+
+        :param host: New host.
+        """
         _validate_host(host)
 
         self._host = host
@@ -358,6 +467,11 @@ class TrojanConfig(BaseConfig):
         self,
         port: int,
     ):
+        """
+        Update port.
+
+        :param port: New port.
+        """
         _validate_port(port)
 
         self._port = port
@@ -365,10 +479,12 @@ class TrojanConfig(BaseConfig):
         return self
 
     def validate(self) -> None:
+        """Validate Trojan config."""
         _validate_host(self.host)
         _validate_port(self.port)
 
     def to_dict(self) -> dict:
+        """Convert Trojan config to dictionary."""
         return {
             "protocol": "trojan",
             "password": self.password,
@@ -379,6 +495,7 @@ class TrojanConfig(BaseConfig):
         }
 
     def to_uri(self) -> str:
+        """Convert Trojan config to URI."""
         query = (
             f"?{self.query}"
             if self.query else ""
@@ -399,6 +516,9 @@ class TrojanConfig(BaseConfig):
 class ShadowsocksConfig(BaseConfig):
     """
     Shadowsocks config model.
+
+    Represents a Shadowsocks configuration and provides
+    validation, serialization, and URI generation.
     """
 
     def __init__(
@@ -409,6 +529,15 @@ class ShadowsocksConfig(BaseConfig):
         port: int,
         label: Optional[str] = None,
     ):
+        """
+        Shadowsocks config initiator.
+        
+        :param method: Config encryption method.
+        :param password: Config password.
+        :param host: Config host.
+        :param port: Config port.
+        :param label: Config label.
+        """
         super().__init__(
             protocol=Protocol.SHADOWSOCKS,
             label=label,
@@ -425,24 +554,33 @@ class ShadowsocksConfig(BaseConfig):
 
     @property
     def method(self) -> str:
+        """Get the config encryption method."""
         return self._method
 
     @property
     def password(self) -> str:
+        """Get the config password."""
         return self._password
 
     @property
     def host(self) -> str:
+        """Get the config host."""
         return self._host
 
     @property
     def port(self) -> int:
+        """Get the config port."""
         return self._port
 
     def update_method(
         self,
         method: str,
     ):
+        """
+        Update encryption method.
+
+        :param method: New encryption method.
+        """
         if not isinstance(method, str):
             raise TypeError("Method must be str.")
 
@@ -454,6 +592,11 @@ class ShadowsocksConfig(BaseConfig):
         self,
         password: str,
     ):
+        """
+        Update password.
+
+        :param password: New password.
+        """
         if not isinstance(password, str):
             raise TypeError("Password must be str.")
 
@@ -465,6 +608,11 @@ class ShadowsocksConfig(BaseConfig):
         self,
         host: str,
     ):
+        """
+        Update host.
+
+        :param host: New host.
+        """
         _validate_host(host)
 
         self._host = host
@@ -475,6 +623,11 @@ class ShadowsocksConfig(BaseConfig):
         self,
         port: int,
     ):
+        """
+        Update port.
+
+        :param port: New port.
+        """
         _validate_port(port)
 
         self._port = port
@@ -482,10 +635,12 @@ class ShadowsocksConfig(BaseConfig):
         return self
 
     def validate(self) -> None:
+        """Validate Shadowsocks config."""
         _validate_host(self.host)
         _validate_port(self.port)
 
     def to_dict(self) -> dict:
+        """Convert Shadowsocks config to dictionary."""
         return {
             "protocol": "shadowsocks",
             "method": self.method,
@@ -496,6 +651,7 @@ class ShadowsocksConfig(BaseConfig):
         }
 
     def to_uri(self) -> str:
+        """Convert config to URI."""
         userinfo = (
             f"{self.method}:{self.password}"
         )
