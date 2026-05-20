@@ -2,13 +2,14 @@
 """v2kit models."""
 
 import json
+from abc import ABC, abstractmethod
 from typing import Optional
 from .params import Protocol
 from .validators import _validate_uuid, _validate_port, _validate_host, _validate_label
 from .utils import _encode_base64
 
 
-class BaseConfig:
+class BaseConfig(ABC):
     """
     Base class for all V2Ray config models.
 
@@ -60,13 +61,15 @@ class BaseConfig:
     def validate(self) -> None:
         """Validate config fields."""
 
+    @abstractmethod
     def to_uri(self) -> str:
         """Convert config to URI."""
-        raise NotImplementedError
+        pass
 
+    @abstractmethod
     def to_dict(self) -> dict:
         """Convert config to dictionary."""
-        raise NotImplementedError
+        pass
 
 
 class VMESSConfig(BaseConfig):
