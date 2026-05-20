@@ -75,9 +75,6 @@ def encode_subscription(
             item,
             BaseConfig,
         ):
-            if validate:
-                item.validate()
-
             uri_list.append(
                 item.to_uri()
             )
