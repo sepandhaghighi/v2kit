@@ -447,15 +447,17 @@ class TrojanConfig(BaseConfig):
             protocol=Protocol.TROJAN,
             label=label,
         )
-
-        self._password = password
         self._host = None
         self._port = None
+        self._password = None
+        self._query = None
 
-        self._query = query
+
 
         self.update_host(host)
         self.update_port(port)
+        self.update_password(password)
+        self.update_query(query)
 
     @property
     def password(self) -> str:
@@ -486,8 +488,7 @@ class TrojanConfig(BaseConfig):
 
         :param password: New password.
         """
-        if not isinstance(password, str):
-            raise TypeError("Password must be str.")
+        _validate_password(password)
 
         self._password = password
 
@@ -520,6 +521,21 @@ class TrojanConfig(BaseConfig):
         _validate_port(port)
 
         self._port = port
+
+        return self
+    
+    def update_query(
+        self,
+        query: str,
+    ):
+        """
+        Update query.
+
+        :param query: New query.
+        """
+        _validate_query(query)
+
+        self._query = query
 
         return self
 
