@@ -58,9 +58,6 @@ class BaseConfig(ABC):
 
         return self
 
-    def validate(self) -> None:
-        """Validate config fields."""
-
     @abstractmethod
     def to_uri(self) -> str:
         """Convert config to URI."""
@@ -196,12 +193,6 @@ class VMESSConfig(BaseConfig):
         self._port = port
 
         return self
-
-    def validate(self) -> None:
-        """Validate VMESS config."""
-        _validate_uuid(self.uuid)
-        _validate_host(self.host)
-        _validate_port(self.port)
 
     def to_dict(self) -> dict:
         """Convert VMESS config to dictionary."""
@@ -340,12 +331,6 @@ class VLESSConfig(BaseConfig):
 
         return self
 
-    def validate(self) -> None:
-        """Validate VLESS config."""
-        _validate_uuid(self.uuid)
-        _validate_host(self.host)
-        _validate_port(self.port)
-
     def to_dict(self) -> dict:
         """Convert VLESS config to dictionary."""
         return {
@@ -480,11 +465,6 @@ class TrojanConfig(BaseConfig):
         self._port = port
 
         return self
-
-    def validate(self) -> None:
-        """Validate Trojan config."""
-        _validate_host(self.host)
-        _validate_port(self.port)
 
     def to_dict(self) -> dict:
         """Convert Trojan config to dictionary."""
@@ -636,11 +616,6 @@ class ShadowsocksConfig(BaseConfig):
         self._port = port
 
         return self
-
-    def validate(self) -> None:
-        """Validate Shadowsocks config."""
-        _validate_host(self.host)
-        _validate_port(self.port)
 
     def to_dict(self) -> dict:
         """Convert Shadowsocks config to dictionary."""
