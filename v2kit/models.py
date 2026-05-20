@@ -5,7 +5,17 @@ import json
 from abc import ABC, abstractmethod
 from typing import Optional
 from .params import Protocol
-from .validators import _validate_uuid, _validate_port, _validate_host, _validate_label
+from .validators import (
+    _validate_uuid,
+    _validate_port,
+    _validate_host,
+    _validate_label,
+    _validate_password,
+    _validate_method,
+    _validate_network,
+    _validate_tls,
+    _validate_query,
+)
 from .utils import _encode_base64
 
 
@@ -110,14 +120,16 @@ class VMESSConfig(BaseConfig):
         self._port = None
 
         self._aid = aid
-        self._network = network
-        self._tls = tls
+        self._network = None
+        self._tls = None
 
         self._raw_data = raw_data or {}
 
         self.update_uuid(uuid)
         self.update_host(host)
         self.update_port(port)
+        self.update_network(network)
+        self.update_tls(tls)
 
     @property
     def uuid(self) -> str:
@@ -191,6 +203,36 @@ class VMESSConfig(BaseConfig):
         _validate_port(port)
 
         self._port = port
+
+        return self
+    
+    def update_network(
+        self,
+        network: str,
+    ):
+        """
+        Update network.
+
+        :param network: New network.
+        """
+        _validate_network(network)
+
+        self._network = network
+
+        return self
+    
+    def update_tls(
+        self,
+        tls: str,
+    ):
+        """
+        Update TLS.
+
+        :param tls: New TLS value.
+        """
+        _validate_tls(tls)
+
+        self._tls = tls
 
         return self
 
