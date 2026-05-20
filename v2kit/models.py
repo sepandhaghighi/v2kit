@@ -96,7 +96,7 @@ class VMESSConfig(BaseConfig):
         :param port: Config port.
         :param label: Config label.
         :param aid: Config aid.
-        :param netowkr: Config network.
+        :param network: Config network.
         :param tls: Config tls.
         :param raw_data: Config raw data.
         """
