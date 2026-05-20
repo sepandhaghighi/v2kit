@@ -301,12 +301,12 @@ class VLESSConfig(BaseConfig):
         self._uuid = None
         self._host = None
         self._port = None
-
-        self._query = query
+        self._query = None
 
         self.update_uuid(uuid)
         self.update_host(host)
         self.update_port(port)
+        self.update_query(query)
 
     @property
     def uuid(self) -> str:
@@ -370,6 +370,21 @@ class VLESSConfig(BaseConfig):
         _validate_port(port)
 
         self._port = port
+
+        return self
+    
+    def update_query(
+        self,
+        query: str,
+    ):
+        """
+        Update query.
+
+        :param query: New query.
+        """
+        _validate_query(query)
+
+        self._query = query
 
         return self
 
