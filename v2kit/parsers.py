@@ -149,7 +149,7 @@ def _parse_shadowsocks(
             parsed.username
         )
 
-        encryption_method, password = = (
+        encryption_method, password = (
             userinfo.split(
                 ":",
                 1,
