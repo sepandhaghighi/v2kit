@@ -124,7 +124,7 @@ class VMESSConfig(BaseConfig):
         aid: int = 0,
         network: str = "tcp",
         tls: str = "",
-        raw_data: Optional[dict] = None,
+        extra: Optional[dict] = None,
     ):
         """
         VMESS config initiator.
@@ -136,11 +136,12 @@ class VMESSConfig(BaseConfig):
         :param aid: Config aid.
         :param network: Config network.
         :param tls: Config tls.
-        :param raw_data: Config raw data.
+        :param extra: Extra dictionary.
         """
         super().__init__(
             protocol=Protocol.VMESS,
             label=label,
+            extra=extra,
         )
 
         self._uuid = None
@@ -150,8 +151,6 @@ class VMESSConfig(BaseConfig):
         self._aid = aid
         self._network = None
         self._tls = None
-
-        self._raw_data = raw_data or {}
 
         self.update_uuid(uuid)
         self.update_host(host)
@@ -266,10 +265,7 @@ class VMESSConfig(BaseConfig):
 
     def to_dict(self) -> dict:
         """Convert VMESS config to dictionary."""
-        data = (
-            self._raw_data.copy()
-            if self._raw_data else {}
-        )
+        data = self.extra.copy()
 
         data.update({
             "v": "2",
