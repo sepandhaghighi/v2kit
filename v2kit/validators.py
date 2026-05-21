@@ -117,8 +117,4 @@ def _validate_label(label: Optional[str]) -> None:
     if label is None:
         return
 
-    if not isinstance(label, str):
-        raise TypeError("Label must be str.")
-
-    if len(label.strip()) == 0:
-        raise ValueError("Label cannot be empty.")
+    _validate_non_empty_string(label, "Label")
