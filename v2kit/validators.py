@@ -68,11 +68,7 @@ def _validate_password(password: str) -> None:
 
     :param password: Password string.
     """
-    if not isinstance(password, str):
-        raise TypeError("Password must be str.")
-
-    if len(password.strip()) == 0:
-        raise ValueError("Password cannot be empty.")
+    _validate_non_empty_string(password, "Password")
 
 
 def _validate_uuid(value: str) -> None:
