@@ -4,6 +4,7 @@ import json
 import base64
 from typing import Iterable
 from urllib.parse import urlparse
+from .validators import _validate_label
 from .params import DEFAULT_ENCODING
 from .params import Protocol
 
@@ -82,19 +83,6 @@ def _validate_config(uri: str) -> None:
             raise ValueError(
                 "Invalid VMESS config."
             ) from exc
-
-
-def _validate_label(label: str) -> None:
-    """
-    Validate URI label.
-
-    :param label: URI label.
-    """
-    if not isinstance(label, str):
-        raise TypeError("Label must be str.")
-
-    if len(label) == 0:
-        raise ValueError("Label cannot be empty.")
 
 
 def _get_protocol(uri: str) -> Protocol:
