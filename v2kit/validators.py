@@ -3,6 +3,7 @@
 from typing import Optional
 import uuid
 
+
 def _validate_non_empty_string(
     value: str,
     field_name: str,

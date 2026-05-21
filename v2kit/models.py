@@ -57,7 +57,7 @@ class BaseConfig(ABC):
     def label(self) -> Optional[str]:
         """Get the config label."""
         return self._label
-    
+
     @property
     def extra(self) -> dict:
         """Get extra data."""
@@ -77,7 +77,7 @@ class BaseConfig(ABC):
         self._label = label
 
         return self
-    
+
     def update_extra(
         self,
         extra: dict,
