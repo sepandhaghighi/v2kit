@@ -315,7 +315,7 @@ class VLESSConfig(BaseConfig):
         :param host: Config host.
         :param port: Config port.
         :param label: Config label.
-        :param query: Config query.
+        :param extra: Extra dictionary.
         """
         super().__init__(
             protocol=Protocol.VLESS,
@@ -444,6 +444,7 @@ class TrojanConfig(BaseConfig):
         :param host: Config host.
         :param port: Config port.
         :param label: Config label.
+        :param extra: Extra dictionary.
         """
         super().__init__(
             protocol=Protocol.TROJAN,
@@ -573,6 +574,7 @@ class ShadowsocksConfig(BaseConfig):
         :param host: Config host.
         :param port: Config port.
         :param label: Config label.
+        :param extra: Extra dictionary.
         """
         super().__init__(
             protocol=Protocol.SHADOWSOCKS,
