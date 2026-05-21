@@ -3,6 +3,26 @@
 from typing import Optional
 import uuid
 
+def _validate_non_empty_string(
+    value: str,
+    field_name: str,
+) -> None:
+    """
+    Validate non-empty string fields.
+
+    :param value: Input value.
+    :param field_name: Field display name.
+    """
+    if not isinstance(value, str):
+        raise TypeError(
+            f"{field_name} must be str."
+        )
+
+    if len(value.strip()) == 0:
+        raise ValueError(
+            f"{field_name} cannot be empty."
+        )
+
 
 def _validate_query(query: str) -> None:
     """
