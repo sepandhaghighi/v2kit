@@ -53,17 +53,13 @@ def _validate_network(network: str) -> None:
     _validate_non_empty_string(network, "Network")
 
 
-def _validate_method(method: str) -> None:
+def _validate_encryption_method(encryption_method: str) -> None:
     """
     Validate Shadowsocks method.
 
-    :param method: Encryption method.
+    :param encryption_method: Encryption method.
     """
-    if not isinstance(method, str):
-        raise TypeError("Method must be str.")
-
-    if len(method.strip()) == 0:
-        raise ValueError("Method cannot be empty.")
+    _validate_non_empty_string(encryption_method, "Encryption method")
 
 
 def _validate_password(password: str) -> None:
