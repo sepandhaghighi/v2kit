@@ -565,6 +565,7 @@ class ShadowsocksConfig(BaseConfig):
         host: str,
         port: int,
         label: Optional[str] = None,
+        extra: Optional[dict] = None,
     ):
         """
         Shadowsocks config initiator.
@@ -578,6 +579,7 @@ class ShadowsocksConfig(BaseConfig):
         super().__init__(
             protocol=Protocol.SHADOWSOCKS,
             label=label,
+            extra=extra
         )
 
         self._method = None
