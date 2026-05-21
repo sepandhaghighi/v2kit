@@ -118,3 +118,19 @@ def _validate_label(label: Optional[str]) -> None:
         return
 
     _validate_non_empty_string(label, "Label")
+
+
+def _validate_dict(
+    value: dict,
+    field_name: str,
+) -> None:
+    """
+    Validate dictionary fields.
+
+    :param value: Input dictionary.
+    :param field_name: Field display name.
+    """
+    if not isinstance(value, dict):
+        raise TypeError(
+            f"{field_name} must be dict."
+        )
