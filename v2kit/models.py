@@ -436,7 +436,7 @@ class TrojanConfig(BaseConfig):
         host: str,
         port: int,
         label: Optional[str] = None,
-        query: str = "",
+        extra: Optional[dict] = None,
     ):
         """
         Trojan config initiator.
@@ -445,16 +445,15 @@ class TrojanConfig(BaseConfig):
         :param host: Config host.
         :param port: Config port.
         :param label: Config label.
-        :param query: Config query.
         """
         super().__init__(
             protocol=Protocol.TROJAN,
             label=label,
+            extra=extra,
         )
         self._host = None
         self._port = None
         self._password = None
-        self._query = None
 
         self.update_host(host)
         self.update_port(port)
@@ -475,11 +474,6 @@ class TrojanConfig(BaseConfig):
     def port(self) -> int:
         """Get the config port."""
         return self._port
-
-    @property
-    def query(self) -> str:
-        """Get the config query."""
-        return self._query
 
     def update_password(
         self,
@@ -526,21 +520,6 @@ class TrojanConfig(BaseConfig):
 
         return self
 
-    def update_query(
-        self,
-        query: str,
-    ):
-        """
-        Update query.
-
-        :param query: New query.
-        """
-        _validate_query(query)
-
-        self._query = query
-
-        return self
-
     def to_dict(self) -> dict:
         """Convert Trojan config to dictionary."""
         return {
@@ -548,15 +527,15 @@ class TrojanConfig(BaseConfig):
             "password": self.password,
             "host": self.host,
             "port": self.port,
-            "query": self.query,
+            "extra": self.extra,
             "label": self.label,
         }
 
     def to_uri(self) -> str:
         """Convert Trojan config to URI."""
         query = (
-            f"?{self.query}"
-            if self.query else ""
+            f"?{urlencode(self.extra)}"
+            if self.extra else ""
         )
 
         label = (
