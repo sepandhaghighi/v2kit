@@ -3,6 +3,66 @@
 from typing import Optional
 import uuid
 
+
+def _validate_query(query: str) -> None:
+    """
+    Validate query string.
+
+    :param query: URI query string.
+    """
+    if not isinstance(query, str):
+        raise TypeError("Query must be str.")
+
+
+def _validate_tls(tls: str) -> None:
+    """
+    Validate TLS mode.
+
+    :param tls: TLS value.
+    """
+    if not isinstance(tls, str):
+        raise TypeError("TLS must be str.")
+
+
+def _validate_network(network: str) -> None:
+    """
+    Validate transport network.
+
+    :param network: Network type.
+    """
+    if not isinstance(network, str):
+        raise TypeError("Network must be str.")
+
+    if len(network.strip()) == 0:
+        raise ValueError("Network cannot be empty.")
+
+
+def _validate_method(method: str) -> None:
+    """
+    Validate Shadowsocks method.
+
+    :param method: Encryption method.
+    """
+    if not isinstance(method, str):
+        raise TypeError("Method must be str.")
+
+    if len(method.strip()) == 0:
+        raise ValueError("Method cannot be empty.")
+
+
+def _validate_password(password: str) -> None:
+    """
+    Validate password.
+
+    :param password: Password string.
+    """
+    if not isinstance(password, str):
+        raise TypeError("Password must be str.")
+
+    if len(password.strip()) == 0:
+        raise ValueError("Password cannot be empty.")
+
+
 def _validate_uuid(value: str) -> None:
     """
     Validate UUID.

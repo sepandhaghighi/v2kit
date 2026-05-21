@@ -2,13 +2,24 @@
 """v2kit models."""
 
 import json
+from abc import ABC, abstractmethod
 from typing import Optional
 from .params import Protocol
-from .validators import _validate_uuid, _validate_port, _validate_host, _validate_label
+from .validators import (
+    _validate_uuid,
+    _validate_port,
+    _validate_host,
+    _validate_label,
+    _validate_password,
+    _validate_method,
+    _validate_network,
+    _validate_tls,
+    _validate_query,
+)
 from .utils import _encode_base64
 
 
-class BaseConfig:
+class BaseConfig(ABC):
     """
     Base class for all V2Ray config models.
 
@@ -23,7 +34,7 @@ class BaseConfig:
     ):
         """
         Config initiator.
-        
+
         :param protocol: Config protocol.
         :param label: Config label.
         """
@@ -57,16 +68,15 @@ class BaseConfig:
 
         return self
 
-    def validate(self) -> None:
-        """Validate config fields."""
-
+    @abstractmethod
     def to_uri(self) -> str:
         """Convert config to URI."""
-        raise NotImplementedError
+        pass
 
+    @abstractmethod
     def to_dict(self) -> dict:
         """Convert config to dictionary."""
-        raise NotImplementedError
+        pass
 
 
 class VMESSConfig(BaseConfig):
@@ -90,7 +100,7 @@ class VMESSConfig(BaseConfig):
     ):
         """
         VMESS config initiator.
-        
+
         :param uuid: Config uuid.
         :param host: Config host.
         :param port: Config port.
@@ -110,14 +120,16 @@ class VMESSConfig(BaseConfig):
         self._port = None
 
         self._aid = aid
-        self._network = network
-        self._tls = tls
+        self._network = None
+        self._tls = None
 
         self._raw_data = raw_data or {}
 
         self.update_uuid(uuid)
         self.update_host(host)
         self.update_port(port)
+        self.update_network(network)
+        self.update_tls(tls)
 
     @property
     def uuid(self) -> str:
@@ -194,11 +206,35 @@ class VMESSConfig(BaseConfig):
 
         return self
 
-    def validate(self) -> None:
-        """Validate VMESS config."""
-        _validate_uuid(self.uuid)
-        _validate_host(self.host)
-        _validate_port(self.port)
+    def update_network(
+        self,
+        network: str,
+    ):
+        """
+        Update network.
+
+        :param network: New network.
+        """
+        _validate_network(network)
+
+        self._network = network
+
+        return self
+
+    def update_tls(
+        self,
+        tls: str,
+    ):
+        """
+        Update TLS.
+
+        :param tls: New TLS value.
+        """
+        _validate_tls(tls)
+
+        self._tls = tls
+
+        return self
 
     def to_dict(self) -> dict:
         """Convert VMESS config to dictionary."""
@@ -250,7 +286,7 @@ class VLESSConfig(BaseConfig):
     ):
         """
         VLESS config initiator.
-        
+
         :param uuid: Config uuid.
         :param host: Config host.
         :param port: Config port.
@@ -265,12 +301,12 @@ class VLESSConfig(BaseConfig):
         self._uuid = None
         self._host = None
         self._port = None
-
-        self._query = query
+        self._query = None
 
         self.update_uuid(uuid)
         self.update_host(host)
         self.update_port(port)
+        self.update_query(query)
 
     @property
     def uuid(self) -> str:
@@ -337,11 +373,20 @@ class VLESSConfig(BaseConfig):
 
         return self
 
-    def validate(self) -> None:
-        """Validate VLESS config."""
-        _validate_uuid(self.uuid)
-        _validate_host(self.host)
-        _validate_port(self.port)
+    def update_query(
+        self,
+        query: str,
+    ):
+        """
+        Update query.
+
+        :param query: New query.
+        """
+        _validate_query(query)
+
+        self._query = query
+
+        return self
 
     def to_dict(self) -> dict:
         """Convert VLESS config to dictionary."""
@@ -391,7 +436,7 @@ class TrojanConfig(BaseConfig):
     ):
         """
         Trojan config initiator.
-        
+
         :param password: Config password.
         :param host: Config host.
         :param port: Config port.
@@ -402,15 +447,15 @@ class TrojanConfig(BaseConfig):
             protocol=Protocol.TROJAN,
             label=label,
         )
-
-        self._password = password
         self._host = None
         self._port = None
-
-        self._query = query
+        self._password = None
+        self._query = None
 
         self.update_host(host)
         self.update_port(port)
+        self.update_password(password)
+        self.update_query(query)
 
     @property
     def password(self) -> str:
@@ -441,8 +486,7 @@ class TrojanConfig(BaseConfig):
 
         :param password: New password.
         """
-        if not isinstance(password, str):
-            raise TypeError("Password must be str.")
+        _validate_password(password)
 
         self._password = password
 
@@ -478,10 +522,20 @@ class TrojanConfig(BaseConfig):
 
         return self
 
-    def validate(self) -> None:
-        """Validate Trojan config."""
-        _validate_host(self.host)
-        _validate_port(self.port)
+    def update_query(
+        self,
+        query: str,
+    ):
+        """
+        Update query.
+
+        :param query: New query.
+        """
+        _validate_query(query)
+
+        self._query = query
+
+        return self
 
     def to_dict(self) -> dict:
         """Convert Trojan config to dictionary."""
@@ -531,7 +585,7 @@ class ShadowsocksConfig(BaseConfig):
     ):
         """
         Shadowsocks config initiator.
-        
+
         :param method: Config encryption method.
         :param password: Config password.
         :param host: Config host.
@@ -543,12 +597,14 @@ class ShadowsocksConfig(BaseConfig):
             label=label,
         )
 
-        self._method = method
-        self._password = password
+        self._method = None
+        self._password = None
 
         self._host = None
         self._port = None
 
+        self.update_method(method)
+        self.update_password(password)
         self.update_host(host)
         self.update_port(port)
 
@@ -581,8 +637,7 @@ class ShadowsocksConfig(BaseConfig):
 
         :param method: New encryption method.
         """
-        if not isinstance(method, str):
-            raise TypeError("Method must be str.")
+        _validate_method(method)
 
         self._method = method
 
@@ -597,8 +652,7 @@ class ShadowsocksConfig(BaseConfig):
 
         :param password: New password.
         """
-        if not isinstance(password, str):
-            raise TypeError("Password must be str.")
+        _validate_password(password)
 
         self._password = password
 
@@ -633,11 +687,6 @@ class ShadowsocksConfig(BaseConfig):
         self._port = port
 
         return self
-
-    def validate(self) -> None:
-        """Validate Shadowsocks config."""
-        _validate_host(self.host)
-        _validate_port(self.port)
 
     def to_dict(self) -> dict:
         """Convert Shadowsocks config to dictionary."""
