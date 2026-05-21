@@ -11,7 +11,7 @@ from .validators import (
     _validate_host,
     _validate_label,
     _validate_password,
-    _validate_method,
+    _validate_encryption_method,
     _validate_network,
     _validate_tls,
     _validate_query,
