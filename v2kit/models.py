@@ -15,6 +15,7 @@ from .validators import (
     _validate_network,
     _validate_tls,
     _validate_query,
+    _validate_dict,
 )
 from .utils import _encode_base64
 
@@ -31,16 +32,20 @@ class BaseConfig(ABC):
         self,
         protocol: Protocol,
         label: Optional[str] = None,
+        extra: Optional[dict] = None,
     ):
         """
         Config initiator.
 
         :param protocol: Config protocol.
         :param label: Config label.
+        :param extra: Extra dictionary.
         """
         self._protocol = protocol
         self._label = None
+        self._extra = {}
 
+        self.update_extra(extra or {})
         self.update_label(label)
 
     @property
@@ -52,6 +57,11 @@ class BaseConfig(ABC):
     def label(self) -> Optional[str]:
         """Get the config label."""
         return self._label
+    
+    @property
+    def extra(self) -> dict:
+        """Get extra data."""
+        return self._extra
 
     def update_label(
         self,
@@ -65,6 +75,24 @@ class BaseConfig(ABC):
         _validate_label(label)
 
         self._label = label
+
+        return self
+    
+    def update_extra(
+        self,
+        extra: dict,
+    ):
+        """
+        Update extra data.
+
+        :param extra: Extra dictionary.
+        """
+        _validate_dict(
+            extra,
+            "Extra",
+        )
+
+        self._extra = extra
 
         return self
 
