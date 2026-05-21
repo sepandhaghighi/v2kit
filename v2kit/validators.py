@@ -50,11 +50,7 @@ def _validate_network(network: str) -> None:
 
     :param network: Network type.
     """
-    if not isinstance(network, str):
-        raise TypeError("Network must be str.")
-
-    if len(network.strip()) == 0:
-        raise ValueError("Network cannot be empty.")
+    _validate_non_empty_string(network, "Network")
 
 
 def _validate_method(method: str) -> None:
