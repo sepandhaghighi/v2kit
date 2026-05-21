@@ -105,11 +105,7 @@ def _validate_host(host: str) -> None:
 
     :param host: Host address.
     """
-    if not isinstance(host, str):
-        raise TypeError("Host must be str.")
-
-    if len(host.strip()) == 0:
-        raise ValueError("Host cannot be empty.")
+    _validate_non_empty_string(host, "Host")
 
 
 def _validate_label(label: Optional[str]) -> None:
