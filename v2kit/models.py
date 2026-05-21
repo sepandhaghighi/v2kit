@@ -3,6 +3,7 @@
 
 import json
 from abc import ABC, abstractmethod
+from urllib.parse import urlencode
 from typing import Optional
 from .params import Protocol
 from .validators import (
@@ -306,7 +307,7 @@ class VLESSConfig(BaseConfig):
         host: str,
         port: int,
         label: Optional[str] = None,
-        query: str = "",
+        extra: Optional[dict] = None,
     ):
         """
         VLESS config initiator.
@@ -320,17 +321,16 @@ class VLESSConfig(BaseConfig):
         super().__init__(
             protocol=Protocol.VLESS,
             label=label,
+            extra=extra,
         )
 
         self._uuid = None
         self._host = None
         self._port = None
-        self._query = None
 
         self.update_uuid(uuid)
         self.update_host(host)
         self.update_port(port)
-        self.update_query(query)
 
     @property
     def uuid(self) -> str:
@@ -346,11 +346,6 @@ class VLESSConfig(BaseConfig):
     def port(self) -> int:
         """Get the config port."""
         return self._port
-
-    @property
-    def query(self) -> str:
-        """Get the config query."""
-        return self._query
 
     def update_uuid(
         self,
@@ -397,21 +392,6 @@ class VLESSConfig(BaseConfig):
 
         return self
 
-    def update_query(
-        self,
-        query: str,
-    ):
-        """
-        Update query.
-
-        :param query: New query.
-        """
-        _validate_query(query)
-
-        self._query = query
-
-        return self
-
     def to_dict(self) -> dict:
         """Convert VLESS config to dictionary."""
         return {
@@ -419,15 +399,15 @@ class VLESSConfig(BaseConfig):
             "uuid": self.uuid,
             "host": self.host,
             "port": self.port,
-            "query": self.query,
+            "extra": self.extra,
             "label": self.label,
         }
 
     def to_uri(self) -> str:
         """Convert VLESS config to URI."""
         query = (
-            f"?{self.query}"
-            if self.query else ""
+            f"?{urlencode(self.extra)}"
+            if self.extra else ""
         )
 
         label = (
