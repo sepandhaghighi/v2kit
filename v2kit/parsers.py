@@ -3,7 +3,7 @@
 
 from typing import Union
 import json
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qsl
 from .params import Protocol
 from .models import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig
 from .utils import _decode_base64
@@ -98,7 +98,7 @@ def _parse_vmess(
             "tls",
             "",
         ),
-        raw_data=data,
+        extra=data,
     )
 
 
@@ -115,7 +115,7 @@ def _parse_vless(
         host=parsed.hostname or "",
         port=parsed.port or 0,
         label=parsed.fragment or None,
-        query=parsed.query,
+        extra=dict(parse_qsl(parsed.query)),
     )
 
 
@@ -132,7 +132,7 @@ def _parse_trojan(
         host=parsed.hostname or "",
         port=parsed.port or 0,
         label=parsed.fragment or None,
-        query=parsed.query,
+        extra=dict(parse_qsl(parsed.query)),
     )
 
 
@@ -149,7 +149,7 @@ def _parse_shadowsocks(
             parsed.username
         )
 
-        method, password = (
+        encryption_method, password = = (
             userinfo.split(
                 ":",
                 1,
@@ -160,9 +160,10 @@ def _parse_shadowsocks(
         raise ValueError("Invalid Shadowsocks URI.") from exc
 
     return ShadowsocksConfig(
-        method=method,
+        encryption_method=encryption_method,
         password=password,
         host=parsed.hostname or "",
         port=parsed.port or 0,
         label=parsed.fragment or None,
+        extra=dict(parse_qsl(parsed.query)),
     )
