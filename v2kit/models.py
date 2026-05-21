@@ -458,7 +458,6 @@ class TrojanConfig(BaseConfig):
         self.update_host(host)
         self.update_port(port)
         self.update_password(password)
-        self.update_query(query)
 
     @property
     def password(self) -> str:
