@@ -680,6 +680,7 @@ class ShadowsocksConfig(BaseConfig):
             "host": self.host,
             "port": self.port,
             "label": self.label,
+            "extra": self.extra,
         }
 
     def to_uri(self) -> str:
