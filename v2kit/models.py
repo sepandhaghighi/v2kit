@@ -15,7 +15,6 @@ from .validators import (
     _validate_encryption_method,
     _validate_network,
     _validate_tls,
-    _validate_query,
     _validate_dict,
 )
 from .utils import _encode_base64
