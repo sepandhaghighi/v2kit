@@ -263,7 +263,7 @@ class VMESSConfig(BaseConfig):
         self._tls = tls
 
         return self
-    
+
     def update_aid(
         self,
         aid: int,
