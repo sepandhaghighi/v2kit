@@ -148,7 +148,7 @@ class VMESSConfig(BaseConfig):
         self._host = None
         self._port = None
 
-        self._aid = aid
+        self._aid = None
         self._network = None
         self._tls = None
 
@@ -157,6 +157,7 @@ class VMESSConfig(BaseConfig):
         self.update_port(port)
         self.update_network(network)
         self.update_tls(tls)
+        self.update_aid(aid)
 
     @property
     def uuid(self) -> str:
@@ -260,6 +261,21 @@ class VMESSConfig(BaseConfig):
         _validate_tls(tls)
 
         self._tls = tls
+
+        return self
+    
+    def update_aid(
+        self,
+        aid: int,
+    ):
+        """
+        Update alterId.
+
+        :param aid: New alterId.
+        """
+        _validate_aid(aid)
+
+        self._aid = aid
 
         return self
 
