@@ -3,6 +3,7 @@
 
 import json
 from abc import ABC, abstractmethod
+from urllib.parse import urlencode
 from typing import Optional
 from .params import Protocol
 from .validators import (
@@ -11,10 +12,10 @@ from .validators import (
     _validate_host,
     _validate_label,
     _validate_password,
-    _validate_method,
+    _validate_encryption_method,
     _validate_network,
     _validate_tls,
-    _validate_query,
+    _validate_dict,
 )
 from .utils import _encode_base64
 
@@ -31,16 +32,20 @@ class BaseConfig(ABC):
         self,
         protocol: Protocol,
         label: Optional[str] = None,
+        extra: Optional[dict] = None,
     ):
         """
         Config initiator.
 
         :param protocol: Config protocol.
         :param label: Config label.
+        :param extra: Extra dictionary.
         """
         self._protocol = protocol
         self._label = None
+        self._extra = {}
 
+        self.update_extra(extra or {})
         self.update_label(label)
 
     @property
@@ -52,6 +57,11 @@ class BaseConfig(ABC):
     def label(self) -> Optional[str]:
         """Get the config label."""
         return self._label
+
+    @property
+    def extra(self) -> dict:
+        """Get extra data."""
+        return self._extra
 
     def update_label(
         self,
@@ -65,6 +75,24 @@ class BaseConfig(ABC):
         _validate_label(label)
 
         self._label = label
+
+        return self
+
+    def update_extra(
+        self,
+        extra: dict,
+    ):
+        """
+        Update extra data.
+
+        :param extra: Extra dictionary.
+        """
+        _validate_dict(
+            extra,
+            "Extra",
+        )
+
+        self._extra = extra
 
         return self
 
@@ -96,7 +124,7 @@ class VMESSConfig(BaseConfig):
         aid: int = 0,
         network: str = "tcp",
         tls: str = "",
-        raw_data: Optional[dict] = None,
+        extra: Optional[dict] = None,
     ):
         """
         VMESS config initiator.
@@ -108,11 +136,12 @@ class VMESSConfig(BaseConfig):
         :param aid: Config aid.
         :param network: Config network.
         :param tls: Config tls.
-        :param raw_data: Config raw data.
+        :param extra: Extra dictionary.
         """
         super().__init__(
             protocol=Protocol.VMESS,
             label=label,
+            extra=extra,
         )
 
         self._uuid = None
@@ -122,8 +151,6 @@ class VMESSConfig(BaseConfig):
         self._aid = aid
         self._network = None
         self._tls = None
-
-        self._raw_data = raw_data or {}
 
         self.update_uuid(uuid)
         self.update_host(host)
@@ -238,10 +265,7 @@ class VMESSConfig(BaseConfig):
 
     def to_dict(self) -> dict:
         """Convert VMESS config to dictionary."""
-        data = (
-            self._raw_data.copy()
-            if self._raw_data else {}
-        )
+        data = self.extra.copy()
 
         data.update({
             "v": "2",
@@ -282,7 +306,7 @@ class VLESSConfig(BaseConfig):
         host: str,
         port: int,
         label: Optional[str] = None,
-        query: str = "",
+        extra: Optional[dict] = None,
     ):
         """
         VLESS config initiator.
@@ -291,22 +315,21 @@ class VLESSConfig(BaseConfig):
         :param host: Config host.
         :param port: Config port.
         :param label: Config label.
-        :param query: Config query.
+        :param extra: Extra dictionary.
         """
         super().__init__(
             protocol=Protocol.VLESS,
             label=label,
+            extra=extra,
         )
 
         self._uuid = None
         self._host = None
         self._port = None
-        self._query = None
 
         self.update_uuid(uuid)
         self.update_host(host)
         self.update_port(port)
-        self.update_query(query)
 
     @property
     def uuid(self) -> str:
@@ -322,11 +345,6 @@ class VLESSConfig(BaseConfig):
     def port(self) -> int:
         """Get the config port."""
         return self._port
-
-    @property
-    def query(self) -> str:
-        """Get the config query."""
-        return self._query
 
     def update_uuid(
         self,
@@ -373,21 +391,6 @@ class VLESSConfig(BaseConfig):
 
         return self
 
-    def update_query(
-        self,
-        query: str,
-    ):
-        """
-        Update query.
-
-        :param query: New query.
-        """
-        _validate_query(query)
-
-        self._query = query
-
-        return self
-
     def to_dict(self) -> dict:
         """Convert VLESS config to dictionary."""
         return {
@@ -395,15 +398,15 @@ class VLESSConfig(BaseConfig):
             "uuid": self.uuid,
             "host": self.host,
             "port": self.port,
-            "query": self.query,
+            "extra": self.extra,
             "label": self.label,
         }
 
     def to_uri(self) -> str:
         """Convert VLESS config to URI."""
         query = (
-            f"?{self.query}"
-            if self.query else ""
+            f"?{urlencode(self.extra)}"
+            if self.extra else ""
         )
 
         label = (
@@ -432,7 +435,7 @@ class TrojanConfig(BaseConfig):
         host: str,
         port: int,
         label: Optional[str] = None,
-        query: str = "",
+        extra: Optional[dict] = None,
     ):
         """
         Trojan config initiator.
@@ -441,21 +444,20 @@ class TrojanConfig(BaseConfig):
         :param host: Config host.
         :param port: Config port.
         :param label: Config label.
-        :param query: Config query.
+        :param extra: Extra dictionary.
         """
         super().__init__(
             protocol=Protocol.TROJAN,
             label=label,
+            extra=extra,
         )
         self._host = None
         self._port = None
         self._password = None
-        self._query = None
 
         self.update_host(host)
         self.update_port(port)
         self.update_password(password)
-        self.update_query(query)
 
     @property
     def password(self) -> str:
@@ -471,11 +473,6 @@ class TrojanConfig(BaseConfig):
     def port(self) -> int:
         """Get the config port."""
         return self._port
-
-    @property
-    def query(self) -> str:
-        """Get the config query."""
-        return self._query
 
     def update_password(
         self,
@@ -522,21 +519,6 @@ class TrojanConfig(BaseConfig):
 
         return self
 
-    def update_query(
-        self,
-        query: str,
-    ):
-        """
-        Update query.
-
-        :param query: New query.
-        """
-        _validate_query(query)
-
-        self._query = query
-
-        return self
-
     def to_dict(self) -> dict:
         """Convert Trojan config to dictionary."""
         return {
@@ -544,15 +526,15 @@ class TrojanConfig(BaseConfig):
             "password": self.password,
             "host": self.host,
             "port": self.port,
-            "query": self.query,
+            "extra": self.extra,
             "label": self.label,
         }
 
     def to_uri(self) -> str:
         """Convert Trojan config to URI."""
         query = (
-            f"?{self.query}"
-            if self.query else ""
+            f"?{urlencode(self.extra)}"
+            if self.extra else ""
         )
 
         label = (
@@ -577,41 +559,44 @@ class ShadowsocksConfig(BaseConfig):
 
     def __init__(
         self,
-        method: str,
+        encryption_method: str,
         password: str,
         host: str,
         port: int,
         label: Optional[str] = None,
+        extra: Optional[dict] = None,
     ):
         """
         Shadowsocks config initiator.
 
-        :param method: Config encryption method.
+        :param encryption_method: Config encryption method.
         :param password: Config password.
         :param host: Config host.
         :param port: Config port.
         :param label: Config label.
+        :param extra: Extra dictionary.
         """
         super().__init__(
             protocol=Protocol.SHADOWSOCKS,
             label=label,
+            extra=extra
         )
 
-        self._method = None
+        self._encryption_method = None
         self._password = None
 
         self._host = None
         self._port = None
 
-        self.update_method(method)
+        self.update_encryption_method(encryption_method)
         self.update_password(password)
         self.update_host(host)
         self.update_port(port)
 
     @property
-    def method(self) -> str:
+    def encryption_method(self) -> str:
         """Get the config encryption method."""
-        return self._method
+        return self._encryption_method
 
     @property
     def password(self) -> str:
@@ -628,18 +613,18 @@ class ShadowsocksConfig(BaseConfig):
         """Get the config port."""
         return self._port
 
-    def update_method(
+    def update_encryption_method(
         self,
-        method: str,
+        encryption_method: str,
     ):
         """
         Update encryption method.
 
-        :param method: New encryption method.
+        :param encryption_method: New encryption method.
         """
-        _validate_method(method)
+        _validate_encryption_method(encryption_method)
 
-        self._method = method
+        self._encryption_method = encryption_method
 
         return self
 
@@ -692,17 +677,18 @@ class ShadowsocksConfig(BaseConfig):
         """Convert Shadowsocks config to dictionary."""
         return {
             "protocol": "shadowsocks",
-            "method": self.method,
+            "encryption_method": self.encryption_method,
             "password": self.password,
             "host": self.host,
             "port": self.port,
             "label": self.label,
+            "extra": self.extra,
         }
 
     def to_uri(self) -> str:
         """Convert config to URI."""
         userinfo = (
-            f"{self.method}:{self.password}"
+            f"{self.encryption_method}:{self.password}"
         )
 
         encoded = _encode_base64(

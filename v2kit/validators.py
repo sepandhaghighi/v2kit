@@ -4,6 +4,27 @@ from typing import Optional
 import uuid
 
 
+def _validate_non_empty_string(
+    value: str,
+    field_name: str,
+) -> None:
+    """
+    Validate non-empty string fields.
+
+    :param value: Input value.
+    :param field_name: Field display name.
+    """
+    if not isinstance(value, str):
+        raise TypeError(
+            f"{field_name} must be str."
+        )
+
+    if len(value.strip()) == 0:
+        raise ValueError(
+            f"{field_name} cannot be empty."
+        )
+
+
 def _validate_query(query: str) -> None:
     """
     Validate query string.
@@ -30,24 +51,16 @@ def _validate_network(network: str) -> None:
 
     :param network: Network type.
     """
-    if not isinstance(network, str):
-        raise TypeError("Network must be str.")
-
-    if len(network.strip()) == 0:
-        raise ValueError("Network cannot be empty.")
+    _validate_non_empty_string(network, "Network")
 
 
-def _validate_method(method: str) -> None:
+def _validate_encryption_method(encryption_method: str) -> None:
     """
     Validate Shadowsocks method.
 
-    :param method: Encryption method.
+    :param encryption_method: Encryption method.
     """
-    if not isinstance(method, str):
-        raise TypeError("Method must be str.")
-
-    if len(method.strip()) == 0:
-        raise ValueError("Method cannot be empty.")
+    _validate_non_empty_string(encryption_method, "Encryption method")
 
 
 def _validate_password(password: str) -> None:
@@ -56,11 +69,7 @@ def _validate_password(password: str) -> None:
 
     :param password: Password string.
     """
-    if not isinstance(password, str):
-        raise TypeError("Password must be str.")
-
-    if len(password.strip()) == 0:
-        raise ValueError("Password cannot be empty.")
+    _validate_non_empty_string(password, "Password")
 
 
 def _validate_uuid(value: str) -> None:
@@ -97,11 +106,7 @@ def _validate_host(host: str) -> None:
 
     :param host: Host address.
     """
-    if not isinstance(host, str):
-        raise TypeError("Host must be str.")
-
-    if len(host.strip()) == 0:
-        raise ValueError("Host cannot be empty.")
+    _validate_non_empty_string(host, "Host")
 
 
 def _validate_label(label: Optional[str]) -> None:
@@ -113,8 +118,20 @@ def _validate_label(label: Optional[str]) -> None:
     if label is None:
         return
 
-    if not isinstance(label, str):
-        raise TypeError("Label must be str.")
+    _validate_non_empty_string(label, "Label")
 
-    if len(label.strip()) == 0:
-        raise ValueError("Label cannot be empty.")
+
+def _validate_dict(
+    value: dict,
+    field_name: str,
+) -> None:
+    """
+    Validate dictionary fields.
+
+    :param value: Input dictionary.
+    :param field_name: Field display name.
+    """
+    if not isinstance(value, dict):
+        raise TypeError(
+            f"{field_name} must be dict."
+        )
