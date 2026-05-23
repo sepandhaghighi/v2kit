@@ -106,7 +106,7 @@ class BaseConfig(ABC):
     def to_dict(self) -> dict:
         """Convert config to dictionary."""
         pass
-    
+
     def __repr__(self) -> str:
         """Return string representation of BaseConfig."""
         return (
@@ -114,7 +114,7 @@ class BaseConfig(ABC):
             f"protocol={self.protocol!r}, "
             f"label={self.label!r})"
         )
-    
+
     def __eq__(self, other) -> bool:
         """Check configs equality."""
     if not isinstance(other, BaseConfig):

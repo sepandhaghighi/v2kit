@@ -27,4 +27,3 @@ INVALID_URI_FORMAT_MESSAGE = "Invalid URI format."
 INVALID_VMESS_URI_MESSAGE = "Invalid VMESS URI."
 INVALID_SHADOWSOCKS_URI_MESSAGE = "Invalid Shadowsocks URI."
 UNSUPPORTED_PROTOCOL_MESSAGE = "Unsupported protocol: {protocol}"
-
