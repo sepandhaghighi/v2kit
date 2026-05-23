@@ -117,9 +117,9 @@ class BaseConfig(ABC):
 
     def __eq__(self, other) -> bool:
         """Check configs equality."""
-    if not isinstance(other, BaseConfig):
-        return False
-    return self.to_dict() == other.to_dict()
+        if not isinstance(other, BaseConfig):
+            return False
+        return self.to_dict() == other.to_dict()
 
 
 class VMESSConfig(BaseConfig):
