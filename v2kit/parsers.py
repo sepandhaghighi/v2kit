@@ -65,6 +65,15 @@ def _parse_vmess(
 
     :param uri: VMESS URI.
     """
+    KNOWN_VMESS_FIELDS = {
+        "ps",
+        "add",
+        "port",
+        "id",
+        "aid",
+        "net",
+        "tls",
+    }
     try:
         _, encoded = uri.split(
             "://",
@@ -80,6 +89,11 @@ def _parse_vmess(
     except Exception as exc:
         raise ValueError("Invalid VMESS URI.") from exc
 
+    extra = {
+        key: value
+        for key, value in data.items()
+        if key not in KNOWN_VMESS_FIELDS
+    }
     return VMESSConfig(
         uuid=data.get("id", ""),
         host=data.get("add", ""),
@@ -98,7 +112,7 @@ def _parse_vmess(
             "tls",
             "",
         ),
-        extra=data,
+        extra=extra,
     )
 
 

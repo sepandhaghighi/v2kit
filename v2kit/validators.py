@@ -135,3 +135,20 @@ def _validate_dict(
         raise TypeError(
             f"{field_name} must be dict."
         )
+
+
+def _validate_aid(aid: int) -> None:
+    """
+    Validate VMESS alterId.
+
+    :param aid: AlterId value.
+    """
+    if not isinstance(aid, int):
+        raise TypeError(
+            "AlterId must be int."
+        )
+
+    if aid < 0:
+        raise ValueError(
+            "AlterId cannot be negative."
+        )
