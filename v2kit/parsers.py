@@ -5,6 +5,9 @@ from typing import Union
 import json
 from urllib.parse import urlparse, parse_qsl
 from .params import Protocol
+from .params import INVALID_URI_FORMAT_MESSAGE, UNSUPPORTED_PROTOCOL_MESSAGE
+from .params import INVALID_VMESS_URI_MESSAGE, INVALID_SHADOWSOCKS_URI_MESSAGE
+from .validators import _validate_non_empty_string
 from .models import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig
 from .utils import _decode_base64
 
@@ -15,14 +18,10 @@ def parse(uri: str) -> Union[VMESSConfig, VLESSConfig, TrojanConfig, Shadowsocks
 
     :param uri: V2Ray URI.
     """
-    if not isinstance(uri, str):
-        raise TypeError("URI must be str.")
-
-    if len(uri.strip()) == 0:
-        raise ValueError("URI cannot be empty.")
+    _validate_non_empty_string(uri, "URI")
 
     if "://" not in uri:
-        raise ValueError("Invalid URI format.")
+        raise ValueError(INVALID_URI_FORMAT_MESSAGE)
 
     parsed = urlparse(uri)
 
@@ -32,10 +31,7 @@ def parse(uri: str) -> Union[VMESSConfig, VLESSConfig, TrojanConfig, Shadowsocks
         )
 
     except ValueError as exc:
-        raise ValueError(
-            f"Unsupported protocol: "
-            f"{parsed.scheme}"
-        ) from exc
+        raise ValueError(UNSUPPORTED_PROTOCOL_MESSAGE.format(protocol=parsed.scheme)) from exc
 
     if protocol == Protocol.VMESS:
         return _parse_vmess(uri)
@@ -51,10 +47,7 @@ def parse(uri: str) -> Union[VMESSConfig, VLESSConfig, TrojanConfig, Shadowsocks
             parsed
         )
 
-    raise ValueError(
-        f"Unsupported protocol: "
-        f"{protocol}"
-    )
+    raise ValueError(UNSUPPORTED_PROTOCOL_MESSAGE.format(protocol=protocol))
 
 
 def _parse_vmess(
@@ -87,7 +80,7 @@ def _parse_vmess(
         data = json.loads(decoded)
 
     except Exception as exc:
-        raise ValueError("Invalid VMESS URI.") from exc
+        raise ValueError(INVALID_VMESS_URI_MESSAGE) from exc
 
     extra = {
         key: value
@@ -171,7 +164,7 @@ def _parse_shadowsocks(
         )
 
     except Exception as exc:
-        raise ValueError("Invalid Shadowsocks URI.") from exc
+        raise ValueError(INVALID_SHADOWSOCKS_URI_MESSAGE) from exc
 
     return ShadowsocksConfig(
         encryption_method=encryption_method,
