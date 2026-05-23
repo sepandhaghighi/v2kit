@@ -3,7 +3,7 @@
 from typing import Optional
 import uuid
 from .params import INVALID_TYPE_MESSAGE, INVALID_ALTER_ID_MESSAGE, INVALID_EMPTY_STRING_MESSAGE
-from .params import INVALID_UUID_MESSAGE
+from .params import INVALID_UUID_MESSAGE, INVALID_PORT_MESSAGE
 
 
 def _validate_non_empty_string(
