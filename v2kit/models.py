@@ -106,6 +106,14 @@ class BaseConfig(ABC):
     def to_dict(self) -> dict:
         """Convert config to dictionary."""
         pass
+    
+    def __repr__(self) -> str:
+        """Return string representation of BaseConfig."""
+        return (
+            f"{self.__class__.__name__}("
+            f"protocol={self.protocol!r}, "
+            f"label={self.label!r})"
+        )
 
 
 class VMESSConfig(BaseConfig):
