@@ -4,6 +4,7 @@ import json
 import base64
 from typing import Iterable
 from urllib.parse import urlparse
+from .errors import V2kitValidationError
 from .validators import _validate_label
 from .params import DEFAULT_ENCODING
 from .params import Protocol
@@ -49,20 +50,20 @@ def _validate_config(uri: str) -> None:
     :param uri: V2Ray URI.
     """
     if not isinstance(uri, str):
-        raise TypeError("Config must be str.")
+        raise V2kitValidationError("Config must be str.")
 
     if len(uri) == 0:
-        raise ValueError("Config cannot be empty.")
+        raise V2kitValidationError("Config cannot be empty.")
 
     if "://" not in uri:
-        raise ValueError("Invalid config format.")
+        raise V2kitValidationError("Invalid config format.")
 
     parsed = urlparse(uri)
 
     try:
         Protocol(parsed.scheme)
-    except ValueError as exc:
-        raise ValueError(
+    except Exception as exc:
+        raise V2kitValidationError(
             f"Unsupported protocol: {parsed.scheme}"
         ) from exc
 
@@ -80,7 +81,7 @@ def _validate_config(uri: str) -> None:
                 raise ValueError
 
         except Exception as exc:
-            raise ValueError(
+            raise V2kitValidationError(
                 "Invalid VMESS config."
             ) from exc
 

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """v2kit functions."""
 from typing import Iterable, List
+from .errors import V2kitValidationError
 from .params import Protocol
 from .utils import _get_protocol, _is_protocol
 from .utils import _encode_base64, _decode_base64
@@ -89,7 +90,7 @@ def encode_subscription(
 
             continue
 
-        raise TypeError("Items must be str or BaseConfig.")
+        raise V2kitValidationError("Items must be str or BaseConfig.")
 
     subscription = "\n".join(
         uri_list
@@ -114,7 +115,7 @@ def decode_subscription(
         subscription,
         str,
     ):
-        raise TypeError("Subscription must be str.")
+        raise V2kitValidationError("Subscription must be str.")
 
     decoded = _decode_base64(
         subscription
