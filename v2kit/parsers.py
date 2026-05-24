@@ -95,7 +95,7 @@ def _parse_vmess(
             data.get("port", 0)
         ),
         label=data.get("ps"),
-        aid=int(
+        alter_id=int(
             data.get("aid", 0)
         ),
         network=data.get(

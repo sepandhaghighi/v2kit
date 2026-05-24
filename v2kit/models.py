@@ -15,7 +15,7 @@ from .validators import (
     _validate_encryption_method,
     _validate_network,
     _validate_tls,
-    _validate_aid,
+    _validate_alter_id,
     _validate_dict,
 )
 from .utils import _encode_base64
@@ -136,7 +136,7 @@ class VMESSConfig(BaseConfig):
         host: str,
         port: int,
         label: Optional[str] = None,
-        aid: int = 0,
+        alter_id: int = 0,
         network: str = "tcp",
         tls: str = "",
         extra: Optional[dict] = None,
@@ -148,7 +148,7 @@ class VMESSConfig(BaseConfig):
         :param host: Config host.
         :param port: Config port.
         :param label: Config label.
-        :param aid: Config aid.
+        :param alter_id: Config AlterID.
         :param network: Config network.
         :param tls: Config tls.
         :param extra: Extra dictionary.
@@ -163,7 +163,7 @@ class VMESSConfig(BaseConfig):
         self._host = None
         self._port = None
 
-        self._aid = None
+        self._alter_id = None
         self._network = None
         self._tls = None
 
@@ -172,7 +172,7 @@ class VMESSConfig(BaseConfig):
         self.update_port(port)
         self.update_network(network)
         self.update_tls(tls)
-        self.update_aid(aid)
+        self.update_alter_id(alter_id)
 
     @property
     def uuid(self) -> str:
@@ -190,9 +190,9 @@ class VMESSConfig(BaseConfig):
         return self._port
 
     @property
-    def aid(self) -> int:
-        """Get the config aid."""
-        return self._aid
+    def alter_id(self) -> int:
+        """Get the config AlterID."""
+        return self._alter_id
 
     @property
     def network(self) -> str:
@@ -279,18 +279,18 @@ class VMESSConfig(BaseConfig):
 
         return self
 
-    def update_aid(
+    def update_alter_id(
         self,
-        aid: int,
+        alter_id: int,
     ):
         """
         Update alterId.
 
-        :param aid: New alterId.
+        :param alter_id: New alterId.
         """
-        _validate_aid(aid)
+        _validate_alter_id(alter_id)
 
-        self._aid = aid
+        self._alter_id = alter_id
 
         return self
 
@@ -304,7 +304,7 @@ class VMESSConfig(BaseConfig):
             "add": self.host,
             "port": str(self.port),
             "id": self.uuid,
-            "aid": str(self.aid),
+            "aid": str(self.alter_id),
             "net": self.network,
             "tls": self.tls,
         })

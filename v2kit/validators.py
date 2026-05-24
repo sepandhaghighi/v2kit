@@ -134,14 +134,14 @@ def _validate_dict(
         raise V2kitValidationError(INVALID_TYPE_MESSAGE.format(field=field_name, expected_type="dict"))
 
 
-def _validate_aid(aid: int) -> None:
+def _validate_alter_id(alter_id: int) -> None:
     """
     Validate VMESS alterId.
 
-    :param aid: AlterId value.
+    :param alter_id: AlterId value.
     """
-    if not isinstance(aid, int):
+    if not isinstance(alter_id, int):
         raise V2kitValidationError(INVALID_ALTER_ID_MESSAGE)
 
-    if aid < 0:
+    if alter_id < 0:
         raise V2kitValidationError(INVALID_ALTER_ID_MESSAGE)
