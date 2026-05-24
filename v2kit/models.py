@@ -107,6 +107,20 @@ class BaseConfig(ABC):
         """Convert config to dictionary."""
         pass
 
+    def __repr__(self) -> str:
+        """Return string representation of BaseConfig."""
+        return (
+            f"{self.__class__.__name__}("
+            f"protocol={self.protocol!r}, "
+            f"label={self.label!r})"
+        )
+
+    def __eq__(self, other) -> bool:
+        """Check configs equality."""
+        if not isinstance(other, BaseConfig):
+            return False
+        return self.to_dict() == other.to_dict()
+
 
 class VMESSConfig(BaseConfig):
     """

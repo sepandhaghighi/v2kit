@@ -2,6 +2,8 @@
 """v2kit validators."""
 from typing import Optional
 import uuid
+from .params import INVALID_TYPE_MESSAGE, INVALID_ALTER_ID_MESSAGE, INVALID_EMPTY_STRING_MESSAGE
+from .params import INVALID_UUID_MESSAGE, INVALID_PORT_MESSAGE
 
 
 def _validate_non_empty_string(
@@ -15,14 +17,10 @@ def _validate_non_empty_string(
     :param field_name: Field display name.
     """
     if not isinstance(value, str):
-        raise TypeError(
-            f"{field_name} must be str."
-        )
+        raise TypeError(INVALID_TYPE_MESSAGE.format(field=field_name, expected_type="str"))
 
     if len(value.strip()) == 0:
-        raise ValueError(
-            f"{field_name} cannot be empty."
-        )
+        raise ValueError(INVALID_EMPTY_STRING_MESSAGE.format(field=field_name))
 
 
 def _validate_query(query: str) -> None:
@@ -32,7 +30,7 @@ def _validate_query(query: str) -> None:
     :param query: URI query string.
     """
     if not isinstance(query, str):
-        raise TypeError("Query must be str.")
+        raise TypeError(INVALID_TYPE_MESSAGE.format(field="Query", expected_type="str"))
 
 
 def _validate_tls(tls: str) -> None:
@@ -42,7 +40,7 @@ def _validate_tls(tls: str) -> None:
     :param tls: TLS value.
     """
     if not isinstance(tls, str):
-        raise TypeError("TLS must be str.")
+        raise TypeError(INVALID_TYPE_MESSAGE.format(field="TLS", expected_type="str"))
 
 
 def _validate_network(network: str) -> None:
@@ -79,12 +77,12 @@ def _validate_uuid(value: str) -> None:
     :param value: UUID string.
     """
     if not isinstance(value, str):
-        raise TypeError("UUID must be str.")
+        raise TypeError(INVALID_TYPE_MESSAGE.format(field="UUID", expected_type="str"))
 
     try:
         uuid.UUID(value)
     except Exception as exc:
-        raise ValueError(f"Invalid UUID: {value}") from exc
+        raise ValueError(INVALID_UUID_MESSAGE.format(value=value)) from exc
 
 
 def _validate_port(port: int) -> None:
@@ -94,10 +92,10 @@ def _validate_port(port: int) -> None:
     :param port: Network port.
     """
     if not isinstance(port, int):
-        raise TypeError("Port must be int.")
+        raise TypeError(INVALID_TYPE_MESSAGE.format(field="Port", expected_type="int"))
 
     if not 1 <= port <= 65535:
-        raise ValueError(f"Invalid port: {port}")
+        raise ValueError(INVALID_PORT_MESSAGE.format(port=port))
 
 
 def _validate_host(host: str) -> None:
@@ -132,9 +130,7 @@ def _validate_dict(
     :param field_name: Field display name.
     """
     if not isinstance(value, dict):
-        raise TypeError(
-            f"{field_name} must be dict."
-        )
+        raise TypeError(INVALID_TYPE_MESSAGE.format(field=field_name, expected_type="dict"))
 
 
 def _validate_aid(aid: int) -> None:
@@ -144,11 +140,7 @@ def _validate_aid(aid: int) -> None:
     :param aid: AlterId value.
     """
     if not isinstance(aid, int):
-        raise TypeError(
-            "AlterId must be int."
-        )
+        raise TypeError(INVALID_ALTER_ID_MESSAGE)
 
     if aid < 0:
-        raise ValueError(
-            "AlterId cannot be negative."
-        )
+        raise ValueError(INVALID_ALTER_ID_MESSAGE)
