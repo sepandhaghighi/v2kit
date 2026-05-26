@@ -7,4 +7,4 @@ class V2kitError(Exception):
 
 
 class V2kitValidationError(V2kitError, ValueError):
-    """Base class for validation errors in 2kit."""
+    """Base class for validation errors in v2kit."""
