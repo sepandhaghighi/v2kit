@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """v2kit functions."""
-from typing import Iterable, List
+from typing import Iterable, List, Union
 from .errors import V2kitValidationError
 from .params import Protocol
 from .utils import _get_protocol, _is_protocol
@@ -60,7 +60,7 @@ def relabel(uri: str, label: str) -> str:
 
 
 def encode_subscription(
-    entries: Iterable[str],
+    entries: Iterable[Union[str, BaseConfig]],
     validate: bool = True,
 ) -> str:
     """
