@@ -5,6 +5,7 @@ from .errors import V2kitValidationError
 from .params import Protocol
 from .utils import _get_protocol, _is_protocol
 from .utils import _encode_base64, _decode_base64
+from .validators import _validate_non_empty_string
 from .parsers import parse
 from .models import BaseConfig
 
