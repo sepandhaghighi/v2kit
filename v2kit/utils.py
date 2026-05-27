@@ -6,7 +6,7 @@ from typing import Iterable
 from urllib.parse import urlparse
 from .errors import V2kitValidationError, V2kitParseError
 from .validators import _validate_label
-from .params import DEFAULT_ENCODING
+from .params import DEFAULT_ENCODING, INVALID_URI_FORMAT_MESSAGE
 from .params import Protocol
 
 
@@ -49,14 +49,10 @@ def _validate_config(uri: str) -> None:
 
     :param uri: V2Ray URI.
     """
-    if not isinstance(uri, str):
-        raise V2kitValidationError("Config must be str.")
-
-    if len(uri) == 0:
-        raise V2kitValidationError("Config cannot be empty.")
+    _validate_non_empty_string(uri, "URI")
 
     if "://" not in uri:
-        raise V2kitParseError("Invalid config format.")
+        raise V2kitParseError(INVALID_URI_FORMAT_MESSAGE)
 
     parsed = urlparse(uri)
 
@@ -82,7 +78,7 @@ def _validate_config(uri: str) -> None:
 
         except Exception as exc:
             raise V2kitParseError(
-                "Invalid VMESS config."
+                INVALID_URI_FORMAT_MESSAGE
             ) from exc
 
 

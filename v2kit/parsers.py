@@ -7,7 +7,6 @@ from urllib.parse import urlparse, parse_qsl
 from .errors import V2kitValidationError, V2kitParseError
 from .params import Protocol
 from .params import INVALID_URI_FORMAT_MESSAGE, UNSUPPORTED_PROTOCOL_MESSAGE
-from .params import INVALID_VMESS_URI_MESSAGE, INVALID_SHADOWSOCKS_URI_MESSAGE
 from .validators import _validate_non_empty_string
 from .models import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig
 from .utils import _decode_base64
@@ -81,7 +80,7 @@ def _parse_vmess(
         data = json.loads(decoded)
 
     except Exception as exc:
-        raise V2kitParseError(INVALID_VMESS_URI_MESSAGE) from exc
+        raise V2kitParseError(INVALID_URI_FORMAT_MESSAGE) from exc
 
     extra = {
         key: value
@@ -165,7 +164,7 @@ def _parse_shadowsocks(
         )
 
     except Exception as exc:
-        raise V2kitParseError(INVALID_SHADOWSOCKS_URI_MESSAGE) from exc
+        raise V2kitParseError(INVALID_URI_FORMAT_MESSAGE) from exc
 
     return ShadowsocksConfig(
         encryption_method=encryption_method,

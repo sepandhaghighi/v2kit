@@ -115,7 +115,7 @@ def decode_subscription(
         subscription,
         str,
     ):
-        raise V2kitValidationError("Subscription must be str.")
+        _validate_non_empty_string(subscription, "Subscription")
 
     decoded = _decode_base64(
         subscription
