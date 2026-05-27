@@ -5,7 +5,7 @@ import base64
 from typing import Iterable
 from urllib.parse import urlparse
 from .errors import V2kitValidationError, V2kitParseError
-from .validators import _validate_label
+from .validators import _validate_label, _validate_non_empty_string
 from .params import DEFAULT_ENCODING, INVALID_URI_FORMAT_MESSAGE
 from .params import Protocol
 
