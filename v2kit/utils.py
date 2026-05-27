@@ -99,45 +99,6 @@ def _get_protocol(uri: str) -> Protocol:
     return Protocol(protocol)
 
 
-def _relabel_vmess(uri: str, label: str) -> str:
-    """
-    Relabel VMESS URI.
-
-    :param uri: VMESS URI.
-    :param label: New label.
-    """
-    _validate_config(uri)
-    _validate_label(label)
-
-    protocol, encoded = uri.split("://", 1)
-
-    decoded = _decode_base64(encoded)
-
-    data = json.loads(decoded)
-
-    data["ps"] = label
-
-    encoded_new = _encode_base64(
-        json.dumps(data, ensure_ascii=False)
-    )
-
-    return f"{protocol}://{encoded_new}"
-
-
-def _relabel_tag(uri: str, label: str) -> str:
-    """
-    Relabel VLESS, Trojan and Shadowsocks URIs.
-
-    :param uri: Input URI.
-    :param label: New label.
-    """
-    _validate_config(uri)
-    _validate_label(label)
-    base = uri.split("#", 1)[0]
-
-    return f"{base}#{label}"
-
-
 def _is_protocol(uri: str, protocol: Protocol) -> bool:
     """
     Check whether URI uses given protocol.
