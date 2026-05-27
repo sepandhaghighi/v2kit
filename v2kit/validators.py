@@ -24,16 +24,6 @@ def _validate_non_empty_string(
         raise V2kitValidationError(INVALID_EMPTY_STRING_MESSAGE.format(field=field_name))
 
 
-def _validate_query(query: str) -> None:
-    """
-    Validate query string.
-
-    :param query: URI query string.
-    """
-    if not isinstance(query, str):
-        raise V2kitValidationError(INVALID_TYPE_MESSAGE.format(field="Query", expected_type="str"))
-
-
 def _validate_tls(tls: str) -> None:
     """
     Validate TLS mode.
