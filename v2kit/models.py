@@ -82,7 +82,7 @@ class BaseConfig(ABC):
     def update_extra(
         self,
         extra: dict,
-    ):
+    ) -> "BaseConfig":
         """
         Update extra data.
 
@@ -144,13 +144,13 @@ class VMESSConfig(BaseConfig):
         """
         VMESS config initiator.
 
-        :param uuid: Config uuid.
+        :param uuid: Config UUID.
         :param host: Config host.
         :param port: Config port.
         :param label: Config label.
         :param alter_id: Config AlterID.
         :param network: Config network.
-        :param tls: Config tls.
+        :param tls: Config TLS.
         :param extra: Extra dictionary.
         """
         super().__init__(
@@ -207,7 +207,7 @@ class VMESSConfig(BaseConfig):
     def update_uuid(
         self,
         uuid: str,
-    ):
+    ) -> "VMESSConfig":
         """
         Update UUID.
 
@@ -222,7 +222,7 @@ class VMESSConfig(BaseConfig):
     def update_host(
         self,
         host: str,
-    ):
+    ) -> "VMESSConfig":
         """
         Update host.
 
@@ -237,7 +237,7 @@ class VMESSConfig(BaseConfig):
     def update_port(
         self,
         port: int,
-    ):
+    ) -> "VMESSConfig":
         """
         Update port.
 
@@ -252,7 +252,7 @@ class VMESSConfig(BaseConfig):
     def update_network(
         self,
         network: str,
-    ):
+    ) -> "VMESSConfig":
         """
         Update network.
 
@@ -267,7 +267,7 @@ class VMESSConfig(BaseConfig):
     def update_tls(
         self,
         tls: str,
-    ):
+    ) -> "VMESSConfig":
         """
         Update TLS.
 
@@ -282,11 +282,11 @@ class VMESSConfig(BaseConfig):
     def update_alter_id(
         self,
         alter_id: int,
-    ):
+    ) -> "VMESSConfig":
         """
-        Update alterId.
+        Update AlterId.
 
-        :param alter_id: New alterId.
+        :param alter_id: New AlterId.
         """
         _validate_alter_id(alter_id)
 
@@ -342,7 +342,7 @@ class VLESSConfig(BaseConfig):
         """
         VLESS config initiator.
 
-        :param uuid: Config uuid.
+        :param uuid: Config UUID.
         :param host: Config host.
         :param port: Config port.
         :param label: Config label.
@@ -380,7 +380,7 @@ class VLESSConfig(BaseConfig):
     def update_uuid(
         self,
         uuid: str,
-    ):
+    ) -> "VLESSConfig":
         """
         Update UUID.
 
@@ -395,7 +395,7 @@ class VLESSConfig(BaseConfig):
     def update_host(
         self,
         host: str,
-    ):
+    ) -> "VLESSConfig":
         """
         Update host.
 
@@ -410,7 +410,7 @@ class VLESSConfig(BaseConfig):
     def update_port(
         self,
         port: int,
-    ):
+    ) -> "VLESSConfig":
         """
         Update port.
 
@@ -508,7 +508,7 @@ class TrojanConfig(BaseConfig):
     def update_password(
         self,
         password: str,
-    ):
+    ) -> "TrojanConfig":
         """
         Update password.
 
@@ -523,7 +523,7 @@ class TrojanConfig(BaseConfig):
     def update_host(
         self,
         host: str,
-    ):
+    ) -> "TrojanConfig": 
         """
         Update host.
 
@@ -538,7 +538,7 @@ class TrojanConfig(BaseConfig):
     def update_port(
         self,
         port: int,
-    ):
+    ) -> "TrojanConfig":
         """
         Update port.
 
@@ -647,7 +647,7 @@ class ShadowsocksConfig(BaseConfig):
     def update_encryption_method(
         self,
         encryption_method: str,
-    ):
+    ) -> "ShadowsocksConfig":
         """
         Update encryption method.
 
@@ -662,7 +662,7 @@ class ShadowsocksConfig(BaseConfig):
     def update_password(
         self,
         password: str,
-    ):
+    ) -> "ShadowsocksConfig":
         """
         Update password.
 
@@ -677,7 +677,7 @@ class ShadowsocksConfig(BaseConfig):
     def update_host(
         self,
         host: str,
-    ):
+    ) -> "ShadowsocksConfig":
         """
         Update host.
 
@@ -692,7 +692,7 @@ class ShadowsocksConfig(BaseConfig):
     def update_port(
         self,
         port: int,
-    ):
+    ) -> "ShadowsocksConfig":
         """
         Update port.
 

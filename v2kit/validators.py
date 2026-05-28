@@ -130,7 +130,7 @@ def _validate_dict(
 
 def _validate_alter_id(alter_id: int) -> None:
     """
-    Validate VMESS alterId.
+    Validate VMESS AlterId.
 
     :param alter_id: AlterId value.
     """
