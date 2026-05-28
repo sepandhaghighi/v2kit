@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 """v2kit utils."""
-import json
 import base64
 from typing import Iterable
-from urllib.parse import urlparse
 from .errors import V2kitValidationError, V2kitParseError
-from .validators import _validate_label, _validate_non_empty_string
+from .validators import _validate_label, _validate_non_empty_string, _validate_uri
 from .params import DEFAULT_ENCODING, INVALID_URI_FORMAT_MESSAGE
 from .params import Protocol
 
@@ -43,52 +41,13 @@ def _add_base64_padding(data: str) -> str:
     return data + "=" * (-len(data) % 4)
 
 
-def _validate_config(uri: str) -> None:
-    """
-    Validate V2Ray URI format.
-
-    :param uri: V2Ray URI.
-    """
-    _validate_non_empty_string(uri, "URI")
-
-    if "://" not in uri:
-        raise V2kitParseError(INVALID_URI_FORMAT_MESSAGE)
-
-    parsed = urlparse(uri)
-
-    try:
-        Protocol(parsed.scheme)
-    except Exception as exc:
-        raise V2kitParseError(
-            f"Unsupported protocol: {parsed.scheme}"
-        ) from exc
-
-    if parsed.scheme == Protocol.VMESS.value:
-        try:
-            _, encoded = uri.split("://", 1)
-
-            encoded = _add_base64_padding(encoded)
-
-            decoded = _decode_base64(encoded)
-
-            data = json.loads(decoded)
-
-            if not isinstance(data, dict):
-                raise ValueError
-
-        except Exception as exc:
-            raise V2kitParseError(
-                INVALID_URI_FORMAT_MESSAGE
-            ) from exc
-
-
 def _get_protocol(uri: str) -> Protocol:
     """
     Extract protocol from URI.
 
     :param uri: V2Ray URI.
     """
-    _validate_config(uri)
+    _validate_uri(uri)
 
     protocol = uri.split("://", 1)[0]
 
