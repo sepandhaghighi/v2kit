@@ -3,7 +3,7 @@
 import pytest
 from v2kit import relabel, encode_subscription, decode_subscription
 from v2kit import V2kitValidationError
-from v2kit.utils import _validate_config
+from v2kit.validators import _validate_uri
 
 
 INVALID_PROTOCOL = "http://example.com"
@@ -16,29 +16,29 @@ VALID_VLESS = (
 )
 
 
-def test_validate_config_non_string():
+def test_validate_uri_non_string():
     with pytest.raises(V2kitValidationError):
-        _validate_config(123)
+        _validate_uri(123)
 
 
-def test_validate_config_empty():
+def test_validate_uri_empty():
     with pytest.raises(V2kitValidationError):
-        _validate_config("")
+        _validate_uri("")
 
 
-def test_validate_config_missing_scheme():
+def test_validate_uri_missing_scheme():
     with pytest.raises(V2kitValidationError):
-        _validate_config("invalid-config")
+        _validate_uri("invalid-config")
 
 
-def test_validate_config_unsupported_protocol():
+def test_validate_uri_unsupported_protocol():
     with pytest.raises(V2kitValidationError):
-        _validate_config(INVALID_PROTOCOL)
+        _validate_uri(INVALID_PROTOCOL)
 
 
 def test_validate_invalid_vmess():
     with pytest.raises(V2kitValidationError):
-        _validate_config(INVALID_VMESS)
+        _validate_uri(INVALID_VMESS)
 
 
 def test_relabel_invalid_config():
