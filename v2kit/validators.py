@@ -9,6 +9,7 @@ from .errors import V2kitValidationError, V2kitParseError
 from .params import Protocol, DEFAULT_ENCODING
 from .params import INVALID_TYPE_MESSAGE, INVALID_ALTER_ID_MESSAGE, INVALID_EMPTY_STRING_MESSAGE
 from .params import INVALID_UUID_MESSAGE, INVALID_PORT_MESSAGE, INVALID_URI_FORMAT_MESSAGE
+from .params import UNSUPPORTED_PROTOCOL_MESSAGE
 
 
 def _validate_non_empty_string(
@@ -155,7 +156,7 @@ def _validate_uri(uri: str) -> None:
     try:
         Protocol(parsed.scheme)
     except Exception as exc:
-        raise V2kitParseError(f"Unsupported protocol: {parsed.scheme}") from exc
+        raise V2kitParseError(UNSUPPORTED_PROTOCOL_MESSAGE.format(protocol=parsed.scheme)) from exc
     if parsed.scheme == Protocol.VMESS.value:
         try:
             _, encoded = uri.split("://", 1)
