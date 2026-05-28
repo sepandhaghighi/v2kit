@@ -523,7 +523,7 @@ class TrojanConfig(BaseConfig):
     def update_address(
         self,
         address: str,
-    ) -> "TrojanConfig": 
+    ) -> "TrojanConfig":
         """
         Update address.
 
