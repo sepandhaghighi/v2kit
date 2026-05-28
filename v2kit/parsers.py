@@ -4,10 +4,9 @@
 from typing import Union
 import json
 from urllib.parse import urlparse, parse_qsl
-from .errors import V2kitValidationError
+from .errors import V2kitValidationError, V2kitParseError
 from .params import Protocol
 from .params import INVALID_URI_FORMAT_MESSAGE, UNSUPPORTED_PROTOCOL_MESSAGE
-from .params import INVALID_VMESS_URI_MESSAGE, INVALID_SHADOWSOCKS_URI_MESSAGE
 from .validators import _validate_non_empty_string
 from .models import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig
 from .utils import _decode_base64
@@ -22,7 +21,7 @@ def parse(uri: str) -> Union[VMESSConfig, VLESSConfig, TrojanConfig, Shadowsocks
     _validate_non_empty_string(uri, "URI")
 
     if "://" not in uri:
-        raise V2kitValidationError(INVALID_URI_FORMAT_MESSAGE)
+        raise V2kitParseError(INVALID_URI_FORMAT_MESSAGE)
 
     parsed = urlparse(uri)
 
@@ -32,7 +31,7 @@ def parse(uri: str) -> Union[VMESSConfig, VLESSConfig, TrojanConfig, Shadowsocks
         )
 
     except Exception as exc:
-        raise V2kitValidationError(UNSUPPORTED_PROTOCOL_MESSAGE.format(protocol=parsed.scheme)) from exc
+        raise V2kitParseError(UNSUPPORTED_PROTOCOL_MESSAGE.format(protocol=parsed.scheme)) from exc
 
     if protocol == Protocol.VMESS:
         return _parse_vmess(uri)
@@ -48,7 +47,7 @@ def parse(uri: str) -> Union[VMESSConfig, VLESSConfig, TrojanConfig, Shadowsocks
             parsed
         )
 
-    raise V2kitValidationError(UNSUPPORTED_PROTOCOL_MESSAGE.format(protocol=protocol))
+    raise V2kitParseError(UNSUPPORTED_PROTOCOL_MESSAGE.format(protocol=protocol))
 
 
 def _parse_vmess(
@@ -81,7 +80,7 @@ def _parse_vmess(
         data = json.loads(decoded)
 
     except Exception as exc:
-        raise V2kitValidationError(INVALID_VMESS_URI_MESSAGE) from exc
+        raise V2kitParseError(INVALID_URI_FORMAT_MESSAGE) from exc
 
     extra = {
         key: value
@@ -165,7 +164,7 @@ def _parse_shadowsocks(
         )
 
     except Exception as exc:
-        raise V2kitValidationError(INVALID_SHADOWSOCKS_URI_MESSAGE) from exc
+        raise V2kitParseError(INVALID_URI_FORMAT_MESSAGE) from exc
 
     return ShadowsocksConfig(
         encryption_method=encryption_method,

@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 """v2kit functions."""
-from typing import Iterable, List
+from typing import Iterable, List, Union
 from .errors import V2kitValidationError
 from .params import Protocol
 from .utils import _get_protocol, _is_protocol
 from .utils import _encode_base64, _decode_base64
+from .validators import _validate_non_empty_string
 from .parsers import parse
 from .models import BaseConfig
 
@@ -60,7 +61,7 @@ def relabel(uri: str, label: str) -> str:
 
 
 def encode_subscription(
-    entries: Iterable[str],
+    entries: Iterable[Union[str, BaseConfig]],
     validate: bool = True,
 ) -> str:
     """
@@ -115,7 +116,7 @@ def decode_subscription(
         subscription,
         str,
     ):
-        raise V2kitValidationError("Subscription must be str.")
+        _validate_non_empty_string(subscription, "Subscription")
 
     decoded = _decode_base64(
         subscription

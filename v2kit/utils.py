@@ -4,9 +4,9 @@ import json
 import base64
 from typing import Iterable
 from urllib.parse import urlparse
-from .errors import V2kitValidationError
-from .validators import _validate_label
-from .params import DEFAULT_ENCODING
+from .errors import V2kitValidationError, V2kitParseError
+from .validators import _validate_label, _validate_non_empty_string
+from .params import DEFAULT_ENCODING, INVALID_URI_FORMAT_MESSAGE
 from .params import Protocol
 
 
@@ -49,21 +49,17 @@ def _validate_config(uri: str) -> None:
 
     :param uri: V2Ray URI.
     """
-    if not isinstance(uri, str):
-        raise V2kitValidationError("Config must be str.")
-
-    if len(uri) == 0:
-        raise V2kitValidationError("Config cannot be empty.")
+    _validate_non_empty_string(uri, "URI")
 
     if "://" not in uri:
-        raise V2kitValidationError("Invalid config format.")
+        raise V2kitParseError(INVALID_URI_FORMAT_MESSAGE)
 
     parsed = urlparse(uri)
 
     try:
         Protocol(parsed.scheme)
     except Exception as exc:
-        raise V2kitValidationError(
+        raise V2kitParseError(
             f"Unsupported protocol: {parsed.scheme}"
         ) from exc
 
@@ -81,8 +77,8 @@ def _validate_config(uri: str) -> None:
                 raise ValueError
 
         except Exception as exc:
-            raise V2kitValidationError(
-                "Invalid VMESS config."
+            raise V2kitParseError(
+                INVALID_URI_FORMAT_MESSAGE
             ) from exc
 
 
@@ -97,45 +93,6 @@ def _get_protocol(uri: str) -> Protocol:
     protocol = uri.split("://", 1)[0]
 
     return Protocol(protocol)
-
-
-def _relabel_vmess(uri: str, label: str) -> str:
-    """
-    Relabel VMESS URI.
-
-    :param uri: VMESS URI.
-    :param label: New label.
-    """
-    _validate_config(uri)
-    _validate_label(label)
-
-    protocol, encoded = uri.split("://", 1)
-
-    decoded = _decode_base64(encoded)
-
-    data = json.loads(decoded)
-
-    data["ps"] = label
-
-    encoded_new = _encode_base64(
-        json.dumps(data, ensure_ascii=False)
-    )
-
-    return f"{protocol}://{encoded_new}"
-
-
-def _relabel_tag(uri: str, label: str) -> str:
-    """
-    Relabel VLESS, Trojan and Shadowsocks URIs.
-
-    :param uri: Input URI.
-    :param label: New label.
-    """
-    _validate_config(uri)
-    _validate_label(label)
-    base = uri.split("#", 1)[0]
-
-    return f"{base}#{label}"
 
 
 def _is_protocol(uri: str, protocol: Protocol) -> bool:
