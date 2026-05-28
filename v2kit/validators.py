@@ -94,13 +94,13 @@ def _validate_port(port: int) -> None:
         raise V2kitValidationError(INVALID_PORT_MESSAGE.format(port=port))
 
 
-def _validate_host(host: str) -> None:
+def _validate_address(address: str) -> None:
     """
-    Validate host.
+    Validate address.
 
-    :param host: Host address.
+    :param address: Config address.
     """
-    _validate_non_empty_string(host, "Host")
+    _validate_non_empty_string(address, "Address")
 
 
 def _validate_label(label: Optional[str]) -> None:

@@ -85,7 +85,7 @@ def _parse_vmess(uri: str) -> VMESSConfig:
     }
     return VMESSConfig(
         uuid=data.get("id", ""),
-        host=data.get("add", ""),
+        address=data.get("add", ""),
         port=int(
             data.get("port", 0)
         ),
@@ -114,7 +114,7 @@ def _parse_vless(uri: str) -> VLESSConfig:
     parsed = urlparse(uri)
     return VLESSConfig(
         uuid=parsed.username or "",
-        host=parsed.hostname or "",
+        address=parsed.hostname or "",
         port=parsed.port or 0,
         label=parsed.fragment or None,
         extra=dict(parse_qsl(parsed.query)),
@@ -130,7 +130,7 @@ def _parse_trojan(uri: str) -> TrojanConfig:
     parsed = urlparse(uri)
     return TrojanConfig(
         password=parsed.username or "",
-        host=parsed.hostname or "",
+        address=parsed.hostname or "",
         port=parsed.port or 0,
         label=parsed.fragment or None,
         extra=dict(parse_qsl(parsed.query)),
@@ -162,7 +162,7 @@ def _parse_shadowsocks(uri: str) -> ShadowsocksConfig:
     return ShadowsocksConfig(
         encryption_method=encryption_method,
         password=password,
-        host=parsed.hostname or "",
+        address=parsed.hostname or "",
         port=parsed.port or 0,
         label=parsed.fragment or None,
         extra=dict(parse_qsl(parsed.query)),
