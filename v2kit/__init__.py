@@ -17,6 +17,7 @@ __version__ = V2KIT_VERSION
 __all__ = [
     "V2kitError",
     "V2kitValidationError",
+    "V2kitParseError",
     "is_vmess",
     "is_vless",
     "is_trojan",
