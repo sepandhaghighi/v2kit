@@ -9,7 +9,7 @@ from .params import Protocol
 from .validators import (
     _validate_uuid,
     _validate_port,
-    _validate_host,
+    _validate_address,
     _validate_label,
     _validate_password,
     _validate_encryption_method,
@@ -82,7 +82,7 @@ class BaseConfig(ABC):
     def update_extra(
         self,
         extra: dict,
-    ):
+    ) -> "BaseConfig":
         """
         Update extra data.
 
@@ -133,7 +133,7 @@ class VMESSConfig(BaseConfig):
     def __init__(
         self,
         uuid: str,
-        host: str,
+        address: str,
         port: int,
         label: Optional[str] = None,
         alter_id: int = 0,
@@ -144,13 +144,13 @@ class VMESSConfig(BaseConfig):
         """
         VMESS config initiator.
 
-        :param uuid: Config uuid.
-        :param host: Config host.
+        :param uuid: Config UUID.
+        :param address: Config address.
         :param port: Config port.
         :param label: Config label.
         :param alter_id: Config AlterID.
         :param network: Config network.
-        :param tls: Config tls.
+        :param tls: Config TLS.
         :param extra: Extra dictionary.
         """
         super().__init__(
@@ -160,7 +160,7 @@ class VMESSConfig(BaseConfig):
         )
 
         self._uuid = None
-        self._host = None
+        self._address = None
         self._port = None
 
         self._alter_id = None
@@ -168,7 +168,7 @@ class VMESSConfig(BaseConfig):
         self._tls = None
 
         self.update_uuid(uuid)
-        self.update_host(host)
+        self.update_address(address)
         self.update_port(port)
         self.update_network(network)
         self.update_tls(tls)
@@ -180,9 +180,9 @@ class VMESSConfig(BaseConfig):
         return self._uuid
 
     @property
-    def host(self) -> str:
-        """Get the config host."""
-        return self._host
+    def address(self) -> str:
+        """Get the config address."""
+        return self._address
 
     @property
     def port(self) -> int:
@@ -207,7 +207,7 @@ class VMESSConfig(BaseConfig):
     def update_uuid(
         self,
         uuid: str,
-    ):
+    ) -> "VMESSConfig":
         """
         Update UUID.
 
@@ -219,25 +219,25 @@ class VMESSConfig(BaseConfig):
 
         return self
 
-    def update_host(
+    def update_address(
         self,
-        host: str,
-    ):
+        address: str,
+    ) -> "VMESSConfig":
         """
-        Update host.
+        Update address.
 
-        :param host: New host.
+        :param address: New address.
         """
-        _validate_host(host)
+        _validate_address(address)
 
-        self._host = host
+        self._address = address
 
         return self
 
     def update_port(
         self,
         port: int,
-    ):
+    ) -> "VMESSConfig":
         """
         Update port.
 
@@ -252,7 +252,7 @@ class VMESSConfig(BaseConfig):
     def update_network(
         self,
         network: str,
-    ):
+    ) -> "VMESSConfig":
         """
         Update network.
 
@@ -267,7 +267,7 @@ class VMESSConfig(BaseConfig):
     def update_tls(
         self,
         tls: str,
-    ):
+    ) -> "VMESSConfig":
         """
         Update TLS.
 
@@ -282,11 +282,11 @@ class VMESSConfig(BaseConfig):
     def update_alter_id(
         self,
         alter_id: int,
-    ):
+    ) -> "VMESSConfig":
         """
-        Update alterId.
+        Update AlterId.
 
-        :param alter_id: New alterId.
+        :param alter_id: New AlterId.
         """
         _validate_alter_id(alter_id)
 
@@ -301,7 +301,7 @@ class VMESSConfig(BaseConfig):
         data.update({
             "v": "2",
             "ps": self.label or "",
-            "add": self.host,
+            "add": self.address,
             "port": str(self.port),
             "id": self.uuid,
             "aid": str(self.alter_id),
@@ -334,7 +334,7 @@ class VLESSConfig(BaseConfig):
     def __init__(
         self,
         uuid: str,
-        host: str,
+        address: str,
         port: int,
         label: Optional[str] = None,
         extra: Optional[dict] = None,
@@ -342,8 +342,8 @@ class VLESSConfig(BaseConfig):
         """
         VLESS config initiator.
 
-        :param uuid: Config uuid.
-        :param host: Config host.
+        :param uuid: Config UUID.
+        :param address: Config address.
         :param port: Config port.
         :param label: Config label.
         :param extra: Extra dictionary.
@@ -355,11 +355,11 @@ class VLESSConfig(BaseConfig):
         )
 
         self._uuid = None
-        self._host = None
+        self._address = None
         self._port = None
 
         self.update_uuid(uuid)
-        self.update_host(host)
+        self.update_address(address)
         self.update_port(port)
 
     @property
@@ -368,9 +368,9 @@ class VLESSConfig(BaseConfig):
         return self._uuid
 
     @property
-    def host(self) -> str:
-        """Get the config host."""
-        return self._host
+    def address(self) -> str:
+        """Get the config address."""
+        return self._address
 
     @property
     def port(self) -> int:
@@ -380,7 +380,7 @@ class VLESSConfig(BaseConfig):
     def update_uuid(
         self,
         uuid: str,
-    ):
+    ) -> "VLESSConfig":
         """
         Update UUID.
 
@@ -392,25 +392,25 @@ class VLESSConfig(BaseConfig):
 
         return self
 
-    def update_host(
+    def update_address(
         self,
-        host: str,
-    ):
+        address: str,
+    ) -> "VLESSConfig":
         """
-        Update host.
+        Update address.
 
-        :param host: New host.
+        :param address: New address.
         """
-        _validate_host(host)
+        _validate_address(address)
 
-        self._host = host
+        self._address = address
 
         return self
 
     def update_port(
         self,
         port: int,
-    ):
+    ) -> "VLESSConfig":
         """
         Update port.
 
@@ -427,7 +427,7 @@ class VLESSConfig(BaseConfig):
         return {
             "protocol": "vless",
             "uuid": self.uuid,
-            "host": self.host,
+            "address": self.address,
             "port": self.port,
             "extra": self.extra,
             "label": self.label,
@@ -447,7 +447,7 @@ class VLESSConfig(BaseConfig):
 
         return (
             f"vless://{self.uuid}@"
-            f"{self.host}:{self.port}"
+            f"{self.address}:{self.port}"
             f"{query}{label}"
         )
 
@@ -463,7 +463,7 @@ class TrojanConfig(BaseConfig):
     def __init__(
         self,
         password: str,
-        host: str,
+        address: str,
         port: int,
         label: Optional[str] = None,
         extra: Optional[dict] = None,
@@ -472,7 +472,7 @@ class TrojanConfig(BaseConfig):
         Trojan config initiator.
 
         :param password: Config password.
-        :param host: Config host.
+        :param address: Config address.
         :param port: Config port.
         :param label: Config label.
         :param extra: Extra dictionary.
@@ -482,11 +482,11 @@ class TrojanConfig(BaseConfig):
             label=label,
             extra=extra,
         )
-        self._host = None
+        self._address = None
         self._port = None
         self._password = None
 
-        self.update_host(host)
+        self.update_address(address)
         self.update_port(port)
         self.update_password(password)
 
@@ -496,9 +496,9 @@ class TrojanConfig(BaseConfig):
         return self._password
 
     @property
-    def host(self) -> str:
-        """Get the config host."""
-        return self._host
+    def address(self) -> str:
+        """Get the config address."""
+        return self._address
 
     @property
     def port(self) -> int:
@@ -508,7 +508,7 @@ class TrojanConfig(BaseConfig):
     def update_password(
         self,
         password: str,
-    ):
+    ) -> "TrojanConfig":
         """
         Update password.
 
@@ -520,25 +520,25 @@ class TrojanConfig(BaseConfig):
 
         return self
 
-    def update_host(
+    def update_address(
         self,
-        host: str,
-    ):
+        address: str,
+    ) -> "TrojanConfig":
         """
-        Update host.
+        Update address.
 
-        :param host: New host.
+        :param address: New address.
         """
-        _validate_host(host)
+        _validate_address(address)
 
-        self._host = host
+        self._address = address
 
         return self
 
     def update_port(
         self,
         port: int,
-    ):
+    ) -> "TrojanConfig":
         """
         Update port.
 
@@ -555,7 +555,7 @@ class TrojanConfig(BaseConfig):
         return {
             "protocol": "trojan",
             "password": self.password,
-            "host": self.host,
+            "address": self.address,
             "port": self.port,
             "extra": self.extra,
             "label": self.label,
@@ -575,7 +575,7 @@ class TrojanConfig(BaseConfig):
 
         return (
             f"trojan://{self.password}@"
-            f"{self.host}:{self.port}"
+            f"{self.address}:{self.port}"
             f"{query}{label}"
         )
 
@@ -592,7 +592,7 @@ class ShadowsocksConfig(BaseConfig):
         self,
         encryption_method: str,
         password: str,
-        host: str,
+        address: str,
         port: int,
         label: Optional[str] = None,
         extra: Optional[dict] = None,
@@ -602,7 +602,7 @@ class ShadowsocksConfig(BaseConfig):
 
         :param encryption_method: Config encryption method.
         :param password: Config password.
-        :param host: Config host.
+        :param address: Config address.
         :param port: Config port.
         :param label: Config label.
         :param extra: Extra dictionary.
@@ -616,12 +616,12 @@ class ShadowsocksConfig(BaseConfig):
         self._encryption_method = None
         self._password = None
 
-        self._host = None
+        self._address = None
         self._port = None
 
         self.update_encryption_method(encryption_method)
         self.update_password(password)
-        self.update_host(host)
+        self.update_address(address)
         self.update_port(port)
 
     @property
@@ -635,9 +635,9 @@ class ShadowsocksConfig(BaseConfig):
         return self._password
 
     @property
-    def host(self) -> str:
-        """Get the config host."""
-        return self._host
+    def address(self) -> str:
+        """Get the config address."""
+        return self._address
 
     @property
     def port(self) -> int:
@@ -647,7 +647,7 @@ class ShadowsocksConfig(BaseConfig):
     def update_encryption_method(
         self,
         encryption_method: str,
-    ):
+    ) -> "ShadowsocksConfig":
         """
         Update encryption method.
 
@@ -662,7 +662,7 @@ class ShadowsocksConfig(BaseConfig):
     def update_password(
         self,
         password: str,
-    ):
+    ) -> "ShadowsocksConfig":
         """
         Update password.
 
@@ -674,25 +674,25 @@ class ShadowsocksConfig(BaseConfig):
 
         return self
 
-    def update_host(
+    def update_address(
         self,
-        host: str,
-    ):
+        address: str,
+    ) -> "ShadowsocksConfig":
         """
-        Update host.
+        Update address.
 
-        :param host: New host.
+        :param address: New address.
         """
-        _validate_host(host)
+        _validate_address(address)
 
-        self._host = host
+        self._address = address
 
         return self
 
     def update_port(
         self,
         port: int,
-    ):
+    ) -> "ShadowsocksConfig":
         """
         Update port.
 
@@ -710,7 +710,7 @@ class ShadowsocksConfig(BaseConfig):
             "protocol": "shadowsocks",
             "encryption_method": self.encryption_method,
             "password": self.password,
-            "host": self.host,
+            "address": self.address,
             "port": self.port,
             "label": self.label,
             "extra": self.extra,
@@ -730,6 +730,6 @@ class ShadowsocksConfig(BaseConfig):
 
         return (
             f"ss://{encoded}@"
-            f"{self.host}:{self.port}"
+            f"{self.address}:{self.port}"
             f"{label}"
         )

@@ -11,4 +11,4 @@ class V2kitValidationError(V2kitError, ValueError):
 
 
 class V2kitParseError(V2kitValidationError):
-    """Raised when parsing V2Ray URIs fails."""
+    """Raised when parsing URIs fails."""

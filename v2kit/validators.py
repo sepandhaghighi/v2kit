@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 """v2kit validators."""
 from typing import Optional
+import json
+import base64
 import uuid
-from .errors import V2kitValidationError
+from urllib.parse import urlparse
+from .errors import V2kitValidationError, V2kitParseError
+from .params import Protocol, DEFAULT_ENCODING
 from .params import INVALID_TYPE_MESSAGE, INVALID_ALTER_ID_MESSAGE, INVALID_EMPTY_STRING_MESSAGE
-from .params import INVALID_UUID_MESSAGE, INVALID_PORT_MESSAGE
+from .params import INVALID_UUID_MESSAGE, INVALID_PORT_MESSAGE, INVALID_URI_FORMAT_MESSAGE
+from .params import UNSUPPORTED_PROTOCOL_MESSAGE
 
 
 def _validate_non_empty_string(
@@ -89,13 +94,13 @@ def _validate_port(port: int) -> None:
         raise V2kitValidationError(INVALID_PORT_MESSAGE.format(port=port))
 
 
-def _validate_host(host: str) -> None:
+def _validate_address(address: str) -> None:
     """
-    Validate host.
+    Validate address.
 
-    :param host: Host address.
+    :param address: Config address.
     """
-    _validate_non_empty_string(host, "Host")
+    _validate_non_empty_string(address, "Address")
 
 
 def _validate_label(label: Optional[str]) -> None:
@@ -126,7 +131,7 @@ def _validate_dict(
 
 def _validate_alter_id(alter_id: int) -> None:
     """
-    Validate VMESS alterId.
+    Validate VMESS AlterId.
 
     :param alter_id: AlterId value.
     """
@@ -135,3 +140,30 @@ def _validate_alter_id(alter_id: int) -> None:
 
     if alter_id < 0:
         raise V2kitValidationError(INVALID_ALTER_ID_MESSAGE)
+
+
+def _validate_uri(uri: str) -> None:
+    """
+    Validate V2Ray URI format.
+
+    :param uri: V2Ray URI.
+    """
+    _validate_non_empty_string(uri, "URI")
+
+    if "://" not in uri:
+        raise V2kitParseError(INVALID_URI_FORMAT_MESSAGE)
+    parsed = urlparse(uri)
+    try:
+        Protocol(parsed.scheme)
+    except Exception as exc:
+        raise V2kitParseError(UNSUPPORTED_PROTOCOL_MESSAGE.format(protocol=parsed.scheme)) from exc
+    if parsed.scheme == Protocol.VMESS.value:
+        try:
+            _, encoded = uri.split("://", 1)
+            encoded += "=" * (-len(encoded) % 4)
+            decoded = base64.b64decode(encoded).decode(DEFAULT_ENCODING)
+            data = json.loads(decoded)
+            if not isinstance(data, dict):
+                raise ValueError
+        except Exception as exc:
+            raise V2kitParseError(INVALID_URI_FORMAT_MESSAGE) from exc

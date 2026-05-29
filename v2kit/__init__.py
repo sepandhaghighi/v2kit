@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """v2kit modules."""
 from .params import V2KIT_VERSION, Protocol
-from .errors import V2kitError, V2kitValidationError
+from .errors import V2kitError, V2kitValidationError, V2kitParseError
 from .functions import is_vmess, is_vless, is_trojan, is_shadowsocks
 from .functions import relabel
 from .functions import encode_subscription, decode_subscription
@@ -17,6 +17,7 @@ __version__ = V2KIT_VERSION
 __all__ = [
     "V2kitError",
     "V2kitValidationError",
+    "V2kitParseError",
     "is_vmess",
     "is_vless",
     "is_trojan",

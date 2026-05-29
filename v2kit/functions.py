@@ -112,11 +112,7 @@ def decode_subscription(
     :param subscription: Base64 subscription.
     :param validate: Validate decoded URI list.
     """
-    if not isinstance(
-        subscription,
-        str,
-    ):
-        _validate_non_empty_string(subscription, "Subscription")
+    _validate_non_empty_string(subscription, "Subscription")
 
     decoded = _decode_base64(
         subscription

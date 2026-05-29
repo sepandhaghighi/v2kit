@@ -37,22 +37,18 @@ def parse(uri: str) -> Union[VMESSConfig, VLESSConfig, TrojanConfig, Shadowsocks
         return _parse_vmess(uri)
 
     if protocol == Protocol.VLESS:
-        return _parse_vless(parsed)
+        return _parse_vless(uri)
 
     if protocol == Protocol.TROJAN:
-        return _parse_trojan(parsed)
+        return _parse_trojan(uri)
 
     if protocol == Protocol.SHADOWSOCKS:
-        return _parse_shadowsocks(
-            parsed
-        )
+        return _parse_shadowsocks(uri)
 
     raise V2kitParseError(UNSUPPORTED_PROTOCOL_MESSAGE.format(protocol=protocol))
 
 
-def _parse_vmess(
-    uri: str,
-) -> VMESSConfig:
+def _parse_vmess(uri: str) -> VMESSConfig:
     """
     Parse VMESS URI.
 
@@ -89,7 +85,7 @@ def _parse_vmess(
     }
     return VMESSConfig(
         uuid=data.get("id", ""),
-        host=data.get("add", ""),
+        address=data.get("add", ""),
         port=int(
             data.get("port", 0)
         ),
@@ -109,48 +105,45 @@ def _parse_vmess(
     )
 
 
-def _parse_vless(
-    parsed,
-) -> VLESSConfig:
+def _parse_vless(uri: str) -> VLESSConfig:
     """
     Parse VLESS URI.
 
-    :param parsed: Parsed URI object.
+    :param uri: VLESS URI.
     """
+    parsed = urlparse(uri)
     return VLESSConfig(
         uuid=parsed.username or "",
-        host=parsed.hostname or "",
+        address=parsed.hostname or "",
         port=parsed.port or 0,
         label=parsed.fragment or None,
         extra=dict(parse_qsl(parsed.query)),
     )
 
 
-def _parse_trojan(
-    parsed,
-) -> TrojanConfig:
+def _parse_trojan(uri: str) -> TrojanConfig:
     """
     Parse Trojan URI.
 
-    :param parsed: Parsed URI object.
+    :param uri: Trojan URI.
     """
+    parsed = urlparse(uri)
     return TrojanConfig(
         password=parsed.username or "",
-        host=parsed.hostname or "",
+        address=parsed.hostname or "",
         port=parsed.port or 0,
         label=parsed.fragment or None,
         extra=dict(parse_qsl(parsed.query)),
     )
 
 
-def _parse_shadowsocks(
-    parsed,
-) -> ShadowsocksConfig:
+def _parse_shadowsocks(uri: str) -> ShadowsocksConfig:
     """
     Parse Shadowsocks URI.
 
-    :param parsed: Parsed URI object.
+    :param uri: Shadowsocks URI.
     """
+    parsed = urlparse(uri)
     try:
         userinfo = _decode_base64(
             parsed.username
@@ -169,7 +162,7 @@ def _parse_shadowsocks(
     return ShadowsocksConfig(
         encryption_method=encryption_method,
         password=password,
-        host=parsed.hostname or "",
+        address=parsed.hostname or "",
         port=parsed.port or 0,
         label=parsed.fragment or None,
         extra=dict(parse_qsl(parsed.query)),
