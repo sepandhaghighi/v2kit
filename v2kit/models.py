@@ -12,7 +12,7 @@ from .validators import (
     _validate_address,
     _validate_label,
     _validate_password,
-    _validate_encryption_method,
+    _validate_encryption,
     _validate_network,
     _validate_tls,
     _validate_alter_id,
@@ -590,7 +590,7 @@ class ShadowsocksConfig(BaseConfig):
 
     def __init__(
         self,
-        encryption_method: str,
+        encryption: str,
         password: str,
         address: str,
         port: int,
@@ -600,7 +600,7 @@ class ShadowsocksConfig(BaseConfig):
         """
         Shadowsocks config initiator.
 
-        :param encryption_method: Config encryption method.
+        :param encryption: Config encryption method.
         :param password: Config password.
         :param address: Config address.
         :param port: Config port.
@@ -613,21 +613,21 @@ class ShadowsocksConfig(BaseConfig):
             extra=extra
         )
 
-        self._encryption_method = None
+        self._encryption = None
         self._password = None
 
         self._address = None
         self._port = None
 
-        self.update_encryption_method(encryption_method)
+        self.update_encryption(encryption)
         self.update_password(password)
         self.update_address(address)
         self.update_port(port)
 
     @property
-    def encryption_method(self) -> str:
+    def encryption(self) -> str:
         """Get the config encryption method."""
-        return self._encryption_method
+        return self._encryption
 
     @property
     def password(self) -> str:
@@ -644,18 +644,18 @@ class ShadowsocksConfig(BaseConfig):
         """Get the config port."""
         return self._port
 
-    def update_encryption_method(
+    def update_encryption(
         self,
-        encryption_method: str,
+        encryption: str,
     ) -> "ShadowsocksConfig":
         """
         Update encryption method.
 
-        :param encryption_method: New encryption method.
+        :param encryption: New encryption method.
         """
-        _validate_encryption_method(encryption_method)
+        _validate_encryption(encryption)
 
-        self._encryption_method = encryption_method
+        self._encryption = encryption
 
         return self
 
@@ -708,7 +708,7 @@ class ShadowsocksConfig(BaseConfig):
         """Convert Shadowsocks config to dictionary."""
         return {
             "protocol": "shadowsocks",
-            "encryption_method": self.encryption_method,
+            "encryption": self.encryption,
             "password": self.password,
             "address": self.address,
             "port": self.port,
@@ -719,7 +719,7 @@ class ShadowsocksConfig(BaseConfig):
     def to_uri(self) -> str:
         """Convert config to URI."""
         userinfo = (
-            f"{self.encryption_method}:{self.password}"
+            f"{self.encryption}:{self.password}"
         )
 
         encoded = _encode_base64(

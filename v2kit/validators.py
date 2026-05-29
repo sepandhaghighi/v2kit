@@ -48,13 +48,13 @@ def _validate_network(network: str) -> None:
     _validate_non_empty_string(network, "Network")
 
 
-def _validate_encryption_method(encryption_method: str) -> None:
+def _validate_encryption(encryption: str) -> None:
     """
     Validate Shadowsocks method.
 
-    :param encryption_method: Encryption method.
+    :param encryption: Encryption method.
     """
-    _validate_non_empty_string(encryption_method, "Encryption method")
+    _validate_non_empty_string(encryption, "Encryption")
 
 
 def _validate_password(password: str) -> None:

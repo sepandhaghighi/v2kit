@@ -149,7 +149,7 @@ def _parse_shadowsocks(uri: str) -> ShadowsocksConfig:
             parsed.username
         )
 
-        encryption_method, password = (
+        encryption, password = (
             userinfo.split(
                 ":",
                 1,
@@ -160,7 +160,7 @@ def _parse_shadowsocks(uri: str) -> ShadowsocksConfig:
         raise V2kitParseError(INVALID_URI_FORMAT_MESSAGE) from exc
 
     return ShadowsocksConfig(
-        encryption_method=encryption_method,
+        encryption=encryption,
         password=password,
         address=parsed.hostname or "",
         port=parsed.port or 0,
