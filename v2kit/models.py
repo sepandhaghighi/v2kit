@@ -135,10 +135,10 @@ class VMESSConfig(BaseConfig):
         uuid: str,
         address: str,
         port: int,
-        label: Optional[str] = None,
         alter_id: int = 0,
         network: str = "tcp",
         tls: str = "",
+        label: Optional[str] = None,
         extra: Optional[dict] = None,
     ):
         """
@@ -147,10 +147,10 @@ class VMESSConfig(BaseConfig):
         :param uuid: Config UUID.
         :param address: Config address.
         :param port: Config port.
-        :param label: Config label.
         :param alter_id: Config AlterID.
         :param network: Config network.
         :param tls: Config TLS.
+        :param label: Config label.
         :param extra: Extra dictionary.
         """
         super().__init__(
