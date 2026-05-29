@@ -2,7 +2,7 @@
 """v2kit functions."""
 from typing import Iterable, List, Union
 from .errors import V2kitValidationError
-from .params import Protocol
+from .params import Protocol, INVALID_ITEMS_MESSAGE
 from .utils import _get_protocol, _is_protocol
 from .utils import _encode_base64, _decode_base64
 from .validators import _validate_non_empty_string
@@ -91,7 +91,7 @@ def encode_subscription(
 
             continue
 
-        raise V2kitValidationError("Items must be str or BaseConfig.")
+        raise V2kitValidationError(INVALID_ITEMS_MESSAGE)
 
     subscription = "\n".join(
         uri_list
