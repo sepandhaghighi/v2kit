@@ -4,7 +4,7 @@
 import json
 from abc import ABC, abstractmethod
 from urllib.parse import urlencode
-from typing import Optional
+from typing import Dict, Optional
 from .params import Protocol
 from .validators import (
     _validate_uuid,
@@ -33,7 +33,7 @@ class BaseConfig(ABC):
         self,
         protocol: Protocol,
         label: Optional[str] = None,
-        extra: Optional[dict] = None,
+        extra: Optional[Dict[str, object]] = None,
     ):
         """
         Config initiator.
@@ -60,7 +60,7 @@ class BaseConfig(ABC):
         return self._label
 
     @property
-    def extra(self) -> dict:
+    def extra(self) -> Dict[str, object]:
         """Get extra data."""
         return self._extra
 
@@ -81,7 +81,7 @@ class BaseConfig(ABC):
 
     def update_extra(
         self,
-        extra: dict,
+        extra: Dict[str, object],
     ) -> "BaseConfig":
         """
         Update extra data.
@@ -139,7 +139,7 @@ class VMESSConfig(BaseConfig):
         network: str = "tcp",
         tls: str = "",
         label: Optional[str] = None,
-        extra: Optional[dict] = None,
+        extra: Optional[Dict[str, object]] = None,
     ):
         """
         VMESS config initiator.
@@ -337,7 +337,7 @@ class VLESSConfig(BaseConfig):
         address: str,
         port: int,
         label: Optional[str] = None,
-        extra: Optional[dict] = None,
+        extra: Optional[Dict[str, object]] = None,
     ):
         """
         VLESS config initiator.
@@ -466,7 +466,7 @@ class TrojanConfig(BaseConfig):
         address: str,
         port: int,
         label: Optional[str] = None,
-        extra: Optional[dict] = None,
+        extra: Optional[Dict[str, object]] = None,
     ):
         """
         Trojan config initiator.
@@ -595,7 +595,7 @@ class ShadowsocksConfig(BaseConfig):
         address: str,
         port: int,
         label: Optional[str] = None,
-        extra: Optional[dict] = None,
+        extra: Optional[Dict[str, object]] = None,
     ):
         """
         Shadowsocks config initiator.
