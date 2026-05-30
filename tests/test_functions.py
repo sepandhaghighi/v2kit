@@ -3,6 +3,7 @@
 import json
 from v2kit import is_vmess, is_vless, is_trojan, is_shadowsocks, parse
 from v2kit import relabel, encode_subscription, decode_subscription
+from v2kit import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig
 from v2kit.utils import _encode_base64
 
 
@@ -176,3 +177,31 @@ def test_decode_subscription_no_validation():
     )
 
     assert result == ["invalid-config"]
+
+
+def test_parse_vmess():
+    assert isinstance(
+        parse(VMESS_CONFIG),
+        VMESSConfig,
+    )
+
+
+def test_parse_vless():
+    assert isinstance(
+        parse(VLESS_CONFIG),
+        VLESSConfig,
+    )
+
+
+def test_parse_trojan():
+    assert isinstance(
+        parse(TROJAN_CONFIG),
+        TrojanConfig,
+    )
+
+
+def test_parse_shadowsocks():
+    assert isinstance(
+        parse(SHADOWSOCKS_CONFIG),
+        ShadowsocksConfig,
+    )

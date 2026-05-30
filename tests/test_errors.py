@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import pytest
-from v2kit import relabel, encode_subscription, decode_subscription
+from v2kit import VMESS_CONFIG, VLESS_CONFIG, TrojanConfig, ShadowsocksConfig
+from v2kit import relabel, encode_subscription, decode_subscription, parse
 from v2kit import V2kitError, V2kitValidationError, V2kitParseError
 from v2kit.validators import _validate_uri
 
@@ -13,6 +14,10 @@ INVALID_VMESS = "vmess://invalid-base64"
 VALID_VLESS = (
     "vless://1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45@example.com:443"
     "?security=tls#test"
+)
+
+VALID_UUID = (
+    "1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45"
 )
 
 
@@ -95,3 +100,69 @@ def test_exception_hierarchy():
         V2kitParseError,
         V2kitValidationError,
     )
+
+
+def test_parse_invalid_uri():
+    with pytest.raises(V2kitParseError):
+        parse("invalid")
+
+
+def test_parse_unsupported_protocol():
+    with pytest.raises(V2kitParseError):
+        parse("http://example.com")
+
+
+def test_vless_invalid_uuid():
+    with pytest.raises(V2kitValidationError):
+        VLESSConfig(
+            uuid="invalid",
+            address="example.com",
+            port=443,
+        )
+
+
+def test_vless_invalid_port():
+    with pytest.raises(V2kitValidationError):
+        VLESSConfig(
+            uuid=VALID_UUID,
+            address="example.com",
+            port=70000,
+        )
+
+
+def test_vless_empty_address():
+    with pytest.raises(V2kitValidationError):
+        VLESSConfig(
+            uuid=VALID_UUID,
+            address="",
+            port=443,
+        )
+
+
+def test_vmess_invalid_alter_id():
+    with pytest.raises(V2kitValidationError):
+        VMESSConfig(
+            uuid=VALID_UUID,
+            address="example.com",
+            port=443,
+            alter_id=-1,
+        )
+
+
+def test_trojan_empty_password():
+    with pytest.raises(V2kitValidationError):
+        TrojanConfig(
+            password="",
+            address="example.com",
+            port=443,
+        )
+
+
+def test_shadowsocks_empty_encryption():
+    with pytest.raises(V2kitValidationError):
+        ShadowsocksConfig(
+            encryption="",
+            password="secret",
+            address="example.com",
+            port=8388,
+        )
