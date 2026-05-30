@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-from v2kit import is_vmess, is_vless, is_trojan, is_shadowsocks
+from v2kit import is_vmess, is_vless, is_trojan, is_shadowsocks, parse
 from v2kit import relabel, encode_subscription, decode_subscription
 from v2kit.utils import _encode_base64
 
@@ -62,6 +62,21 @@ def test_is_shadowsocks():
 def test_is_vmess_negative():
     assert is_vmess(VLESS_CONFIG) is False
 
+
+def test_is_vmess_invalid():
+    assert is_vmess("invalid") is False
+
+
+def test_is_vless_invalid():
+    assert is_vless("invalid") is False
+
+
+def test_is_trojan_invalid():
+    assert is_trojan("invalid") is False
+
+
+def test_is_shadowsocks_invalid():
+    assert is_shadowsocks("invalid") is False
 
 def test_relabel_vmess():
     result = relabel(VMESS_CONFIG, "new-label")
@@ -131,3 +146,33 @@ def test_encode_decode_subscription_roundtrip():
     decoded = decode_subscription(encoded)
 
     assert decoded == configs
+
+
+def test_encode_subscription_with_models():
+    config = parse(VLESS_CONFIG)
+
+    result = encode_subscription([config])
+
+    assert isinstance(result, str)
+
+
+def test_encode_subscription_no_validation():
+    result = encode_subscription(
+        ["invalid-config"],
+        validate=False,
+    )
+
+    assert isinstance(result, str)
+
+
+def test_decode_subscription_no_validation():
+    encoded = _encode_base64(
+        "invalid-config"
+    )
+
+    result = decode_subscription(
+        encoded,
+        validate=False,
+    )
+
+    assert result == ["invalid-config"]
