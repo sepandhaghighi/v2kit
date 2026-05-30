@@ -3,6 +3,7 @@ from v2kit import parse
 from v2kit import VMESSConfig, VLESSConfig
 from v2kit import TrojanConfig, ShadowsocksConfig
 
+
 def test_vmess_to_uri_roundtrip():
     config = VMESSConfig(
         uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
@@ -44,6 +45,7 @@ def test_vless_to_uri_roundtrip():
     parsed = parse(config.to_uri())
 
     assert parsed == config
+
 
 def test_trojan_to_uri_roundtrip():
     config = TrojanConfig(

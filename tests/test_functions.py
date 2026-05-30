@@ -79,6 +79,7 @@ def test_is_trojan_invalid():
 def test_is_shadowsocks_invalid():
     assert is_shadowsocks("invalid") is False
 
+
 def test_relabel_vmess():
     result = relabel(VMESS_CONFIG, "new-label")
 
