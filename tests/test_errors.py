@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import pytest
-from v2kit import VMESS_CONFIG, VLESS_CONFIG, TrojanConfig, ShadowsocksConfig
+from v2kit import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig
 from v2kit import relabel, encode_subscription, decode_subscription, parse
 from v2kit import V2kitError, V2kitValidationError, V2kitParseError
 from v2kit.validators import _validate_uri
