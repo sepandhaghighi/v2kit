@@ -2,7 +2,7 @@
 
 import pytest
 from v2kit import relabel, encode_subscription, decode_subscription
-from v2kit import V2kitValidationError
+from v2kit import V2kitError, V2kitValidationError, V2kitParseError
 from v2kit.validators import _validate_uri
 
 
@@ -83,3 +83,15 @@ def test_decode_subscription_invalid_config():
 
     with pytest.raises(V2kitValidationError):
         decode_subscription(invalid_subscription)
+
+
+def test_exception_hierarchy():
+    assert issubclass(
+        V2kitValidationError,
+        V2kitError,
+    )
+
+    assert issubclass(
+        V2kitParseError,
+        V2kitValidationError,
+    )
