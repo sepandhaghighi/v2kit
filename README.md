@@ -57,6 +57,17 @@ V2Kit is a lightweight and extensible Python toolkit for working with V2Ray prox
 - Check [Python Packaging User Guide](https://packaging.python.org/installing/)     
 - `pip install v2kit==0.1`						
 
+## Supported Protocols
+
+V2Kit currently supports the following protocols:
+
+| Protocol    | Detection  | Parsing  | Relabeling  | Config Model |
+| ----------- | ---------  | -------  | ----------  | ------------ |
+| VMESS       | ✅         | ✅       | ✅          | ✅           |
+| VLESS       | ✅         | ✅       | ✅          | ✅           |
+| Trojan      | ✅         | ✅       | ✅          | ✅           |
+| Shadowsocks | ✅         | ✅       | ✅          | ✅           |
+
 
 ## Usage
 
