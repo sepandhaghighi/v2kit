@@ -57,27 +57,60 @@ V2Kit is a lightweight and extensible Python toolkit for working with V2Ray prox
 - Check [Python Packaging User Guide](https://packaging.python.org/installing/)     
 - `pip install v2kit==0.1`						
 
+## Supported Protocols
+
+V2Kit currently supports the following protocols:
+
+| Protocol    | Detection  | Parsing  | Relabeling  | Config Model |
+| ----------- | ---------  | -------  | ----------  | ------------ |
+| VMESS       | ✅         | ✅       | ✅          | ✅           |
+| VLESS       | ✅         | ✅       | ✅          | ✅           |
+| Trojan      | ✅         | ✅       | ✅          | ✅           |
+| Shadowsocks | ✅         | ✅       | ✅          | ✅           |
+
 
 ## Usage
+
+### URI Utilities
 
 ```python
 from v2kit import (
     decode_subscription,
     encode_subscription,
     is_vmess,
+    parse,
     relabel,
 )
 
-config = "vmess://eyJhZGQiOiIxMjcuMC4wLjEiLCJwcyI6Im9sZCJ9"
+uri = "vmess://eyJhZGQiOiIxMjcuMC4wLjEiLCJwcyI6Im9sZCJ9"
 
-new_config = relabel(config, "Germany-1")
+new_uri = relabel(uri, "Germany-1")
 
-if is_vmess(new_config):
+if is_vmess(new_uri):
     print("VMESS config detected")
 
-subscription = encode_subscription([new_config])
+config = parse(new_uri)
+
+config.update_label("Germany-2")
+
+subscription = encode_subscription([config])
 
 configs = decode_subscription(subscription)
+```
+
+### Configs
+
+```python
+from v2kit import VMESSConfig
+
+config = VMESSConfig(
+    uuid="550e8400-e29b-41d4-a716-446655440000",
+    address="example.com",
+    port=443,
+    label="Germany-1",
+)
+
+uri = config.to_uri()
 ```
 
 ## Issues & Bug Reports			
