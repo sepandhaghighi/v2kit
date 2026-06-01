@@ -4,6 +4,7 @@
 <a href="https://www.python.org/"><img src="https://img.shields.io/badge/built%20with-Python3-green.svg" alt="built with Python3"></a>
 <a href="https://github.com/sepandhaghighi/v2kit"><img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/sepandhaghighi/v2kit"></a>
 <a href="https://badge.fury.io/py/v2kit"><img src="https://badge.fury.io/py/v2kit.svg" alt="PyPI version"></a>
+<a href="https://codecov.io/gh/sepandhaghighi/v2kit"><img src="https://codecov.io/gh/sepandhaghighi/v2kit/graph/badge.svg?token=ytuuYF0NmT"></a>
 </div>			
 				
 ## Overview	
