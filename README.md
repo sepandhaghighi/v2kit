@@ -96,7 +96,7 @@ config.update_label("Germany-2")
 
 subscription = encode_subscription([config])
 
-configs = decode_subscription(subscription)
+uris = decode_subscription(subscription)
 ```
 
 ### Configs
