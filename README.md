@@ -88,7 +88,7 @@ uri = "vmess://eyJhZGQiOiIxMjcuMC4wLjEiLCJwcyI6Im9sZCJ9"
 new_uri = relabel(uri, "Germany-1")
 
 if is_vmess(new_uri):
-    print("VMESS config detected")
+    print("VMESS URI detected")
 
 config = parse(new_uri)
 
