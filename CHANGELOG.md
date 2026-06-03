@@ -5,8 +5,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- `VMESSConfig` class
+- `VLESSConfig` class
+- `TrojanConfig` class
+- `ShadowsocksConfig` class
+- `V2kitError` class
+- `V2kitValidationError` class
+- `V2kitParseError` class
+- `parse` function
 ### Changed
 - `README.md` updated
+- Test system modified
+- `is_vmess` function `config` parameter renamed to `uri`
+- `is_vless` function `config` parameter renamed to `uri`
+- `is_trojan` function `config` parameter renamed to `uri`
+- `is_shadowsocks` function `config` parameter renamed to `uri`
+- `encode_subscription` function `configs` parameter renamed to `entries`
 ## [0.1] - 2026-05-16
 ### Added
 - `is_vmess` function

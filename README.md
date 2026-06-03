@@ -88,7 +88,7 @@ uri = "vmess://eyJhZGQiOiIxMjcuMC4wLjEiLCJwcyI6Im9sZCJ9"
 new_uri = relabel(uri, "Germany-1")
 
 if is_vmess(new_uri):
-    print("VMESS config detected")
+    print("VMESS URI detected")
 
 config = parse(new_uri)
 
@@ -96,7 +96,7 @@ config.update_label("Germany-2")
 
 subscription = encode_subscription([config])
 
-configs = decode_subscription(subscription)
+uris = decode_subscription(subscription)
 ```
 
 ### Configs
