@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [0.2] - 2026-06-04
 ### Added
 - `VMESSConfig` class
 - `VLESSConfig` class
@@ -32,7 +33,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `encode_subscription` function
 - `decode_subscription` function
 
-[Unreleased]: https://github.com/sepandhaghighi/v2kit/compare/v0.1...dev
+[Unreleased]: https://github.com/sepandhaghighi/v2kit/compare/v0.2...dev
+[0.2]: https://github.com/sepandhaghighi/v2kit/compare/v0.1...v0.2
 [0.1]: https://github.com/sepandhaghighi/v2kit/compare/bb5a2cb...v0.1
 
 
