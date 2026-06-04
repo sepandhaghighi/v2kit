@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """v2kit utils."""
 import base64
-from typing import Iterable
 from .errors import V2kitValidationError, V2kitParseError
 from .validators import _validate_uri
 from .params import DEFAULT_ENCODING
