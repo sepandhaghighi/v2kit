@@ -68,6 +68,7 @@ V2Kit currently supports the following protocols:
 | VLESS       | ✅         | ✅       | ✅          | ✅           |
 | Trojan      | ✅         | ✅       | ✅          | ✅           |
 | Shadowsocks | ✅         | ✅       | ✅          | ✅           |
+| SOCKS       | ✅         | ✅       | ✅          | ✅           |
 
 
 ## Usage
