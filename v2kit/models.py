@@ -752,7 +752,7 @@ class SocksConfig(BaseConfig):
         password: Optional[str] = None,
         label: Optional[str] = None,
         extra: Optional[Dict[str, object]] = None,
-        ):
+    ):
         """
         SOCKS config initiator.
 

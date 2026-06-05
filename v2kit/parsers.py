@@ -44,7 +44,7 @@ def parse(uri: str) -> Union[VMESSConfig, VLESSConfig, TrojanConfig, Shadowsocks
 
     if protocol == Protocol.SHADOWSOCKS:
         return _parse_shadowsocks(uri)
-    
+
     if protocol == Protocol.SOCKS:
         return _parse_socks(uri)
 

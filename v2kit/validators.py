@@ -151,7 +151,7 @@ def _validate_username(username: Optional[str]) -> None:
     if username is None:
         return
 
-    _validate_non_empty_string(username,"Username")
+    _validate_non_empty_string(username, "Username")
 
 
 def _validate_uri(uri: str) -> None:
