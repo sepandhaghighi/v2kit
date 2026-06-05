@@ -4,7 +4,7 @@
 from typing import Union
 import json
 from urllib.parse import urlparse, parse_qsl
-from .errors import V2kitValidationError, V2kitParseError
+from .errors import V2kitParseError
 from .params import Protocol
 from .params import INVALID_URI_FORMAT_MESSAGE, UNSUPPORTED_PROTOCOL_MESSAGE
 from .validators import _validate_non_empty_string

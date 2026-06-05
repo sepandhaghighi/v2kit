@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 """v2kit utils."""
 import base64
-from typing import Iterable
-from .errors import V2kitValidationError, V2kitParseError
+from .errors import V2kitParseError
 from .validators import _validate_uri
-from .params import DEFAULT_ENCODING, INVALID_URI_FORMAT_MESSAGE
+from .params import DEFAULT_ENCODING
 from .params import Protocol
 
 
