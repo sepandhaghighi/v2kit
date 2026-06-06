@@ -832,7 +832,7 @@ class SocksConfig(BaseConfig):
         """
         Update username.
 
-        :param port: New username.
+        :param username: New username.
         """
         _validate_username(username)
         self._username = username
