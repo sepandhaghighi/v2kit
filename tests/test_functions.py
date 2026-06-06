@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import json
-from v2kit import is_vmess, is_vless, is_trojan, is_shadowsocks, parse
+from v2kit import is_vmess, is_vless, is_trojan, is_shadowsocks, is_socks, parse
 from v2kit import relabel, encode_subscription, decode_subscription
-from v2kit import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig
+from v2kit import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig, SocksConfig
 from v2kit.utils import _encode_base64
 
 
@@ -29,19 +29,13 @@ def create_vmess(label="test"):
 
 VMESS_CONFIG = create_vmess()
 
-VLESS_CONFIG = (
-    "vless://1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45@example.com:443"
-    "?security=tls#vless-test"
-)
+VLESS_CONFIG = "vless://1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45@example.com:443?security=tls#vless-test"
 
-TROJAN_CONFIG = (
-    "trojan://password@example.com:443"
-    "?security=tls#trojan-test"
-)
+TROJAN_CONFIG = "trojan://password@example.com:443?security=tls#trojan-test"
 
-SHADOWSOCKS_CONFIG = (
-    "ss://YWVzLTI1Ni1nY206cGFzc3dvcmQ=@example.com:8388#ss-test"
-)
+SHADOWSOCKS_CONFIG = "ss://YWVzLTI1Ni1nY206cGFzc3dvcmQ=@example.com:8388#ss-test"
+
+SOCKS_CONFIG = "socks://user:password@example.com:1080#socks-test"
 
 
 def test_is_vmess():
@@ -78,6 +72,14 @@ def test_is_trojan_invalid():
 
 def test_is_shadowsocks_invalid():
     assert is_shadowsocks("invalid") is False
+
+
+def test_is_socks():
+    assert is_socks(SOCKS_CONFIG) is True
+
+
+def test_is_socks_invalid():
+    assert is_socks("invalid") is False
 
 
 def test_relabel_vmess():
@@ -142,6 +144,7 @@ def test_encode_decode_subscription_roundtrip():
         VLESS_CONFIG,
         TROJAN_CONFIG,
         SHADOWSOCKS_CONFIG,
+        SOCKS_CONFIG,
     ]
 
     encoded = encode_subscription(configs)
@@ -205,4 +208,11 @@ def test_parse_shadowsocks():
     assert isinstance(
         parse(SHADOWSOCKS_CONFIG),
         ShadowsocksConfig,
+    )
+
+
+def test_parse_socks():
+    assert isinstance(
+        parse(SOCKS_CONFIG),
+        SocksConfig,
     )
