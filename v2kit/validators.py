@@ -142,6 +142,18 @@ def _validate_alter_id(alter_id: int) -> None:
         raise V2kitValidationError(INVALID_ALTER_ID_MESSAGE)
 
 
+def _validate_username(username: Optional[str]) -> None:
+    """
+    Validate username.
+
+    :param username: Config username.
+    """
+    if username is None:
+        return
+
+    _validate_non_empty_string(username, "Username")
+
+
 def _validate_uri(uri: str) -> None:
     """
     Validate V2Ray URI format.

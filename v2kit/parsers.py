@@ -8,11 +8,11 @@ from .errors import V2kitParseError
 from .params import Protocol
 from .params import INVALID_URI_FORMAT_MESSAGE, UNSUPPORTED_PROTOCOL_MESSAGE
 from .validators import _validate_non_empty_string
-from .models import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig
+from .models import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig, SocksConfig
 from .utils import _decode_base64
 
 
-def parse(uri: str) -> Union[VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig]:
+def parse(uri: str) -> Union[VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig, SocksConfig]:
     """
     Parse V2Ray URI.
 
@@ -44,6 +44,9 @@ def parse(uri: str) -> Union[VMESSConfig, VLESSConfig, TrojanConfig, Shadowsocks
 
     if protocol == Protocol.SHADOWSOCKS:
         return _parse_shadowsocks(uri)
+
+    if protocol == Protocol.SOCKS:
+        return _parse_socks(uri)
 
     raise V2kitParseError(UNSUPPORTED_PROTOCOL_MESSAGE.format(protocol=protocol))
 
@@ -164,6 +167,24 @@ def _parse_shadowsocks(uri: str) -> ShadowsocksConfig:
         password=password,
         address=parsed.hostname or "",
         port=parsed.port or 0,
+        label=parsed.fragment or None,
+        extra=dict(parse_qsl(parsed.query)),
+    )
+
+
+def _parse_socks(uri: str) -> SocksConfig:
+    """
+    Parse SOCKS URI.
+
+    :param uri: SOCKS URI.
+    """
+    parsed = urlparse(uri)
+
+    return SocksConfig(
+        address=parsed.hostname or "",
+        port=parsed.port or 0,
+        username=parsed.username or None,
+        password=parsed.password or None,
         label=parsed.fragment or None,
         extra=dict(parse_qsl(parsed.query)),
     )

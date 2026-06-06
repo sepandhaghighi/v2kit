@@ -46,6 +46,15 @@ def is_shadowsocks(uri: str) -> bool:
     return _is_protocol(uri, Protocol.SHADOWSOCKS)
 
 
+def is_socks(uri: str) -> bool:
+    """
+    Check whether URI is SOCKS.
+
+    :param uri: V2Ray URI.
+    """
+    return _is_protocol(uri, Protocol.SOCKS)
+
+
 def relabel(uri: str, label: str) -> str:
     """
     Relabel any supported URI.
