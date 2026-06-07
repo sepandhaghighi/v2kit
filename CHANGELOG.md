@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - `README.md` updated
 - Test system modified
+- All config models moved to `models` folder
 ## [0.2] - 2026-06-04
 ### Added
 - `VMESSConfig` class
