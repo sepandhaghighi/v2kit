@@ -2,8 +2,6 @@
 """VMESS config model."""
 
 import json
-from abc import ABC, abstractmethod
-from urllib.parse import urlencode
 from typing import Dict, Optional
 from .base import BaseConfig
 from ..params import Protocol
@@ -12,13 +10,9 @@ from ..validators import (
     _validate_port,
     _validate_address,
     _validate_label,
-    _validate_password,
-    _validate_encryption,
     _validate_network,
     _validate_tls,
     _validate_alter_id,
-    _validate_dict,
-    _validate_username,
 )
 from ..utils import _encode_base64
 
