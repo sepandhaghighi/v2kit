@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import pytest
-from v2kit import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig
+from v2kit import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig, SocksConfig
 from v2kit import relabel, encode_subscription, decode_subscription, parse
 from v2kit import V2kitError, V2kitValidationError, V2kitParseError
 from v2kit.validators import _validate_uri
@@ -165,4 +165,38 @@ def test_shadowsocks_empty_encryption():
             password="secret",
             address="example.com",
             port=8388,
+        )
+
+
+def test_socks_invalid_port():
+    with pytest.raises(V2kitValidationError):
+        SocksConfig(
+            address="example.com",
+            port=70000,
+        )
+
+
+def test_socks_empty_address():
+    with pytest.raises(V2kitValidationError):
+        SocksConfig(
+            address="",
+            port=1080,
+        )
+
+
+def test_socks_invalid_username():
+    with pytest.raises(V2kitValidationError):
+        SocksConfig(
+            address="example.com",
+            port=1080,
+            username="",
+        )
+
+
+def test_socks_invalid_password():
+    with pytest.raises(V2kitValidationError):
+        SocksConfig(
+            address="example.com",
+            port=1080,
+            password="",
         )
