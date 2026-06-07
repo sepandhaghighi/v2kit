@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Base model."""
+"""Base config model."""
 
 from abc import ABC, abstractmethod
 from typing import Dict, Optional

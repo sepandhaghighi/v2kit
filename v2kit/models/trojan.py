@@ -1,11 +1,13 @@
+# -*- coding: utf-8 -*-
 """Trojan config model."""
 
 import json
 from abc import ABC, abstractmethod
 from urllib.parse import urlencode
 from typing import Dict, Optional
-from .params import Protocol
-from .validators import (
+from .base import BaseConfig
+from ..params import Protocol
+from ..validators import (
     _validate_uuid,
     _validate_port,
     _validate_address,
@@ -18,7 +20,7 @@ from .validators import (
     _validate_dict,
     _validate_username,
 )
-from .utils import _encode_base64
+from ..utils import _encode_base64
 
 
 class TrojanConfig(BaseConfig):

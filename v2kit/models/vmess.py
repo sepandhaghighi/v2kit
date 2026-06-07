@@ -5,6 +5,7 @@ import json
 from abc import ABC, abstractmethod
 from urllib.parse import urlencode
 from typing import Dict, Optional
+from .base import BaseConfig
 from ..params import Protocol
 from ..validators import (
     _validate_uuid,
