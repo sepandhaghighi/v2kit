@@ -8,7 +8,6 @@ from ..params import Protocol
 from ..validators import (
     _validate_port,
     _validate_address,
-    _validate_label,
     _validate_password,
 )
 

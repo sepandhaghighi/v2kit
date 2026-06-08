@@ -9,7 +9,6 @@ from ..validators import (
     _validate_uuid,
     _validate_port,
     _validate_address,
-    _validate_label,
 )
 
 
