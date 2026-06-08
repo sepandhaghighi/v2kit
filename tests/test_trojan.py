@@ -3,6 +3,7 @@
 from v2kit import parse
 from v2kit import TrojanConfig
 
+
 def test_to_uri_roundtrip():
     config = TrojanConfig(
         password="password",

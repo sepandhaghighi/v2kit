@@ -15,6 +15,7 @@ from ..validators import (
 )
 from ..utils import _encode_base64
 
+
 class VMESSConfig(BaseConfig):
     """
     VMESS config model.

@@ -2,6 +2,7 @@
 from v2kit import parse
 from v2kit import SocksConfig
 
+
 def test_update_methods():
     config = SocksConfig(
         address="example.com",
