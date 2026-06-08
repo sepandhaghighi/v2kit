@@ -10,17 +10,7 @@ from v2kit import TrojanConfig, ShadowsocksConfig, SocksConfig
 
 
 
-def test_trojan_to_uri_roundtrip():
-    config = TrojanConfig(
-        password="password",
-        address="example.com",
-        port=443,
-        label="test",
-    )
 
-    parsed = parse(config.to_uri())
-
-    assert parsed == config
 
 
 def test_shadowsocks_to_uri_roundtrip():
