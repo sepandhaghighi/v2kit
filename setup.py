@@ -32,7 +32,7 @@ def read_description() -> str:
 
 setup(
     name='v2kit',
-    packages=['v2kit'],
+    packages=['v2kit', 'v2kit.models'],
     version='0.2',
     description='V2Kit: A Lightweight Toolkit for V2Ray Config Manipulation',
     long_description=read_description(),
