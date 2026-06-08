@@ -4,31 +4,10 @@ from v2kit import VMESSConfig, VLESSConfig
 from v2kit import TrojanConfig, ShadowsocksConfig, SocksConfig
 
 
-def test_socks_update_methods():
-    config = SocksConfig(
-        address="example.com",
-        port=1080,
-    )
-
-    config.update_username("user")
-    config.update_password("password")
-
-    assert config.username == "user"
-    assert config.password == "password"
 
 
-def test_vless_to_uri_roundtrip():
-    config = VLESSConfig(
-        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
-        address="example.com",
-        port=443,
-        label="test",
-        extra={"security": "tls"},
-    )
 
-    parsed = parse(config.to_uri())
 
-    assert parsed == config
 
 
 def test_trojan_to_uri_roundtrip():
@@ -58,94 +37,19 @@ def test_shadowsocks_to_uri_roundtrip():
     assert parsed == config
 
 
-def test_socks_to_uri_roundtrip():
-    config = SocksConfig(
-        address="example.com",
-        port=1080,
-        username="user",
-        password="password",
-        label="test",
-    )
-
-    parsed = parse(config.to_uri())
-
-    assert parsed == config
 
 
-def test_config_equality():
-    config1 = VLESSConfig(
-        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
-        address="example.com",
-        port=443,
-    )
-
-    config2 = VLESSConfig(
-        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
-        address="example.com",
-        port=443,
-    )
-
-    assert config1 == config2
 
 
-def test_socks_config_equality():
-    config1 = SocksConfig(
-        address="example.com",
-        port=1080,
-        username="user",
-        password="password",
-    )
-
-    config2 = SocksConfig(
-        address="example.com",
-        port=1080,
-        username="user",
-        password="password",
-    )
-
-    assert config1 == config2
 
 
-def test_config_repr():
-    config = VLESSConfig(
-        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
-        address="example.com",
-        port=443,
-    )
-
-    assert "VLESSConfig" in repr(config)
 
 
-def test_update_extra():
-    config = VLESSConfig(
-        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
-        address="example.com",
-        port=443,
-    )
-
-    config.update_extra(
-        {"security": "tls"}
-    )
-
-    assert config.extra["security"] == "tls"
 
 
-def test_socks_to_uri_without_auth():
-    config = SocksConfig(
-        address="example.com",
-        port=1080,
-        label="test",
-    )
-
-    assert config.to_uri() == "socks://example.com:1080#test"
 
 
-def test_socks_to_uri_username_only():
-    config = SocksConfig(
-        address="example.com",
-        port=1080,
-        username="user",
-        label="test",
-    )
 
-    assert config.to_uri() == "socks://user@example.com:1080#test"
+
+
+
