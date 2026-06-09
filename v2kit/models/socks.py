@@ -12,6 +12,7 @@ from ..validators import (
     _validate_username,
 )
 
+
 class SocksConfig(BaseConfig):
     """
     SOCKS config model.

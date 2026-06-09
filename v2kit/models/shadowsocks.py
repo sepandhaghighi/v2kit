@@ -12,6 +12,7 @@ from ..validators import (
 )
 from ..utils import _encode_base64
 
+
 class ShadowsocksConfig(BaseConfig):
     """
     Shadowsocks config model.

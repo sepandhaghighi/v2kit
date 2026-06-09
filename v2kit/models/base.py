@@ -6,6 +6,7 @@ from typing import Dict, Optional
 from ..params import Protocol
 from ..validators import _validate_label, _validate_dict
 
+
 class BaseConfig(ABC):
     """
     Base class for all V2Ray config models.
