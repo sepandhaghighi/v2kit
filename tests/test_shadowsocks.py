@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from v2kit import parse
 from v2kit import ShadowsocksConfig
 
