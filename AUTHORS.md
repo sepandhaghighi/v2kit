@@ -5,7 +5,7 @@
 
 # Other Contributors
 ----------
-- [ChatGPT](https://chat.openai.com/) ++
+- [Gemini](https://gemini.google.com) ++
 
 ++ Graphic designer
 
