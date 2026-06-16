@@ -2,7 +2,7 @@
 """v2kit params."""
 from enum import Enum
 
-V2KIT_VERSION = "0.2"
+V2KIT_VERSION = "0.3"
 
 
 class Protocol(str, Enum):
