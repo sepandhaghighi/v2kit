@@ -12,6 +12,7 @@ from .models import (
     TrojanConfig,
     ShadowsocksConfig,
     SocksConfig,
+    HttpConfig,
 )
 __version__ = V2KIT_VERSION
 
@@ -33,4 +34,5 @@ __all__ = [
     "VLESSConfig",
     "TrojanConfig",
     "ShadowsocksConfig",
-    "SocksConfig"]
+    "SocksConfig",
+    "HttpConfig"]

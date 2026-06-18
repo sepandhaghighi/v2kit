@@ -14,7 +14,7 @@ from ..validators import (
 )
 
 
-class HTTPConfig(BaseConfig):
+class HttpConfig(BaseConfig):
     """
     HTTP config model.
 
@@ -77,7 +77,7 @@ class HTTPConfig(BaseConfig):
         """Get the config password."""
         return self._password
 
-    def update_address(self, address: str) -> "HTTPConfig":
+    def update_address(self, address: str) -> "HttpConfig":
         """
         Update address.
 
@@ -87,7 +87,7 @@ class HTTPConfig(BaseConfig):
         self._address = address
         return self
 
-    def update_port(self, port: int) -> "HTTPConfig":
+    def update_port(self, port: int) -> "HttpConfig":
         """
         Update port.
 
@@ -100,7 +100,7 @@ class HTTPConfig(BaseConfig):
     def update_username(
         self,
         username: Optional[str],
-    ) -> "HTTPConfig":
+    ) -> "HttpConfig":
         """
         Update username.
 
@@ -113,7 +113,7 @@ class HTTPConfig(BaseConfig):
     def update_password(
         self,
         password: Optional[str],
-    ) -> "HTTPConfig":
+    ) -> "HttpConfig":
         """
         Update password.
 
