@@ -109,7 +109,7 @@ def test_parse_invalid_uri():
 
 def test_parse_unsupported_protocol():
     with pytest.raises(V2kitParseError):
-        parse("http://example.com")
+        parse(INVALID_PROTOCOL)
 
 
 def test_vless_invalid_uuid():
