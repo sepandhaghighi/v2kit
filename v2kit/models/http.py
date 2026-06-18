@@ -16,7 +16,10 @@ from ..validators import (
 
 class HTTPConfig(BaseConfig):
     """
-    HTTP proxy config model.
+    HTTP config model.
+
+    Represents a HTTP configuration and provides
+    validation, serialization, and URI generation.
     """
 
     def __init__(
@@ -28,6 +31,16 @@ class HTTPConfig(BaseConfig):
         label: Optional[str] = None,
         extra: Optional[Dict[str, object]] = None,
     ):
+        """
+        HTTP config initiator.
+
+        :param address: Config address.
+        :param port: Config port.
+        :param username: Config username.
+        :param password: Config password.
+        :param label: Config label.
+        :param extra: Extra dictionary.
+        """
         super().__init__(
             protocol=Protocol.HTTP,
             label=label,
@@ -46,26 +59,40 @@ class HTTPConfig(BaseConfig):
 
     @property
     def address(self) -> str:
+        """Get the config address."""
         return self._address
 
     @property
     def port(self) -> int:
+        """Get the config port."""
         return self._port
 
     @property
     def username(self) -> Optional[str]:
+        """Get the config username."""
         return self._username
 
     @property
     def password(self) -> Optional[str]:
+        """Get the config password."""
         return self._password
 
     def update_address(self, address: str) -> "HTTPConfig":
+        """
+        Update address.
+
+        :param address: New address.
+        """
         _validate_address(address)
         self._address = address
         return self
 
     def update_port(self, port: int) -> "HTTPConfig":
+        """
+        Update port.
+
+        :param port: New port.
+        """
         _validate_port(port)
         self._port = port
         return self
@@ -74,6 +101,11 @@ class HTTPConfig(BaseConfig):
         self,
         username: Optional[str],
     ) -> "HTTPConfig":
+        """
+        Update username.
+
+        :param username: New username.
+        """
         _validate_username(username)
         self._username = username
         return self
@@ -82,6 +114,11 @@ class HTTPConfig(BaseConfig):
         self,
         password: Optional[str],
     ) -> "HTTPConfig":
+        """
+        Update password.
+
+        :param password: New password.
+        """
         if password is not None:
             _validate_password(password)
 
@@ -89,6 +126,7 @@ class HTTPConfig(BaseConfig):
         return self
 
     def to_dict(self) -> dict:
+        """Convert HTTP config to dictionary."""
         return {
             "protocol": "http",
             "address": self.address,
@@ -100,6 +138,7 @@ class HTTPConfig(BaseConfig):
         }
 
     def to_uri(self) -> str:
+        """Convert config to URI."""
         auth = ""
 
         if self.username is not None:
