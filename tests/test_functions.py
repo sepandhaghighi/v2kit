@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-from v2kit import is_vmess, is_vless, is_trojan, is_shadowsocks, is_socks, parse
+from v2kit import is_vmess, is_vless, is_trojan, is_shadowsocks, is_socks, is_http, parse
 from v2kit import relabel, encode_subscription, decode_subscription
 from v2kit import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig, SocksConfig
 from v2kit.utils import _encode_base64
