@@ -57,6 +57,29 @@ def test_extra():
     assert data["host"] == "cdn.example.com"
 
 
+def test_equality():
+    config1 = VMESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+    )
+
+    config2 = VMESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+    )
+
+    config3 = VMESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.org",
+        port=443,
+    )
+
+    assert config1 == config2
+    assert config1 != config3
+
+
 def test_to_uri_roundtrip():
     config = VMESSConfig(
         uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
