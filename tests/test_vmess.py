@@ -117,6 +117,17 @@ def test_invalid_values(kwargs):
         VMESSConfig(**params)
 
 
+def test_repr():
+    config = VMESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+        label="test",
+    )
+
+    assert repr(config) == "VMESSConfig(protocol=<Protocol.VMESS: 'vmess'>, label='test')"
+
+
 def test_to_uri_roundtrip():
     config = VMESSConfig(
         uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
