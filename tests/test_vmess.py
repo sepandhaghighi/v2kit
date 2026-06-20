@@ -80,6 +80,20 @@ def test_equality():
     assert config1 != config3
 
 
+def test_method_chaining():
+    config = VMESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+    )
+
+    config.update_network("ws").update_tls("tls").update_alter_id(1)
+
+    assert config.network == "ws"
+    assert config.tls == "tls"
+    assert config.alter_id == 1
+
+
 def test_to_uri_roundtrip():
     config = VMESSConfig(
         uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
