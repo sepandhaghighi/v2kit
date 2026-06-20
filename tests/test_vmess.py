@@ -101,8 +101,8 @@ def test_method_chaining():
         {"address": ""},
         {"port": 0},
         {"alter_id": -1},
-        {"network": "invalid"},
-        {"tls": "invalid"},
+        {"network": 2},
+        {"tls": 2},
     ],
 )
 def test_invalid_values(kwargs):
