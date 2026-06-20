@@ -7,7 +7,7 @@ from v2kit import V2kitError, V2kitValidationError, V2kitParseError
 from v2kit.validators import _validate_uri
 
 
-INVALID_PROTOCOL = "http://example.com"
+INVALID_PROTOCOL = "ftp://example.com"
 
 INVALID_VMESS = "vmess://invalid-base64"
 
@@ -109,7 +109,7 @@ def test_parse_invalid_uri():
 
 def test_parse_unsupported_protocol():
     with pytest.raises(V2kitParseError):
-        parse("http://example.com")
+        parse(INVALID_PROTOCOL)
 
 
 def test_vless_invalid_uuid():

@@ -70,6 +70,7 @@ V2Kit currently supports the following protocols:
 | Trojan      | ✅         | ✅       | ✅          | ✅           |
 | Shadowsocks | ✅         | ✅       | ✅          | ✅           |
 | SOCKS       | ✅         | ✅       | ✅          | ✅           |
+| HTTP        | ✅         | ✅       | ✅          | ✅           |
 
 
 ## Usage

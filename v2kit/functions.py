@@ -55,6 +55,15 @@ def is_socks(uri: str) -> bool:
     return _is_protocol(uri, Protocol.SOCKS)
 
 
+def is_http(uri: str) -> bool:
+    """
+    Check whether URI is HTTP.
+
+    :param uri: V2Ray URI.
+    """
+    return _is_protocol(uri, Protocol.HTTP)
+
+
 def relabel(uri: str, label: str) -> str:
     """
     Relabel any supported URI.

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-from v2kit import is_vmess, is_vless, is_trojan, is_shadowsocks, is_socks, parse
+from v2kit import is_vmess, is_vless, is_trojan, is_shadowsocks, is_socks, is_http, parse
 from v2kit import relabel, encode_subscription, decode_subscription
 from v2kit import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig, SocksConfig
 from v2kit.utils import _encode_base64
@@ -37,6 +37,8 @@ SHADOWSOCKS_CONFIG = "ss://YWVzLTI1Ni1nY206cGFzc3dvcmQ=@example.com:8388#ss-test
 
 SOCKS_CONFIG = "socks://user:password@example.com:1080#socks-test"
 
+HTTP_CONFIG = "http://user@example.com:1080#test"
+
 
 def test_is_vmess():
     assert is_vmess(VMESS_CONFIG) is True
@@ -52,6 +54,10 @@ def test_is_trojan():
 
 def test_is_shadowsocks():
     assert is_shadowsocks(SHADOWSOCKS_CONFIG) is True
+
+
+def test_is_http():
+    assert is_http(HTTP_CONFIG) is True
 
 
 def test_is_vmess_negative():
@@ -72,6 +78,10 @@ def test_is_trojan_invalid():
 
 def test_is_shadowsocks_invalid():
     assert is_shadowsocks("invalid") is False
+
+
+def test_is_http_invalid():
+    assert is_http("invalid") is False
 
 
 def test_is_socks():

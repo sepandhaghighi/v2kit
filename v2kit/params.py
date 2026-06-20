@@ -13,6 +13,7 @@ class Protocol(str, Enum):
     TROJAN = "trojan"
     SHADOWSOCKS = "ss"
     SOCKS = "socks"
+    HTTP = "http"
 
 
 SUPPORTED_PROTOCOLS = {item.value for item in Protocol}
