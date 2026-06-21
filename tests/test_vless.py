@@ -34,6 +34,19 @@ def test_to_dict():
     }
 
 
+def test_extra():
+    config = VLESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+        extra={"security": "tls"},
+    )
+
+    data = config.to_dict()
+
+    assert data["extra"]["security"] == "tls"
+
+
 def test_to_uri_roundtrip():
     config = VLESSConfig(
         uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
