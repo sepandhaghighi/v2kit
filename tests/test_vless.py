@@ -139,3 +139,19 @@ def test_update_extra():
     )
 
     assert config.extra["security"] == "tls"
+
+
+def test_update_methods():
+    config = VLESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+    )
+
+    config.update_uuid("2c4b4bca-e3ff-4ca8-a062-6f399ad3cf45")
+    config.update_address("example.org")
+    config.update_port(8443)
+
+    assert config.uuid == "2c4b4bca-e3ff-4ca8-a062-6f399ad3cf45"
+    assert config.address == "example.org"
+    assert config.port == 8443
