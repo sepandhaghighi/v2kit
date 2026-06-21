@@ -1,7 +1,18 @@
 # -*- coding: utf-8 -*-
 
+import pytest
 from v2kit import parse
 from v2kit import VLESSConfig
+
+def test_defaults():
+    config = VLESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+    )
+
+    assert config.label is None
+    assert config.extra == {}
 
 
 def test_to_uri_roundtrip():
