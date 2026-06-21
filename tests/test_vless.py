@@ -117,14 +117,14 @@ def test_equality():
     assert config1 == config2
 
 
-def test_config_repr():
+def test_repr():
     config = VLESSConfig(
         uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
         address="example.com",
         port=443,
     )
 
-    assert "VLESSConfig" in repr(config)
+    assert repr(config) == "VLESSConfig(protocol=<Protocol.VLESS: 'vless'>, label=None)"
 
 
 def test_update_extra():
