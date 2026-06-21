@@ -67,6 +67,26 @@ def test_method_chaining():
     assert config.port == 8443
 
 
+@pytest.mark.parametrize(
+    "kwargs",
+    [
+        {"uuid": "invalid"},
+        {"address": ""},
+        {"port": 0},
+    ],
+)
+def test_invalid_values(kwargs):
+    params = {
+        "uuid": "1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        "address": "example.com",
+        "port": 443,
+    }
+    params.update(kwargs)
+
+    with pytest.raises(ValueError):
+        VLESSConfig(**params)
+
+
 def test_to_uri_roundtrip():
     config = VLESSConfig(
         uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
