@@ -15,6 +15,25 @@ def test_defaults():
     assert config.extra == {}
 
 
+def test_to_dict():
+    config = VLESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+        label="test",
+        extra={"security": "tls"},
+    )
+
+    assert config.to_dict() == {
+        "protocol": "vless",
+        "uuid": "1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        "address": "example.com",
+        "port": 443,
+        "extra": {"security": "tls"},
+        "label": "test",
+    }
+
+
 def test_to_uri_roundtrip():
     config = VLESSConfig(
         uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
