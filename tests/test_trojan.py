@@ -144,3 +144,19 @@ def test_update_extra():
     )
 
     assert config.extra["security"] == "tls"
+
+
+def test_update_methods():
+    config = TrojanConfig(
+        password="password",
+        address="example.com",
+        port=443,
+    )
+
+    config.update_password("new-password")
+    config.update_address("example.org")
+    config.update_port(8443)
+
+    assert config.password == "new-password"
+    assert config.address == "example.org"
+    assert config.port == 8443
