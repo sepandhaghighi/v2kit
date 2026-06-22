@@ -109,6 +109,16 @@ def test_equality():
     assert config1 == config2
     assert config1 != config3
 
+
+def test_repr():
+    config = TrojanConfig(
+        password="password",
+        address="example.com",
+        port=443,
+    )
+
+    assert repr(config) == "TrojanConfig(protocol=<Protocol.TROJAN: 'trojan'>, label=None)"
+
 def test_to_uri_roundtrip():
     config = TrojanConfig(
         password="password",
