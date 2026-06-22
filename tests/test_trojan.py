@@ -46,6 +46,26 @@ def test_extra():
 
     assert data["extra"]["security"] == "tls"
 
+
+def test_method_chaining():
+    config = TrojanConfig(
+        password="password",
+        address="example.com",
+        port=443,
+    )
+
+    config.update_password(
+        "new-password"
+    ).update_address(
+        "example.org"
+    ).update_port(
+        8443
+    )
+
+    assert config.password == "new-password"
+    assert config.address == "example.org"
+    assert config.port == 8443
+
 def test_to_uri_roundtrip():
     config = TrojanConfig(
         password="password",
