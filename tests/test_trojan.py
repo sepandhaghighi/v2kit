@@ -66,6 +66,26 @@ def test_method_chaining():
     assert config.address == "example.org"
     assert config.port == 8443
 
+
+@pytest.mark.parametrize(
+    "kwargs",
+    [
+        {"password": ""},
+        {"address": ""},
+        {"port": 0},
+    ],
+)
+def test_invalid_values(kwargs):
+    params = {
+        "password": "password",
+        "address": "example.com",
+        "port": 443,
+    }
+    params.update(kwargs)
+
+    with pytest.raises(ValueError):
+        TrojanConfig(**params)
+
 def test_to_uri_roundtrip():
     config = TrojanConfig(
         password="password",
