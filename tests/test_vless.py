@@ -1,7 +1,90 @@
 # -*- coding: utf-8 -*-
 
+import pytest
 from v2kit import parse
 from v2kit import VLESSConfig
+
+def test_defaults():
+    config = VLESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+    )
+
+    assert config.label is None
+    assert config.extra == {}
+
+
+def test_to_dict():
+    config = VLESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+        label="test",
+        extra={"security": "tls"},
+    )
+
+    assert config.to_dict() == {
+        "protocol": "vless",
+        "uuid": "1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        "address": "example.com",
+        "port": 443,
+        "extra": {"security": "tls"},
+        "label": "test",
+    }
+
+
+def test_extra():
+    config = VLESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+        extra={"security": "tls"},
+    )
+
+    data = config.to_dict()
+
+    assert data["extra"]["security"] == "tls"
+
+
+def test_method_chaining():
+    config = VLESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+    )
+
+    config.update_uuid(
+        "2c4b4bca-e3ff-4ca8-a062-6f399ad3cf45"
+    ).update_address(
+        "example.org"
+    ).update_port(
+        8443
+    )
+
+    assert config.uuid == "2c4b4bca-e3ff-4ca8-a062-6f399ad3cf45"
+    assert config.address == "example.org"
+    assert config.port == 8443
+
+
+@pytest.mark.parametrize(
+    "kwargs",
+    [
+        {"uuid": "invalid"},
+        {"address": ""},
+        {"port": 0},
+    ],
+)
+def test_invalid_values(kwargs):
+    params = {
+        "uuid": "1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        "address": "example.com",
+        "port": 443,
+    }
+    params.update(kwargs)
+
+    with pytest.raises(ValueError):
+        VLESSConfig(**params)
 
 
 def test_to_uri_roundtrip():
@@ -18,7 +101,7 @@ def test_to_uri_roundtrip():
     assert parsed == config
 
 
-def test_config_equality():
+def test_equality():
     config1 = VLESSConfig(
         uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
         address="example.com",
@@ -31,17 +114,24 @@ def test_config_equality():
         port=443,
     )
 
+    config3 = VLESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.org",
+        port=443,
+    )
+
     assert config1 == config2
+    assert config1 != config3
 
 
-def test_config_repr():
+def test_repr():
     config = VLESSConfig(
         uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
         address="example.com",
         port=443,
     )
 
-    assert "VLESSConfig" in repr(config)
+    assert repr(config) == "VLESSConfig(protocol=<Protocol.VLESS: 'vless'>, label=None)"
 
 
 def test_update_extra():
@@ -56,3 +146,19 @@ def test_update_extra():
     )
 
     assert config.extra["security"] == "tls"
+
+
+def test_update_methods():
+    config = VLESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+    )
+
+    config.update_uuid("2c4b4bca-e3ff-4ca8-a062-6f399ad3cf45")
+    config.update_address("example.org")
+    config.update_port(8443)
+
+    assert config.uuid == "2c4b4bca-e3ff-4ca8-a062-6f399ad3cf45"
+    assert config.address == "example.org"
+    assert config.port == 8443
