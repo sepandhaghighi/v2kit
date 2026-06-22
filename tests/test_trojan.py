@@ -130,3 +130,17 @@ def test_to_uri_roundtrip():
     parsed = parse(config.to_uri())
 
     assert parsed == config
+
+
+def test_update_extra():
+    config = TrojanConfig(
+        password="password",
+        address="example.com",
+        port=443,
+    )
+
+    config.update_extra(
+        {"security": "tls"}
+    )
+
+    assert config.extra["security"] == "tls"
