@@ -54,13 +54,7 @@ def test_method_chaining():
         port=443,
     )
 
-    config.update_password(
-        "new-password"
-    ).update_address(
-        "example.org"
-    ).update_port(
-        8443
-    )
+    config.update_password("new-password").update_address("example.org").update_port(8443)
 
     assert config.password == "new-password"
     assert config.address == "example.org"
