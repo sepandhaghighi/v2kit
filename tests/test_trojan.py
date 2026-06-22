@@ -15,6 +15,25 @@ def test_defaults():
     assert config.extra == {}
 
 
+def test_to_dict():
+    config = TrojanConfig(
+        password="password",
+        address="example.com",
+        port=443,
+        label="test",
+        extra={"security": "tls"},
+    )
+
+    assert config.to_dict() == {
+        "protocol": "trojan",
+        "password": "password",
+        "address": "example.com",
+        "port": 443,
+        "extra": {"security": "tls"},
+        "label": "test",
+    }
+
+
 def test_to_uri_roundtrip():
     config = TrojanConfig(
         password="password",
