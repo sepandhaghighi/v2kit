@@ -34,6 +34,18 @@ def test_to_dict():
     }
 
 
+def test_extra():
+    config = TrojanConfig(
+        password="password",
+        address="example.com",
+        port=443,
+        extra={"security": "tls"},
+    )
+
+    data = config.to_dict()
+
+    assert data["extra"]["security"] == "tls"
+
 def test_to_uri_roundtrip():
     config = TrojanConfig(
         password="password",
