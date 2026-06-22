@@ -86,6 +86,29 @@ def test_invalid_values(kwargs):
     with pytest.raises(ValueError):
         TrojanConfig(**params)
 
+
+def test_equality():
+    config1 = TrojanConfig(
+        password="password",
+        address="example.com",
+        port=443,
+    )
+
+    config2 = TrojanConfig(
+        password="password",
+        address="example.com",
+        port=443,
+    )
+
+    config3 = TrojanConfig(
+        password="password",
+        address="example.org",
+        port=443,
+    )
+
+    assert config1 == config2
+    assert config1 != config3
+
 def test_to_uri_roundtrip():
     config = TrojanConfig(
         password="password",
