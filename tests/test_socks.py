@@ -13,6 +13,27 @@ def test_defaults():
     assert config.extra == {}
 
 
+def test_to_dict():
+    config = SocksConfig(
+        address="example.com",
+        port=1080,
+        username="user",
+        password="password",
+        label="test",
+        extra={"version": "5"},
+    )
+
+    assert config.to_dict() == {
+        "protocol": "socks",
+        "address": "example.com",
+        "port": 1080,
+        "username": "user",
+        "password": "password",
+        "label": "test",
+        "extra": {"version": "5"},
+    }
+
+
 def test_update_methods():
     config = SocksConfig(
         address="example.com",
