@@ -68,6 +68,26 @@ def test_method_chaining():
     assert config.password == "password"
 
 
+@pytest.mark.parametrize(
+    "kwargs",
+    [
+        {"address": ""},
+        {"port": 0},
+        {"username": ""},
+        {"password": ""},
+    ],
+)
+def test_invalid_values(kwargs):
+    params = {
+        "address": "example.com",
+        "port": 1080,
+    }
+    params.update(kwargs)
+
+    with pytest.raises(ValueError):
+        SocksConfig(**params)
+
+
 def test_update_methods():
     config = SocksConfig(
         address="example.com",
