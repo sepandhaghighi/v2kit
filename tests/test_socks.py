@@ -101,6 +101,19 @@ def test_update_methods():
     assert config.password == "password"
 
 
+def test_update_extra():
+    config = SocksConfig(
+        address="example.com",
+        port=1080,
+    )
+
+    config.update_extra(
+        {"version": "5"}
+    )
+
+    assert config.extra["version"] == "5"
+
+
 def test_to_uri_roundtrip():
     config = SocksConfig(
         address="example.com",
