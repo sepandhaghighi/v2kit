@@ -34,6 +34,18 @@ def test_to_dict():
     }
 
 
+def test_extra():
+    config = SocksConfig(
+        address="example.com",
+        port=1080,
+        extra={"version": "5"},
+    )
+
+    data = config.to_dict()
+
+    assert data["extra"]["version"] == "5"
+
+
 def test_update_methods():
     config = SocksConfig(
         address="example.com",
