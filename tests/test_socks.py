@@ -46,6 +46,28 @@ def test_extra():
     assert data["extra"]["version"] == "5"
 
 
+def test_method_chaining():
+    config = SocksConfig(
+        address="example.com",
+        port=1080,
+    )
+
+    config.update_address(
+        "example.org"
+    ).update_port(
+        2080
+    ).update_username(
+        "user"
+    ).update_password(
+        "password"
+    )
+
+    assert config.address == "example.org"
+    assert config.port == 2080
+    assert config.username == "user"
+    assert config.password == "password"
+
+
 def test_update_methods():
     config = SocksConfig(
         address="example.com",
