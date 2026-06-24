@@ -115,7 +115,7 @@ def test_to_uri_roundtrip():
     assert parsed == config
 
 
-def test_config_equality():
+def test_equality():
     config1 = SocksConfig(
         address="example.com",
         port=1080,
@@ -130,7 +130,24 @@ def test_config_equality():
         password="password",
     )
 
+    config3 = SocksConfig(
+        address="example.org",
+        port=1080,
+        username="user",
+        password="password",
+    )
+
     assert config1 == config2
+    assert config1 != config3
+
+
+def test_repr():
+    config = SocksConfig(
+        address="example.com",
+        port=1080,
+    )
+
+    assert repr(config) == "SocksConfig(protocol=<Protocol.SOCKS: 'socks'>, label=None)"
 
 
 def test_to_uri_without_auth():
