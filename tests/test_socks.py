@@ -94,9 +94,13 @@ def test_update_methods():
         port=1080,
     )
 
+    config.update_address("example.org")
+    config.update_port(2080)
     config.update_username("user")
     config.update_password("password")
 
+    assert config.address == "example.org"
+    assert config.port == 2080
     assert config.username == "user"
     assert config.password == "password"
 
