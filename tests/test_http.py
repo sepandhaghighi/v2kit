@@ -16,6 +16,27 @@ def test_defaults():
     assert config.password is None
 
 
+def test_to_dict():
+    config = HttpConfig(
+        address="example.com",
+        port=1080,
+        username="user",
+        password="password",
+        label="test",
+        extra={"foo": "bar"},
+    )
+
+    assert config.to_dict() == {
+        "protocol": "http",
+        "address": "example.com",
+        "port": 1080,
+        "username": "user",
+        "password": "password",
+        "extra": {"foo": "bar"},
+        "label": "test",
+    }
+
+
 def test_update_methods():
     config = HttpConfig(
         address="example.com",
