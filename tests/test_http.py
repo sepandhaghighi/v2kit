@@ -37,6 +37,18 @@ def test_to_dict():
     }
 
 
+def test_extra():
+    config = HttpConfig(
+        address="example.com",
+        port=1080,
+        extra={"foo": "bar"},
+    )
+
+    data = config.to_dict()
+
+    assert data["extra"]["foo"] == "bar"
+
+
 def test_update_methods():
     config = HttpConfig(
         address="example.com",
