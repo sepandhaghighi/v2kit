@@ -1,6 +1,19 @@
 # -*- coding: utf-8 -*-
+import pytest
 from v2kit import parse
 from v2kit import HttpConfig
+
+
+def test_defaults():
+    config = HttpConfig(
+        address="example.com",
+        port=1080,
+    )
+
+    assert config.label is None
+    assert config.extra == {}
+    assert config.username is None
+    assert config.password is None
 
 
 def test_update_methods():
