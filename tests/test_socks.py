@@ -1,6 +1,91 @@
 # -*- coding: utf-8 -*-
+import pytest
 from v2kit import parse
 from v2kit import SocksConfig
+
+def test_defaults():
+    config = SocksConfig(
+        address="example.com",
+        port=1080,
+    )
+
+    assert config.label is None
+    assert config.extra == {}
+
+
+def test_to_dict():
+    config = SocksConfig(
+        address="example.com",
+        port=1080,
+        username="user",
+        password="password",
+        label="test",
+        extra={"version": "5"},
+    )
+
+    assert config.to_dict() == {
+        "protocol": "socks",
+        "address": "example.com",
+        "port": 1080,
+        "username": "user",
+        "password": "password",
+        "label": "test",
+        "extra": {"version": "5"},
+    }
+
+
+def test_extra():
+    config = SocksConfig(
+        address="example.com",
+        port=1080,
+        extra={"version": "5"},
+    )
+
+    data = config.to_dict()
+
+    assert data["extra"]["version"] == "5"
+
+
+def test_method_chaining():
+    config = SocksConfig(
+        address="example.com",
+        port=1080,
+    )
+
+    config.update_address(
+        "example.org"
+    ).update_port(
+        2080
+    ).update_username(
+        "user"
+    ).update_password(
+        "password"
+    )
+
+    assert config.address == "example.org"
+    assert config.port == 2080
+    assert config.username == "user"
+    assert config.password == "password"
+
+
+@pytest.mark.parametrize(
+    "kwargs",
+    [
+        {"address": ""},
+        {"port": 0},
+        {"username": ""},
+        {"password": ""},
+    ],
+)
+def test_invalid_values(kwargs):
+    params = {
+        "address": "example.com",
+        "port": 1080,
+    }
+    params.update(kwargs)
+
+    with pytest.raises(ValueError):
+        SocksConfig(**params)
 
 
 def test_update_methods():
@@ -9,11 +94,28 @@ def test_update_methods():
         port=1080,
     )
 
+    config.update_address("example.org")
+    config.update_port(2080)
     config.update_username("user")
     config.update_password("password")
 
+    assert config.address == "example.org"
+    assert config.port == 2080
     assert config.username == "user"
     assert config.password == "password"
+
+
+def test_update_extra():
+    config = SocksConfig(
+        address="example.com",
+        port=1080,
+    )
+
+    config.update_extra(
+        {"version": "5"}
+    )
+
+    assert config.extra["version"] == "5"
 
 
 def test_to_uri_roundtrip():
@@ -30,7 +132,7 @@ def test_to_uri_roundtrip():
     assert parsed == config
 
 
-def test_config_equality():
+def test_equality():
     config1 = SocksConfig(
         address="example.com",
         port=1080,
@@ -45,7 +147,24 @@ def test_config_equality():
         password="password",
     )
 
+    config3 = SocksConfig(
+        address="example.org",
+        port=1080,
+        username="user",
+        password="password",
+    )
+
     assert config1 == config2
+    assert config1 != config3
+
+
+def test_repr():
+    config = SocksConfig(
+        address="example.com",
+        port=1080,
+    )
+
+    assert repr(config) == "SocksConfig(protocol=<Protocol.SOCKS: 'socks'>, label=None)"
 
 
 def test_to_uri_without_auth():
