@@ -118,7 +118,7 @@ def test_to_uri_roundtrip():
     assert parsed == config
 
 
-def test_config_equality():
+def test_equality():
     config1 = HttpConfig(
         address="example.com",
         port=1080,
@@ -133,7 +133,15 @@ def test_config_equality():
         password="password",
     )
 
+    config3 = HttpConfig(
+        address="example.org",
+        port=1080,
+        username="user",
+        password="password",
+    )
+
     assert config1 == config2
+    assert config1 != config3
 
 
 def test_to_uri_without_auth():
@@ -155,3 +163,12 @@ def test_to_uri_username_only():
     )
 
     assert config.to_uri() == "http://user@example.com:1080#test"
+
+
+def test_repr():
+    config = HttpConfig(
+        address="example.com",
+        port=1080,
+    )
+
+    assert repr(config) == "HttpConfig(protocol=<Protocol.HTTP: 'http'>, label=None)"
