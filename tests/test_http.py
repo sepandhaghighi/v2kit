@@ -62,6 +62,19 @@ def test_update_methods():
     assert config.password == "password"
 
 
+def test_update_extra():
+    config = HttpConfig(
+        address="example.com",
+        port=1080,
+    )
+
+    config.update_extra(
+        {"foo": "bar"}
+    )
+
+    assert config.extra["foo"] == "bar"
+
+
 def test_method_chaining():
     config = HttpConfig(
         address="example.com",
