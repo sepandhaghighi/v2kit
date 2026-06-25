@@ -62,6 +62,28 @@ def test_update_methods():
     assert config.password == "password"
 
 
+def test_method_chaining():
+    config = HttpConfig(
+        address="example.com",
+        port=1080,
+    )
+
+    config.update_address(
+        "example.org"
+    ).update_port(
+        8080
+    ).update_username(
+        "user"
+    ).update_password(
+        "password"
+    )
+
+    assert config.address == "example.org"
+    assert config.port == 8080
+    assert config.username == "user"
+    assert config.password == "password"
+
+
 def test_to_uri_roundtrip():
     config = HttpConfig(
         address="example.com",
