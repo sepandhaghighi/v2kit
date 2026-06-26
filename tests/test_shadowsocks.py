@@ -1,6 +1,18 @@
 # -*- coding: utf-8 -*-
+import pytest
 from v2kit import parse
 from v2kit import ShadowsocksConfig
+
+def test_defaults():
+    config = ShadowsocksConfig(
+        encryption="aes-256-gcm",
+        password="password",
+        address="example.com",
+        port=8388,
+    )
+
+    assert config.label is None
+    assert config.extra == {}
 
 
 def test_to_uri_roundtrip():
