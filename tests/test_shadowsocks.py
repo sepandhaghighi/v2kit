@@ -74,6 +74,28 @@ def test_method_chaining():
     assert config.port == 443
 
 
+@pytest.mark.parametrize(
+    "kwargs",
+    [
+        {"encryption": ""},
+        {"password": ""},
+        {"address": ""},
+        {"port": 0},
+    ],
+)
+def test_invalid_values(kwargs):
+    params = {
+        "encryption": "aes-256-gcm",
+        "password": "password",
+        "address": "example.com",
+        "port": 8388,
+    }
+    params.update(kwargs)
+
+    with pytest.raises(ValueError):
+        ShadowsocksConfig(**params)
+
+
 def test_to_uri_roundtrip():
     config = ShadowsocksConfig(
         encryption="aes-256-gcm",
