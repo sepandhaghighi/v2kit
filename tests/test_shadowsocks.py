@@ -163,3 +163,30 @@ def test_update_extra():
     )
 
     assert config.extra["plugin"] == "v2ray-plugin"
+
+
+def test_update_methods():
+    config = ShadowsocksConfig(
+        encryption="aes-256-gcm",
+        password="password",
+        address="example.com",
+        port=8388,
+    )
+
+    config.update_encryption(
+        "chacha20-ietf-poly1305"
+    )
+    config.update_password(
+        "secret"
+    )
+    config.update_address(
+        "example.org"
+    )
+    config.update_port(
+        443
+    )
+
+    assert config.encryption == "chacha20-ietf-poly1305"
+    assert config.password == "secret"
+    assert config.address == "example.org"
+    assert config.port == 443
