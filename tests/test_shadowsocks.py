@@ -148,3 +148,18 @@ def test_repr():
         "ShadowsocksConfig(protocol=<Protocol.SHADOWSOCKS: "
         "'shadowsocks'>, label=None)"
     )
+
+
+def test_update_extra():
+    config = ShadowsocksConfig(
+        encryption="aes-256-gcm",
+        password="password",
+        address="example.com",
+        port=8388,
+    )
+
+    config.update_extra(
+        {"plugin": "v2ray-plugin"}
+    )
+
+    assert config.extra["plugin"] == "v2ray-plugin"
