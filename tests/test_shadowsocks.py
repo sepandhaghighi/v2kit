@@ -50,6 +50,30 @@ def test_extra():
     assert data["extra"]["plugin"] == "v2ray-plugin"
 
 
+def test_method_chaining():
+    config = ShadowsocksConfig(
+        encryption="aes-256-gcm",
+        password="password",
+        address="example.com",
+        port=8388,
+    )
+
+    config.update_encryption(
+        "chacha20-ietf-poly1305"
+    ).update_password(
+        "secret"
+    ).update_address(
+        "example.org"
+    ).update_port(
+        443
+    )
+
+    assert config.encryption == "chacha20-ietf-poly1305"
+    assert config.password == "secret"
+    assert config.address == "example.org"
+    assert config.port == 443
+
+
 def test_to_uri_roundtrip():
     config = ShadowsocksConfig(
         encryption="aes-256-gcm",
