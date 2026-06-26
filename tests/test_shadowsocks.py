@@ -134,3 +134,17 @@ def test_equality():
 
     assert config1 == config2
     assert config1 != config3
+
+
+def test_repr():
+    config = ShadowsocksConfig(
+        encryption="aes-256-gcm",
+        password="password",
+        address="example.com",
+        port=8388,
+    )
+
+    assert repr(config) == (
+        "ShadowsocksConfig(protocol=<Protocol.SHADOWSOCKS: "
+        "'shadowsocks'>, label=None)"
+    )
