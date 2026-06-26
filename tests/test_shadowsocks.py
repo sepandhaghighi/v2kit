@@ -108,3 +108,29 @@ def test_to_uri_roundtrip():
     parsed = parse(config.to_uri())
 
     assert parsed == config
+
+
+def test_equality():
+    config1 = ShadowsocksConfig(
+        encryption="aes-256-gcm",
+        password="password",
+        address="example.com",
+        port=8388,
+    )
+
+    config2 = ShadowsocksConfig(
+        encryption="aes-256-gcm",
+        password="password",
+        address="example.com",
+        port=8388,
+    )
+
+    config3 = ShadowsocksConfig(
+        encryption="aes-256-gcm",
+        password="password",
+        address="example.org",
+        port=8388,
+    )
+
+    assert config1 == config2
+    assert config1 != config3
