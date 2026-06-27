@@ -103,6 +103,7 @@ def test_method_chaining():
         {"port": 0},
         {"port": 1.2},
         {"alter_id": -1},
+        {"alter_id": 2.2},
         {"network": 2},
         {"tls": 2},
     ],
