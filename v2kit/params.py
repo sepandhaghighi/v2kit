@@ -11,7 +11,7 @@ class Protocol(str, Enum):
     VMESS = "vmess"
     VLESS = "vless"
     TROJAN = "trojan"
-    SHADOWSOCKS = "shadowsocks"
+    SHADOWSOCKS = "ss"
     SOCKS = "socks"
     HTTP = "http"
 
