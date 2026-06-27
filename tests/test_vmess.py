@@ -3,6 +3,7 @@ import pytest
 from v2kit import parse
 from v2kit import VMESSConfig
 
+
 def test_defaults():
     config = VMESSConfig(
         uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
@@ -98,11 +99,15 @@ def test_method_chaining():
     "kwargs",
     [
         {"uuid": "invalid"},
+        {"uuid": 2},
         {"address": ""},
         {"port": 0},
+        {"port": 1.2},
         {"alter_id": -1},
+        {"alter_id": 2.2},
         {"network": 2},
         {"tls": 2},
+        {"extra": 1}
     ],
 )
 def test_invalid_values(kwargs):

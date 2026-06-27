@@ -4,6 +4,7 @@ import pytest
 from v2kit import parse
 from v2kit import TrojanConfig
 
+
 def test_defaults():
     config = TrojanConfig(
         password="password",
@@ -67,6 +68,8 @@ def test_method_chaining():
         {"password": ""},
         {"address": ""},
         {"port": 0},
+        {"port": 1.2},
+        {"extra": 1},
     ],
 )
 def test_invalid_values(kwargs):
@@ -112,6 +115,7 @@ def test_repr():
     )
 
     assert repr(config) == "TrojanConfig(protocol=<Protocol.TROJAN: 'trojan'>, label=None)"
+
 
 def test_to_uri_roundtrip():
     config = TrojanConfig(

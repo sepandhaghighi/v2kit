@@ -106,8 +106,10 @@ def test_method_chaining():
     [
         {"address": ""},
         {"port": 0},
+        {"port": 1.2},
         {"username": ""},
         {"password": ""},
+        {"extra": 1},
     ],
 )
 def test_invalid_values(kwargs):
