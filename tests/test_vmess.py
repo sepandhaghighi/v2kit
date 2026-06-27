@@ -101,6 +101,7 @@ def test_method_chaining():
         {"uuid": 2},
         {"address": ""},
         {"port": 0},
+        {"port": 1.2},
         {"alter_id": -1},
         {"network": 2},
         {"tls": 2},

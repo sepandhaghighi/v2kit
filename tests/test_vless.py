@@ -71,8 +71,10 @@ def test_method_chaining():
     "kwargs",
     [
         {"uuid": "invalid"},
+        {"uuid": 2},
         {"address": ""},
         {"port": 0},
+        {"port": 1.2},
     ],
 )
 def test_invalid_values(kwargs):
