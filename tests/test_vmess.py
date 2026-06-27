@@ -106,6 +106,7 @@ def test_method_chaining():
         {"alter_id": 2.2},
         {"network": 2},
         {"tls": 2},
+        {"extra": 1}
     ],
 )
 def test_invalid_values(kwargs):
