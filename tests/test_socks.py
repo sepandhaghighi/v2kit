@@ -3,6 +3,7 @@ import pytest
 from v2kit import parse
 from v2kit import SocksConfig
 
+
 def test_defaults():
     config = SocksConfig(
         address="example.com",

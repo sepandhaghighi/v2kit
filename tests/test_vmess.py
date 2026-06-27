@@ -3,6 +3,7 @@ import pytest
 from v2kit import parse
 from v2kit import VMESSConfig
 
+
 def test_defaults():
     config = VMESSConfig(
         uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
