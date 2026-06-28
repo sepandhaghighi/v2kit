@@ -11,6 +11,8 @@ INVALID_PROTOCOL = "ftp://example.com"
 
 INVALID_VMESS = "vmess://invalid-base64"
 
+INVALID_SHADOWSOCKS = "ss://invalid-base64@example.com:8388#ss-test"
+
 VALID_VLESS = (
     "vless://1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45@example.com:443"
     "?security=tls#test"
@@ -116,6 +118,10 @@ def test_parse_invalid_vmess():
     with pytest.raises(V2kitParseError):
         parse(INVALID_VMESS)
 
+
+def test_parse_invalid_shadowsocks():
+    with pytest.raises(V2kitParseError):
+        parse(INVALID_SHADOWSOCKS)
 
 
 def test_vless_invalid_uuid():
