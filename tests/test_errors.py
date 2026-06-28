@@ -112,6 +112,12 @@ def test_parse_unsupported_protocol():
         parse(INVALID_PROTOCOL)
 
 
+def test_parse_invalid_vmess():
+    with pytest.raises(V2kitParseError):
+        parse(INVALID_VMESS)
+
+
+
 def test_vless_invalid_uuid():
     with pytest.raises(V2kitValidationError):
         VLESSConfig(
