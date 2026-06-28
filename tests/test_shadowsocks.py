@@ -3,6 +3,7 @@ import pytest
 from v2kit import parse
 from v2kit import ShadowsocksConfig
 
+
 def test_defaults():
     config = ShadowsocksConfig(
         encryption="aes-256-gcm",
@@ -81,6 +82,8 @@ def test_method_chaining():
         {"password": ""},
         {"address": ""},
         {"port": 0},
+        {"port": 1.2},
+        {"extra": 1},
     ],
 )
 def test_invalid_values(kwargs):

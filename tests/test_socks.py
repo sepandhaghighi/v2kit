@@ -3,6 +3,7 @@ import pytest
 from v2kit import parse
 from v2kit import SocksConfig
 
+
 def test_defaults():
     config = SocksConfig(
         address="example.com",
@@ -73,8 +74,10 @@ def test_method_chaining():
     [
         {"address": ""},
         {"port": 0},
+        {"port": 1.2},
         {"username": ""},
         {"password": ""},
+        {"extra": 1},
     ],
 )
 def test_invalid_values(kwargs):
