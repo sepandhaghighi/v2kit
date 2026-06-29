@@ -50,8 +50,6 @@ def parse(uri: str) -> Union[VMESSConfig, VLESSConfig, TrojanConfig, Shadowsocks
     if protocol == Protocol.HTTP:
         return _parse_http(uri)
 
-    raise V2kitParseError(UNSUPPORTED_PROTOCOL_MESSAGE.format(protocol=protocol))
-
 
 def _parse_vmess(uri: str) -> VMESSConfig:
     """
