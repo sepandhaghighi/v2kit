@@ -137,6 +137,7 @@ def test_equality():
 
     assert config1 == config2
     assert config1 != config3
+    assert config1 != "config1"
 
 
 def test_repr():
