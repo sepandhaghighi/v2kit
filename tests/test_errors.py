@@ -63,10 +63,20 @@ def test_relabel_non_string_label():
         relabel(VALID_VLESS, 123)
 
 
-def test_encode_subscription_invalid_config():
+def test_encode_subscription_invalid_config1():
     configs = [
         VALID_VLESS,
         "invalid-config",
+    ]
+
+    with pytest.raises(V2kitValidationError):
+        encode_subscription(configs)
+
+
+def test_encode_subscription_invalid_config2():
+    configs = [
+        VALID_VLESS,
+        1,
     ]
 
     with pytest.raises(V2kitValidationError):
