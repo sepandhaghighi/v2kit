@@ -86,12 +86,12 @@ class BaseConfig(ABC):
     @abstractmethod
     def to_uri(self) -> str:
         """Convert config to URI."""
-        pass # pragma: no cover
+        pass  # pragma: no cover
 
     @abstractmethod
     def to_dict(self) -> dict:
         """Convert config to dictionary."""
-        pass # pragma: no cover
+        pass  # pragma: no cover
 
     def __repr__(self) -> str:
         """Return string representation of BaseConfig."""
