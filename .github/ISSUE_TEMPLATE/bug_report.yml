@@ -84,6 +84,7 @@ body:
       label: V2Kit version
       description: Which version of V2Kit are you using?
       options:
+        - V2Kit 0.4
         - V2Kit 0.3
         - V2Kit 0.2
         - V2Kit 0.1
