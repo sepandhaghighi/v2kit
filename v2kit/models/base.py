@@ -2,6 +2,7 @@
 """Base config model."""
 
 from abc import ABC, abstractmethod
+from urllib.parse import quote
 from typing import Dict, Optional
 from ..params import Protocol
 from ..validators import _validate_label, _validate_dict
@@ -30,6 +31,7 @@ class BaseConfig(ABC):
         """
         self._protocol = protocol
         self._label = None
+        self._encoded_label = None
         self._extra = {}
 
         self.update_extra(extra or {})
@@ -44,6 +46,11 @@ class BaseConfig(ABC):
     def label(self) -> Optional[str]:
         """Get the config label."""
         return self._label
+    
+    @property
+    def encoded_label(self) -> Optional[str]:
+        """Get the config percent-encoded label."""
+        return self._encoded_label
 
     @property
     def extra(self) -> Dict[str, object]:
@@ -62,6 +69,7 @@ class BaseConfig(ABC):
         _validate_label(label)
 
         self._label = label
+        self._encoded_label = quote(label)
 
         return self
 
