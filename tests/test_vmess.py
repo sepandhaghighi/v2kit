@@ -147,6 +147,20 @@ def test_to_uri_roundtrip():
     assert parsed == config
 
 
+def test_encoded_label():
+    config = VMESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+        label="test 1 2",
+    )
+
+    parsed = parse(config.to_uri())
+    assert parsed == config
+    assert config.label == "test 1 2"
+    assert config.encoded_label == "test\%201\%202"
+
+
 def test_update_methods():
     config = VMESSConfig(
         uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
