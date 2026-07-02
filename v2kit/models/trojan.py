@@ -129,8 +129,8 @@ class TrojanConfig(BaseConfig):
         )
 
         label = (
-            f"#{self.label}"
-            if self.label else ""
+            f"#{self.encoded_label}"
+            if self.encoded_label else ""
         )
 
         return (
