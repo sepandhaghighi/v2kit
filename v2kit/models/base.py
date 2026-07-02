@@ -69,7 +69,7 @@ class BaseConfig(ABC):
         _validate_label(label)
 
         self._label = label
-        self._encoded_label = quote(label)
+        self._encoded_label = quote(label) if label else None
 
         return self
 
