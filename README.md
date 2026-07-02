@@ -51,13 +51,13 @@ V2Kit is a lightweight and extensible Python toolkit for working with V2Ray prox
 ## Installation		
 
 ### Source Code
-- Download [Version 0.3](https://github.com/sepandhaghighi/v2kit/archive/v0.3.zip) or [Latest Source](https://github.com/sepandhaghighi/v2kit/archive/dev.zip)
+- Download [Version 0.4](https://github.com/sepandhaghighi/v2kit/archive/v0.4.zip) or [Latest Source](https://github.com/sepandhaghighi/v2kit/archive/dev.zip)
 - `pip install .`				
 
 ### PyPI
 
 - Check [Python Packaging User Guide](https://packaging.python.org/installing/)     
-- `pip install v2kit==0.3`						
+- `pip install v2kit==0.4`						
 
 ## Supported Protocols
 
