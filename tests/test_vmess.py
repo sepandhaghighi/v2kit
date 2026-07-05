@@ -158,7 +158,7 @@ def test_encoded_label():
     parsed = parse(config.to_uri())
     assert parsed == config
     assert config.label == "test 1 2"
-    assert config.encoded_label == "test\%201\%202"
+    assert config.encoded_label == "test%201%202"
 
 
 def test_update_methods():
