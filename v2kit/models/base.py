@@ -55,7 +55,7 @@ class BaseConfig(ABC):
     @property
     def extra(self) -> Dict[str, object]:
         """Get extra data."""
-        return self._extra
+        return self._extra.copy()
 
     def update_label(
         self,
