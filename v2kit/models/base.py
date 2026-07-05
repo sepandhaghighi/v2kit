@@ -87,7 +87,7 @@ class BaseConfig(ABC):
             "Extra",
         )
 
-        self._extra = extra
+        self._extra = extra.copy()
 
         return self
 
