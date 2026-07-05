@@ -46,7 +46,7 @@ class BaseConfig(ABC):
     def label(self) -> Optional[str]:
         """Get the config label."""
         return self._label
-    
+
     @property
     def encoded_label(self) -> Optional[str]:
         """Get the config percent-encoded label."""
