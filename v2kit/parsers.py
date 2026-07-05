@@ -3,7 +3,7 @@
 
 from typing import Union
 import json
-from urllib.parse import urlparse, parse_qsl
+from urllib.parse import urlparse, parse_qsl, unquote
 from .errors import V2kitParseError
 from .params import Protocol
 from .params import INVALID_URI_FORMAT_MESSAGE, UNSUPPORTED_PROTOCOL_MESSAGE
@@ -119,7 +119,7 @@ def _parse_vless(uri: str) -> VLESSConfig:
         uuid=parsed.username or "",
         address=parsed.hostname or "",
         port=parsed.port or 0,
-        label=parsed.fragment or None,
+        label=unquote(parsed.fragment) or None,
         extra=dict(parse_qsl(parsed.query)),
     )
 
@@ -135,7 +135,7 @@ def _parse_trojan(uri: str) -> TrojanConfig:
         password=parsed.username or "",
         address=parsed.hostname or "",
         port=parsed.port or 0,
-        label=parsed.fragment or None,
+        label=unquote(parsed.fragment) or None,
         extra=dict(parse_qsl(parsed.query)),
     )
 
@@ -167,7 +167,7 @@ def _parse_shadowsocks(uri: str) -> ShadowsocksConfig:
         password=password,
         address=parsed.hostname or "",
         port=parsed.port or 0,
-        label=parsed.fragment or None,
+        label=unquote(parsed.fragment) or None,
         extra=dict(parse_qsl(parsed.query)),
     )
 
@@ -185,7 +185,7 @@ def _parse_socks(uri: str) -> SocksConfig:
         port=parsed.port or 0,
         username=parsed.username or None,
         password=parsed.password or None,
-        label=parsed.fragment or None,
+        label=unquote(parsed.fragment) or None,
         extra=dict(parse_qsl(parsed.query)),
     )
 
@@ -203,6 +203,6 @@ def _parse_http(uri: str) -> HttpConfig:
         port=parsed.port or 0,
         username=parsed.username or None,
         password=parsed.password or None,
-        label=parsed.fragment or None,
+        label=unquote(parsed.fragment) or None,
         extra=dict(parse_qsl(parsed.query)),
     )

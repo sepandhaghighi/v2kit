@@ -159,7 +159,7 @@ class ShadowsocksConfig(BaseConfig):
             userinfo
         )
 
-        label = f"#{self.label}" if self.label else ""
+        label = f"#{self.encoded_label}" if self.encoded_label else ""
 
         return (
             f"ss://{encoded}@"

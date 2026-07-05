@@ -135,6 +135,21 @@ def test_to_uri_roundtrip():
     assert parsed == config
 
 
+def test_encoded_label():
+    config = SocksConfig(
+        address="example.com",
+        port=1080,
+        username="user",
+        password="password",
+        label="test 1 2",
+    )
+
+    parsed = parse(config.to_uri())
+    assert parsed == config
+    assert config.label == "test 1 2"
+    assert config.encoded_label == "test%201%202"
+
+
 def test_equality():
     config1 = SocksConfig(
         address="example.com",

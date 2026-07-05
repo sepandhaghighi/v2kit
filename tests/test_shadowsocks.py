@@ -113,6 +113,21 @@ def test_to_uri_roundtrip():
     assert parsed == config
 
 
+def test_encoded_label():
+    config = ShadowsocksConfig(
+        encryption="aes-256-gcm",
+        password="password",
+        address="example.com",
+        port=8388,
+        label="test 1 2",
+    )
+
+    parsed = parse(config.to_uri())
+    assert parsed == config
+    assert config.label == "test 1 2"
+    assert config.encoded_label == "test%201%202"
+
+
 def test_equality():
     config1 = ShadowsocksConfig(
         encryption="aes-256-gcm",
