@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `encoded_label` property
 ### Changed
 - `parse` function modified
+- `extra` property modified
+- `update_extra` method modified
 - Test system modified
 ## [0.4] - 2026-07-02
 ### Added
