@@ -99,9 +99,9 @@ def encode_subscription(
                 parse(uri)
         else:
             raise V2kitValidationError(INVALID_ITEMS_MESSAGE)
-        
+
         uri_list.append(uri)
-    
+
     subscription = "\n".join(uri_list)
 
     return _encode_base64(subscription)
