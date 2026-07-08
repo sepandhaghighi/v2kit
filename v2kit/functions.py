@@ -91,33 +91,20 @@ def encode_subscription(
     uri_list = []
 
     for item in entries:
-        if isinstance(
-            item,
-            BaseConfig,
-        ):
-            uri_list.append(
-                item.to_uri()
-            )
-
-            continue
-
-        if isinstance(item, str):
+        if isinstance(item, BaseConfig):
+            uri = item.to_uri()
+        elif isinstance(item, str):
+            uri = item
             if validate:
-                parse(item)
+                parse(uri)
+        else:
+            raise V2kitValidationError(INVALID_ITEMS_MESSAGE)
 
-            uri_list.append(item)
+        uri_list.append(uri)
 
-            continue
+    subscription = "\n".join(uri_list)
 
-        raise V2kitValidationError(INVALID_ITEMS_MESSAGE)
-
-    subscription = "\n".join(
-        uri_list
-    )
-
-    return _encode_base64(
-        subscription
-    )
+    return _encode_base64(subscription)
 
 
 def decode_subscription(

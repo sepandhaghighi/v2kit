@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - `encoded_label` property
 ### Changed
+- `encode_subscription` function modified
 - `parse` function modified
 - `extra` property modified
 - `update_extra` method modified
