@@ -6,7 +6,7 @@ import base64
 import uuid
 from urllib.parse import urlparse
 from .errors import V2kitValidationError, V2kitParseError
-from .params import Protocol, DEFAULT_ENCODING
+from .params import Protocol, SCHEME_TO_PROTOCOL, DEFAULT_ENCODING
 from .params import INVALID_TYPE_MESSAGE, INVALID_ALTER_ID_MESSAGE, INVALID_EMPTY_STRING_MESSAGE
 from .params import INVALID_UUID_MESSAGE, INVALID_PORT_MESSAGE, INVALID_URI_FORMAT_MESSAGE
 from .params import UNSUPPORTED_PROTOCOL_MESSAGE
@@ -166,10 +166,10 @@ def _validate_uri(uri: str) -> None:
         raise V2kitParseError(INVALID_URI_FORMAT_MESSAGE)
     parsed = urlparse(uri)
     try:
-        Protocol(parsed.scheme)
+        SCHEME_TO_PROTOCOL[parsed.scheme]
     except Exception as exc:
         raise V2kitParseError(UNSUPPORTED_PROTOCOL_MESSAGE.format(protocol=parsed.scheme)) from exc
-    if parsed.scheme == Protocol.VMESS.value:
+    if SCHEME_TO_PROTOCOL[parsed.scheme] == Protocol.VMESS:
         try:
             _, encoded = uri.split("://", 1)
             encoded += "=" * (-len(encoded) % 4)
