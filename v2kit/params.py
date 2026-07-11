@@ -15,6 +15,7 @@ class Protocol(str, Enum):
     SOCKS = "socks"
     HTTP = "http"
 
+
 PROTOCOL_SCHEMES = {
     Protocol.VMESS: "vmess",
     Protocol.VLESS: "vless",
