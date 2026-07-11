@@ -48,9 +48,9 @@ def _get_protocol(uri: str) -> Protocol:
     """
     _validate_uri(uri)
 
-    protocol = uri.split("://", 1)[0]
+    scheme = uri.split("://", 1)[0]
 
-    return SCHEME_TO_PROTOCOL[protocol]
+    return SCHEME_TO_PROTOCOL[scheme]
 
 
 def _is_protocol(uri: str, protocol: Protocol) -> bool:
