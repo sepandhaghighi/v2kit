@@ -4,7 +4,7 @@ import base64
 from .errors import V2kitParseError
 from .validators import _validate_uri
 from .params import DEFAULT_ENCODING
-from .params import Protocol
+from .params import Protocol, SCHEME_TO_PROTOCOL
 
 
 def _encode_base64(data: str) -> str:
@@ -50,7 +50,7 @@ def _get_protocol(uri: str) -> Protocol:
 
     protocol = uri.split("://", 1)[0]
 
-    return Protocol(protocol)
+    return SCHEME_TO_PROTOCOL[protocol]
 
 
 def _is_protocol(uri: str, protocol: Protocol) -> bool:
