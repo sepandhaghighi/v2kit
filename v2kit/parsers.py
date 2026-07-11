@@ -5,7 +5,7 @@ from typing import Union
 import json
 from urllib.parse import urlparse, parse_qsl, unquote
 from .errors import V2kitParseError
-from .params import Protocol
+from .params import Protocol, SCHEME_TO_PROTOCOL
 from .params import INVALID_URI_FORMAT_MESSAGE, UNSUPPORTED_PROTOCOL_MESSAGE
 from .validators import _validate_non_empty_string
 from .models import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig, SocksConfig, HttpConfig
@@ -26,10 +26,7 @@ def parse(uri: str) -> Union[VMESSConfig, VLESSConfig, TrojanConfig, Shadowsocks
     parsed = urlparse(uri)
 
     try:
-        protocol = Protocol(
-            parsed.scheme
-        )
-
+        protocol = SCHEME_TO_PROTOCOL[parsed.scheme]
     except Exception as exc:
         raise V2kitParseError(UNSUPPORTED_PROTOCOL_MESSAGE.format(protocol=parsed.scheme)) from exc
 
