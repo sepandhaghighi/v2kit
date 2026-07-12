@@ -114,7 +114,7 @@ class VLESSConfig(BaseConfig):
     def to_dict(self) -> dict:
         """Convert VLESS config to dictionary."""
         return {
-            "protocol": "vless",
+            "protocol": self.protocol.value,
             "uuid": self.uuid,
             "address": self.address,
             "port": self.port,
