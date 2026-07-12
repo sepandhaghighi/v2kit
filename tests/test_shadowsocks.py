@@ -165,7 +165,7 @@ def test_repr():
 
     assert repr(config) == (
         "ShadowsocksConfig(protocol=<Protocol.SHADOWSOCKS: "
-        "'ss'>, label=None)"
+        "'shadowsocks'>, label=None)"
     )
 
 

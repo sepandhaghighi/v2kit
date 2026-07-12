@@ -11,12 +11,24 @@ class Protocol(str, Enum):
     VMESS = "vmess"
     VLESS = "vless"
     TROJAN = "trojan"
-    SHADOWSOCKS = "ss"
+    SHADOWSOCKS = "shadowsocks"
     SOCKS = "socks"
     HTTP = "http"
 
 
-SUPPORTED_PROTOCOLS = {item.value for item in Protocol}
+PROTOCOL_SCHEMES = {
+    Protocol.VMESS: "vmess",
+    Protocol.VLESS: "vless",
+    Protocol.TROJAN: "trojan",
+    Protocol.SHADOWSOCKS: "ss",
+    Protocol.SOCKS: "socks",
+    Protocol.HTTP: "http",
+}
+
+SCHEME_TO_PROTOCOL = {value: key for key, value in PROTOCOL_SCHEMES.items()}
+
+
+SUPPORTED_PROTOCOLS = set(PROTOCOL_SCHEMES.values())
 
 DEFAULT_ENCODING = "utf-8"
 
