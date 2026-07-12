@@ -64,7 +64,7 @@ def _parse_vmess(uri: str) -> VMESSConfig:
         "tls",
     }
     try:
-        _, encoded = uri.split("://",1)
+        _, encoded = uri.split("://", 1)
         decoded = _decode_base64(encoded)
         data = json.loads(decoded)
 
@@ -82,7 +82,7 @@ def _parse_vmess(uri: str) -> VMESSConfig:
         port=int(data.get("port", 0)),
         label=data.get("ps"),
         alter_id=int(data.get("aid", 0)),
-        network=data.get("net","tcp"),
+        network=data.get("net", "tcp"),
         tls=data.get("tls", ""),
         extra=extra,
     )
