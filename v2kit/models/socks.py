@@ -4,7 +4,7 @@
 from urllib.parse import urlencode
 from typing import Dict, Optional
 from .base import BaseConfig
-from ..params import Protocol
+from ..params import Protocol, PROTOCOL_SCHEMES
 from ..validators import (
     _validate_port,
     _validate_address,
@@ -163,9 +163,9 @@ class SocksConfig(BaseConfig):
                 auth += f":{self.password}"
 
             auth += "@"
-
+        scheme = PROTOCOL_SCHEMES[self.protocol]
         return (
-            f"socks://"
+            f"{scheme}://"
             f"{auth}"
             f"{self.address}:{self.port}"
             f"{query}{label}"
