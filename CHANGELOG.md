@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `parse` function modified
 - `extra` property modified
 - `update_extra` method modified
+- `to_uri` method modified
+- `to_dict` method modified
 - `Protocol` enum updated
 - Scheme bug fixed
 - Test system modified
