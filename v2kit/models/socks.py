@@ -133,7 +133,7 @@ class SocksConfig(BaseConfig):
     def to_dict(self) -> dict:
         """Convert SOCKS config to dictionary."""
         return {
-            "protocol": "socks",
+            "protocol": self.protocol.value,
             "address": self.address,
             "port": self.port,
             "username": self.username,

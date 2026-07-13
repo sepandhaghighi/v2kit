@@ -128,7 +128,7 @@ class HttpConfig(BaseConfig):
     def to_dict(self) -> dict:
         """Convert HTTP config to dictionary."""
         return {
-            "protocol": "http",
+            "protocol": self.protocol.value,
             "address": self.address,
             "port": self.port,
             "username": self.username,

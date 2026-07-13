@@ -140,7 +140,7 @@ class ShadowsocksConfig(BaseConfig):
     def to_dict(self) -> dict:
         """Convert Shadowsocks config to dictionary."""
         return {
-            "protocol": "shadowsocks",
+            "protocol": self.protocol.value,
             "encryption": self.encryption,
             "password": self.password,
             "address": self.address,

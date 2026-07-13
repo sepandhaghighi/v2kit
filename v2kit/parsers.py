@@ -64,15 +64,8 @@ def _parse_vmess(uri: str) -> VMESSConfig:
         "tls",
     }
     try:
-        _, encoded = uri.split(
-            "://",
-            1,
-        )
-
-        decoded = _decode_base64(
-            encoded
-        )
-
+        _, encoded = uri.split("://", 1)
+        decoded = _decode_base64(encoded)
         data = json.loads(decoded)
 
     except Exception as exc:
@@ -86,21 +79,11 @@ def _parse_vmess(uri: str) -> VMESSConfig:
     return VMESSConfig(
         uuid=data.get("id", ""),
         address=data.get("add", ""),
-        port=int(
-            data.get("port", 0)
-        ),
+        port=int(data.get("port", 0)),
         label=data.get("ps"),
-        alter_id=int(
-            data.get("aid", 0)
-        ),
-        network=data.get(
-            "net",
-            "tcp",
-        ),
-        tls=data.get(
-            "tls",
-            "",
-        ),
+        alter_id=int(data.get("aid", 0)),
+        network=data.get("net", "tcp"),
+        tls=data.get("tls", ""),
         extra=extra,
     )
 
@@ -145,16 +128,8 @@ def _parse_shadowsocks(uri: str) -> ShadowsocksConfig:
     """
     parsed = urlparse(uri)
     try:
-        userinfo = _decode_base64(
-            parsed.username
-        )
-
-        encryption, password = (
-            userinfo.split(
-                ":",
-                1,
-            )
-        )
+        userinfo = _decode_base64(parsed.username)
+        encryption, password = (userinfo.split(":", 1))
 
     except Exception as exc:
         raise V2kitParseError(INVALID_URI_FORMAT_MESSAGE) from exc

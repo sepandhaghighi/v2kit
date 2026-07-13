@@ -113,7 +113,7 @@ class TrojanConfig(BaseConfig):
     def to_dict(self) -> dict:
         """Convert Trojan config to dictionary."""
         return {
-            "protocol": "trojan",
+            "protocol": self.protocol.value,
             "password": self.password,
             "address": self.address,
             "port": self.port,
