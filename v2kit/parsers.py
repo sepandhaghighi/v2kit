@@ -178,3 +178,13 @@ def _parse_http(uri: str) -> HttpConfig:
         label=unquote(parsed.fragment) or None,
         extra=dict(parse_qsl(parsed.query)),
     )
+
+
+PARSERS = {
+    Protocol.VMESS: _parse_vmess,
+    Protocol.VLESS: _parse_vless,
+    Protocol.TROJAN: _parse_trojan,
+    Protocol.SHADOWSOCKS: _parse_shadowsocks,
+    Protocol.SOCKS: _parse_socks,
+    Protocol.HTTP: _parse_http,
+}
