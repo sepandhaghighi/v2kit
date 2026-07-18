@@ -4,7 +4,7 @@
 from urllib.parse import urlencode
 from typing import Dict, Optional
 from .base import BaseConfig
-from ..params import Protocol
+from ..params import Protocol, PROTOCOL_SCHEMES
 from ..validators import (
     _validate_uuid,
     _validate_port,
@@ -133,9 +133,9 @@ class VLESSConfig(BaseConfig):
             f"#{self.encoded_label}"
             if self.encoded_label else ""
         )
-
+        scheme = PROTOCOL_SCHEMES[self.protocol]
         return (
-            f"vless://{self.uuid}@"
+            f"{scheme}://{self.uuid}@"
             f"{self.address}:{self.port}"
             f"{query}{label}"
         )

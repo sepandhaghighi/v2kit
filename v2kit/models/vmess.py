@@ -4,7 +4,7 @@
 import json
 from typing import Dict, Optional
 from .base import BaseConfig
-from ..params import Protocol
+from ..params import Protocol, PROTOCOL_SCHEMES
 from ..validators import (
     _validate_uuid,
     _validate_port,
@@ -213,5 +213,5 @@ class VMESSConfig(BaseConfig):
                 ensure_ascii=False,
             )
         )
-
-        return f"vmess://{encoded}"
+        scheme = PROTOCOL_SCHEMES[self.protocol]
+        return f"{scheme}://{encoded}"

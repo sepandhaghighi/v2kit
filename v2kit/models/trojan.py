@@ -4,7 +4,7 @@
 from urllib.parse import urlencode
 from typing import Dict, Optional
 from .base import BaseConfig
-from ..params import Protocol
+from ..params import Protocol, PROTOCOL_SCHEMES
 from ..validators import (
     _validate_port,
     _validate_address,
@@ -132,9 +132,9 @@ class TrojanConfig(BaseConfig):
             f"#{self.encoded_label}"
             if self.encoded_label else ""
         )
-
+        scheme = PROTOCOL_SCHEMES[self.protocol]
         return (
-            f"trojan://{self.password}@"
+            f"{scheme}://{self.password}@"
             f"{self.address}:{self.port}"
             f"{query}{label}"
         )
