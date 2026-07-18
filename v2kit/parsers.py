@@ -153,6 +153,7 @@ PARSERS = {
     Protocol.HTTP: _parse_http,
 }
 
+
 def parse(uri: str) -> Union[VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig, SocksConfig, HttpConfig]:
     """
     Parse V2Ray URI.
