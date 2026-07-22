@@ -56,6 +56,15 @@ class BaseConfig(ABC):
     def extra(self) -> Dict[str, object]:
         """Get extra data."""
         return self._extra.copy()
+    
+    @property
+    def uri_label(self) -> str:
+        """Get URI label."""
+        return (
+            f"#{self.encoded_label}"
+            if self.encoded_label
+            else ""
+        )
 
     def update_label(
         self,
