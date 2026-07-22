@@ -12,42 +12,6 @@ from .models import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig, S
 from .utils import _decode_base64
 
 
-def parse(uri: str) -> Union[VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig, SocksConfig, HttpConfig]:
-    """
-    Parse V2Ray URI.
-
-    :param uri: V2Ray URI.
-    """
-    _validate_non_empty_string(uri, "URI")
-
-    if "://" not in uri:
-        raise V2kitParseError(INVALID_URI_FORMAT_MESSAGE)
-
-    parsed = urlparse(uri)
-
-    try:
-        protocol = SCHEME_TO_PROTOCOL[parsed.scheme]
-    except Exception as exc:
-        raise V2kitParseError(UNSUPPORTED_PROTOCOL_MESSAGE.format(protocol=parsed.scheme)) from exc
-
-    if protocol == Protocol.VMESS:
-        return _parse_vmess(uri)
-
-    if protocol == Protocol.VLESS:
-        return _parse_vless(uri)
-
-    if protocol == Protocol.TROJAN:
-        return _parse_trojan(uri)
-
-    if protocol == Protocol.SHADOWSOCKS:
-        return _parse_shadowsocks(uri)
-
-    if protocol == Protocol.SOCKS:
-        return _parse_socks(uri)
-    if protocol == Protocol.HTTP:
-        return _parse_http(uri)
-
-
 def _parse_vmess(uri: str) -> VMESSConfig:
     """
     Parse VMESS URI.
@@ -178,3 +142,34 @@ def _parse_http(uri: str) -> HttpConfig:
         label=unquote(parsed.fragment) or None,
         extra=dict(parse_qsl(parsed.query)),
     )
+
+
+PARSERS = {
+    Protocol.VMESS: _parse_vmess,
+    Protocol.VLESS: _parse_vless,
+    Protocol.TROJAN: _parse_trojan,
+    Protocol.SHADOWSOCKS: _parse_shadowsocks,
+    Protocol.SOCKS: _parse_socks,
+    Protocol.HTTP: _parse_http,
+}
+
+
+def parse(uri: str) -> Union[VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig, SocksConfig, HttpConfig]:
+    """
+    Parse V2Ray URI.
+
+    :param uri: V2Ray URI.
+    """
+    _validate_non_empty_string(uri, "URI")
+
+    if "://" not in uri:
+        raise V2kitParseError(INVALID_URI_FORMAT_MESSAGE)
+
+    parsed = urlparse(uri)
+
+    try:
+        protocol = SCHEME_TO_PROTOCOL[parsed.scheme]
+    except Exception as exc:
+        raise V2kitParseError(UNSUPPORTED_PROTOCOL_MESSAGE.format(protocol=parsed.scheme)) from exc
+
+    return PARSERS[protocol](uri)
