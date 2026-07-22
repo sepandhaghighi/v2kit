@@ -128,14 +128,9 @@ class VLESSConfig(BaseConfig):
             f"?{urlencode(self.extra)}"
             if self.extra else ""
         )
-
-        label = (
-            f"#{self.encoded_label}"
-            if self.encoded_label else ""
-        )
         scheme = PROTOCOL_SCHEMES[self.protocol]
         return (
             f"{scheme}://{self.uuid}@"
             f"{self.address}:{self.port}"
-            f"{query}{label}"
+            f"{query}{self.uri_label}"
         )
