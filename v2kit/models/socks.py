@@ -148,12 +148,6 @@ class SocksConfig(BaseConfig):
             f"?{urlencode(self.extra)}"
             if self.extra else ""
         )
-
-        label = (
-            f"#{self.encoded_label}"
-            if self.encoded_label else ""
-        )
-
         auth = ""
 
         if self.username:
@@ -168,5 +162,5 @@ class SocksConfig(BaseConfig):
             f"{scheme}://"
             f"{auth}"
             f"{self.address}:{self.port}"
-            f"{query}{label}"
+            f"{query}{self.uri_label}"
         )

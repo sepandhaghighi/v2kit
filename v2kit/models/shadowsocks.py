@@ -158,11 +158,9 @@ class ShadowsocksConfig(BaseConfig):
         encoded = _encode_base64(
             userinfo
         )
-
-        label = f"#{self.encoded_label}" if self.encoded_label else ""
         scheme = PROTOCOL_SCHEMES[self.protocol]
         return (
             f"{scheme}://{encoded}@"
             f"{self.address}:{self.port}"
-            f"{label}"
+            f"{self.uri_label}"
         )
