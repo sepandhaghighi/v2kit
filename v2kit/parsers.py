@@ -31,7 +31,8 @@ def _parse_vmess(uri: str) -> VMESSConfig:
         _, encoded = uri.split("://", 1)
         decoded = _decode_base64(encoded)
         data = json.loads(decoded)
-
+        port = int(data.get("port", 0))
+        alter_id = int(data.get("aid", 0))
     except Exception as exc:
         raise V2kitParseError(INVALID_URI_FORMAT_MESSAGE) from exc
 
@@ -43,9 +44,9 @@ def _parse_vmess(uri: str) -> VMESSConfig:
     return VMESSConfig(
         uuid=data.get("id", ""),
         address=data.get("add", ""),
-        port=int(data.get("port", 0)),
+        port=port,
         label=data.get("ps"),
-        alter_id=int(data.get("aid", 0)),
+        alter_id=alter_id,
         network=data.get("net", "tcp"),
         tls=data.get("tls", ""),
         extra=extra,

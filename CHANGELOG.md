@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `to_dict` method modified
 - `Protocol` enum updated
 - Scheme bug fixed
+- VMESS parser bug fixed
 - Test system modified
 ## [0.4] - 2026-07-02
 ### Added
