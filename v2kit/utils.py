@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """v2kit utils."""
 import base64
+from urllib.parse import urlparse
 from .errors import V2kitParseError
 from .validators import _validate_uri
 from .params import DEFAULT_ENCODING
@@ -48,7 +49,7 @@ def _get_protocol(uri: str) -> Protocol:
     """
     _validate_uri(uri)
 
-    scheme = uri.split("://", 1)[0]
+    scheme = urlparse(uri).scheme
 
     return SCHEME_TO_PROTOCOL[scheme]
 
