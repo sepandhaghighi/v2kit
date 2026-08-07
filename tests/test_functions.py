@@ -135,7 +135,7 @@ def test_encode_subscription():
     assert len(result) > 0
 
 
-def test_decode_subscription():
+def test_decode_subscription1():
     configs = [
         VMESS_CONFIG,
         VLESS_CONFIG,
@@ -146,6 +146,14 @@ def test_decode_subscription():
     result = decode_subscription(encoded)
 
     assert result == configs
+
+
+def test_decode_subscription2():
+    subscription = "dmxlc3M6Ly8xYzRiNGJjYS1lM2ZmLTRjYTgtYTA2Mi02ZjM5OWFkM2NmNDVAZXhhbXBsZS5jb206NDQzP3NlY3VyaXR5PXRscyN2bGVzcy10ZXN0Cgp0cm9qYW46Ly9wYXNzd29yZEBleGFtcGxlLmNvbTo0NDM/c2VjdXJpdHk9dGxzI3Ryb2phbi10ZXN0CgpzczovL1lXVnpMVEkxTmkxblkyMDZjR0Z6YzNkdmNtUT1AZXhhbXBsZS5jb206ODM4OCNzcy10ZXN0Cg=="
+
+    result = decode_subscription(subscription)
+
+    assert len(result) == 3
 
 
 def test_encode_decode_subscription_roundtrip():

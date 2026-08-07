@@ -119,11 +119,13 @@ def decode_subscription(
     """
     _validate_non_empty_string(subscription, "Subscription")
 
-    decoded = _decode_base64(
-        subscription
-    )
+    decoded = _decode_base64(subscription)
 
-    uris = decoded.splitlines()
+    uris = [
+        uri.strip()
+        for uri in decoded.splitlines()
+        if uri.strip()
+    ]
 
     if validate:
         for uri in uris:
