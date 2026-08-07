@@ -149,7 +149,7 @@ def test_decode_subscription1():
 
 
 def test_decode_subscription2():
-    subscription = "dm1lc3M6Ly9BQUFBCgp2bGVzczovL3V1aWRAZXhhbXBsZS5jb206NDQzCgp0cm9qYW46Ly9wYXNzQGV4YW1wbGUuY29tOjQ0Mwo="
+    subscription = "dmxlc3M6Ly8xYzRiNGJjYS1lM2ZmLTRjYTgtYTA2Mi02ZjM5OWFkM2NmNDVAZXhhbXBsZS5jb206NDQzP3NlY3VyaXR5PXRscyN2bGVzcy10ZXN0Cgp0cm9qYW46Ly9wYXNzd29yZEBleGFtcGxlLmNvbTo0NDM/c2VjdXJpdHk9dGxzI3Ryb2phbi10ZXN0CgpzczovL1lXVnpMVEkxTmkxblkyMDZjR0Z6YzNkdmNtUT1AZXhhbXBsZS5jb206ODM4OCNzcy10ZXN0Cg=="
 
     result = decode_subscription(subscription)
 
