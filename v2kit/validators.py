@@ -87,7 +87,7 @@ def _validate_port(port: int) -> None:
 
     :param port: Network port.
     """
-    if not isinstance(port, int):
+    if not isinstance(port, int) or isinstance(port, bool):
         raise V2kitValidationError(INVALID_TYPE_MESSAGE.format(field="Port", expected_type="int"))
 
     if not 1 <= port <= 65535:
