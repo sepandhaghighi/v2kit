@@ -56,7 +56,7 @@ class BaseConfig(ABC):
     def extra(self) -> Dict[str, object]:
         """Get extra data."""
         return self._extra.copy()
-    
+
     @property
     def uri_label(self) -> str:
         """Get URI label."""
