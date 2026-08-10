@@ -152,7 +152,7 @@ def test_vless_invalid_port1():
         )
 
 
-def test_vless_invalid_port1():
+def test_vless_invalid_port2():
     with pytest.raises(V2kitValidationError):
         VLESSConfig(
             uuid=VALID_UUID,
