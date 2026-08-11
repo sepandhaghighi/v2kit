@@ -143,12 +143,21 @@ def test_vless_invalid_uuid():
         )
 
 
-def test_vless_invalid_port():
+def test_vless_invalid_port1():
     with pytest.raises(V2kitValidationError):
         VLESSConfig(
             uuid=VALID_UUID,
             address="example.com",
             port=70000,
+        )
+
+
+def test_vless_invalid_port2():
+    with pytest.raises(V2kitValidationError):
+        VLESSConfig(
+            uuid=VALID_UUID,
+            address="example.com",
+            port=True,
         )
 
 
@@ -190,11 +199,19 @@ def test_shadowsocks_empty_encryption():
         )
 
 
-def test_socks_invalid_port():
+def test_socks_invalid_port1():
     with pytest.raises(V2kitValidationError):
         SocksConfig(
             address="example.com",
             port=70000,
+        )
+
+
+def test_socks_invalid_port2():
+    with pytest.raises(V2kitValidationError):
+        SocksConfig(
+            address="example.com",
+            port=False,
         )
 
 
