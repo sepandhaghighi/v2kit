@@ -170,13 +170,23 @@ def test_vless_empty_address():
         )
 
 
-def test_vmess_invalid_alter_id():
+def test_vmess_invalid_alter_id1():
     with pytest.raises(V2kitValidationError):
         VMESSConfig(
             uuid=VALID_UUID,
             address="example.com",
             port=443,
             alter_id=-1,
+        )
+
+
+def test_vmess_invalid_alter_id2():
+    with pytest.raises(V2kitValidationError):
+        VMESSConfig(
+            uuid=VALID_UUID,
+            address="example.com",
+            port=443,
+            alter_id=True,
         )
 
 
