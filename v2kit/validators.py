@@ -135,7 +135,7 @@ def _validate_alter_id(alter_id: int) -> None:
 
     :param alter_id: AlterId value.
     """
-    if not isinstance(alter_id, int):
+    if not isinstance(alter_id, int) or isinstance(alter_id, bool):
         raise V2kitValidationError(INVALID_ALTER_ID_MESSAGE)
 
     if alter_id < 0:

@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `_get_protocol` function modified
 - `decode_subscription` function blank line bug fixed
 - Port validation bug fixed
+- AlterId validation bug fixed
+- Test system modified
 ## [0.5] - 2026-07-31
 ### Added
 - `encoded_label` property
