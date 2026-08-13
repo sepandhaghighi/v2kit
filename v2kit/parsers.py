@@ -3,13 +3,21 @@
 
 from typing import Union
 import json
-from urllib.parse import urlparse, parse_qsl, unquote
+from urllib.parse import urlparse, parse_qsl, unquote, ParseResult
 from .errors import V2kitParseError
 from .params import Protocol, SCHEME_TO_PROTOCOL
 from .params import INVALID_URI_FORMAT_MESSAGE, UNSUPPORTED_PROTOCOL_MESSAGE
 from .validators import _validate_non_empty_string
 from .models import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig, SocksConfig, HttpConfig
 from .utils import _decode_base64
+
+def _parse_extra(parsed_uri: ParseResult) -> dict:
+    """
+    Parse URI query parameters.
+
+    :param parsed_uri: Parsed URI.
+    """
+    return dict(parse_qsl(parsed_uri.query))
 
 
 def _parse_vmess(uri: str) -> VMESSConfig:
@@ -65,7 +73,7 @@ def _parse_vless(uri: str) -> VLESSConfig:
         address=parsed.hostname or "",
         port=parsed.port or 0,
         label=unquote(parsed.fragment) or None,
-        extra=dict(parse_qsl(parsed.query)),
+        extra=_parse_extra(parsed),
     )
 
 
@@ -81,7 +89,7 @@ def _parse_trojan(uri: str) -> TrojanConfig:
         address=parsed.hostname or "",
         port=parsed.port or 0,
         label=unquote(parsed.fragment) or None,
-        extra=dict(parse_qsl(parsed.query)),
+        extra=_parse_extra(parsed),
     )
 
 
@@ -105,7 +113,7 @@ def _parse_shadowsocks(uri: str) -> ShadowsocksConfig:
         address=parsed.hostname or "",
         port=parsed.port or 0,
         label=unquote(parsed.fragment) or None,
-        extra=dict(parse_qsl(parsed.query)),
+        extra=_parse_extra(parsed),
     )
 
 
@@ -123,7 +131,7 @@ def _parse_socks(uri: str) -> SocksConfig:
         username=parsed.username or None,
         password=parsed.password or None,
         label=unquote(parsed.fragment) or None,
-        extra=dict(parse_qsl(parsed.query)),
+        extra=_parse_extra(parsed),
     )
 
 
@@ -141,7 +149,7 @@ def _parse_http(uri: str) -> HttpConfig:
         username=parsed.username or None,
         password=parsed.password or None,
         label=unquote(parsed.fragment) or None,
-        extra=dict(parse_qsl(parsed.query)),
+        extra=_parse_extra(parsed),
     )
 
 
