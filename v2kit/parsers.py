@@ -81,7 +81,7 @@ def _parse_vless(uri: str) -> VLESSConfig:
         uuid=parsed.username or "",
         address=parsed.hostname or "",
         port=parsed.port or 0,
-        label=unquote(parsed.fragment) or None,
+        label=_parse_label(parsed),
         extra=_parse_extra(parsed),
     )
 
@@ -97,7 +97,7 @@ def _parse_trojan(uri: str) -> TrojanConfig:
         password=parsed.username or "",
         address=parsed.hostname or "",
         port=parsed.port or 0,
-        label=unquote(parsed.fragment) or None,
+        label=_parse_label(parsed),
         extra=_parse_extra(parsed),
     )
 
@@ -121,7 +121,7 @@ def _parse_shadowsocks(uri: str) -> ShadowsocksConfig:
         password=password,
         address=parsed.hostname or "",
         port=parsed.port or 0,
-        label=unquote(parsed.fragment) or None,
+        label=_parse_label(parsed),
         extra=_parse_extra(parsed),
     )
 
@@ -139,7 +139,7 @@ def _parse_socks(uri: str) -> SocksConfig:
         port=parsed.port or 0,
         username=parsed.username or None,
         password=parsed.password or None,
-        label=unquote(parsed.fragment) or None,
+        label=_parse_label(parsed),
         extra=_parse_extra(parsed),
     )
 
@@ -157,7 +157,7 @@ def _parse_http(uri: str) -> HttpConfig:
         port=parsed.port or 0,
         username=parsed.username or None,
         password=parsed.password or None,
-        label=unquote(parsed.fragment) or None,
+        label=_parse_label(parsed),
         extra=_parse_extra(parsed),
     )
 
