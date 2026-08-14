@@ -20,6 +20,15 @@ def _parse_extra(parsed_uri: ParseResult) -> dict:
     return dict(parse_qsl(parsed_uri.query))
 
 
+def _parse_label(parsed_uri: ParseResult) -> Optional[str]:
+    """
+    Parse URI label.
+
+    :param parsed_uri: Parsed URI.
+    """
+    return unquote(parsed_uri.fragment) or None
+
+
 def _parse_vmess(uri: str) -> VMESSConfig:
     """
     Parse VMESS URI.
