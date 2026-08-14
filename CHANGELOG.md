@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Port validation bug fixed
 - AlterId validation bug fixed
 - Test system modified
+- Parsers updated
 ## [0.5] - 2026-07-31
 ### Added
 - `encoded_label` property
