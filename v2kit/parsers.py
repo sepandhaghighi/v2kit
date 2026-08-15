@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """v2kit parsers."""
 
-from typing import Union
+from typing import Union, Optional
 import json
 from urllib.parse import urlparse, parse_qsl, unquote, ParseResult
 from .errors import V2kitParseError
