@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """v2kit parsers."""
 
-from typing import Union
+from typing import Union, Optional
 import json
 from urllib.parse import urlparse, parse_qsl, unquote, ParseResult
 from .errors import V2kitParseError
@@ -18,6 +18,15 @@ def _parse_extra(parsed_uri: ParseResult) -> dict:
     :param parsed_uri: Parsed URI.
     """
     return dict(parse_qsl(parsed_uri.query))
+
+
+def _parse_label(parsed_uri: ParseResult) -> Optional[str]:
+    """
+    Parse URI label.
+
+    :param parsed_uri: Parsed URI.
+    """
+    return unquote(parsed_uri.fragment) or None
 
 
 def _parse_vmess(uri: str) -> VMESSConfig:
@@ -72,7 +81,7 @@ def _parse_vless(uri: str) -> VLESSConfig:
         uuid=parsed.username or "",
         address=parsed.hostname or "",
         port=parsed.port or 0,
-        label=unquote(parsed.fragment) or None,
+        label=_parse_label(parsed),
         extra=_parse_extra(parsed),
     )
 
@@ -88,7 +97,7 @@ def _parse_trojan(uri: str) -> TrojanConfig:
         password=parsed.username or "",
         address=parsed.hostname or "",
         port=parsed.port or 0,
-        label=unquote(parsed.fragment) or None,
+        label=_parse_label(parsed),
         extra=_parse_extra(parsed),
     )
 
@@ -112,7 +121,7 @@ def _parse_shadowsocks(uri: str) -> ShadowsocksConfig:
         password=password,
         address=parsed.hostname or "",
         port=parsed.port or 0,
-        label=unquote(parsed.fragment) or None,
+        label=_parse_label(parsed),
         extra=_parse_extra(parsed),
     )
 
@@ -130,7 +139,7 @@ def _parse_socks(uri: str) -> SocksConfig:
         port=parsed.port or 0,
         username=parsed.username or None,
         password=parsed.password or None,
-        label=unquote(parsed.fragment) or None,
+        label=_parse_label(parsed),
         extra=_parse_extra(parsed),
     )
 
@@ -148,7 +157,7 @@ def _parse_http(uri: str) -> HttpConfig:
         port=parsed.port or 0,
         username=parsed.username or None,
         password=parsed.password or None,
-        label=unquote(parsed.fragment) or None,
+        label=_parse_label(parsed),
         extra=_parse_extra(parsed),
     )
 
