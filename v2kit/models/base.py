@@ -114,6 +114,19 @@ class BaseConfig(ABC):
         self._extra[key] = value
 
         return self
+    
+    def get_extra_item(
+        self,
+        key: str,
+        default: object = None,
+    ) -> object:
+        """
+        Get an extra item.
+
+        :param key: Extra item key.
+        :param default: Default value.
+        """
+        return self._extra.get(key, default)
 
     @abstractmethod
     def to_uri(self) -> str:
