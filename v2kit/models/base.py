@@ -127,6 +127,14 @@ class BaseConfig(ABC):
         :param default: Default value.
         """
         return self._extra.get(key, default)
+    
+    def clear_extra(self) -> "BaseConfig":
+        """
+        Clear extra data.
+        """
+        self._extra.clear()
+
+        return self
 
     @abstractmethod
     def to_uri(self) -> str:
