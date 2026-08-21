@@ -135,6 +135,19 @@ class BaseConfig(ABC):
         self._extra.clear()
 
         return self
+    
+    def remove_extra_item(
+        self,
+        key: str,
+    ) -> "BaseConfig":
+        """
+        Remove an extra item.
+
+        :param key: Extra item key.
+        """
+        self._extra.pop(key, None)
+
+        return self
 
     @abstractmethod
     def to_uri(self) -> str:
