@@ -99,6 +99,21 @@ class BaseConfig(ABC):
         self._extra = extra.copy()
 
         return self
+    
+    def set_extra_item(
+        self,
+        key: str,
+        value: object,
+    ) -> "BaseConfig":
+        """
+        Set an extra item.
+
+        :param key: Extra item key.
+        :param value: Extra item value.
+        """
+        self._extra[key] = value
+
+        return self
 
     @abstractmethod
     def to_uri(self) -> str:
