@@ -129,9 +129,7 @@ class BaseConfig(ABC):
         return self._extra.get(key, default)
     
     def clear_extra(self) -> "BaseConfig":
-        """
-        Clear extra data.
-        """
+        """Clear extra data."""
         self._extra.clear()
 
         return self
