@@ -6,9 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
+- `clear_extra` method
 - `set_extra_item` method
 - `get_extra_item` method
-- `clear_extra` method
 - `remove_extra_item` method
 ### Changed
 - `_get_protocol` function modified

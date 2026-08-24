@@ -100,6 +100,12 @@ class BaseConfig(ABC):
 
         return self
     
+    def clear_extra(self) -> "BaseConfig":
+        """Clear extra data."""
+        self._extra.clear()
+
+        return self
+    
     def set_extra_item(
         self,
         key: str,
@@ -127,12 +133,6 @@ class BaseConfig(ABC):
         :param default: Default value.
         """
         return self._extra.get(key, default)
-    
-    def clear_extra(self) -> "BaseConfig":
-        """Clear extra data."""
-        self._extra.clear()
-
-        return self
     
     def remove_extra_item(
         self,
