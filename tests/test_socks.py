@@ -61,12 +61,18 @@ def test_method_chaining():
         "user"
     ).update_password(
         "password"
-    )
+    ).set_extra_item(
+        "version",
+        "5",
+    ).remove_extra_item(
+        "version"
+    ).clear_extra()
 
     assert config.address == "example.org"
     assert config.port == 2080
     assert config.username == "user"
     assert config.password == "password"
+    assert config.extra == {}
 
 
 @pytest.mark.parametrize(
@@ -119,6 +125,63 @@ def test_update_extra():
     )
 
     assert config.extra["version"] == "5"
+
+
+def test_clear_extra():
+    config = SocksConfig(
+        address="example.com",
+        port=1080,
+        extra={"version": "5"},
+    )
+
+    config.clear_extra()
+
+    assert config.extra == {}
+
+
+def test_set_extra_item():
+    config = SocksConfig(
+        address="example.com",
+        port=1080,
+    )
+
+    config.set_extra_item(
+        "version",
+        "5",
+    )
+
+    assert config.extra["version"] == "5"
+
+
+def test_get_extra_item():
+    config = SocksConfig(
+        address="example.com",
+        port=1080,
+        extra={"version": "5"},
+    )
+
+    assert config.get_extra_item(
+        "version"
+    ) == "5"
+    assert config.get_extra_item("missing") is None
+    assert config.get_extra_item(
+        "missing",
+        "default",
+    ) == "default"
+
+
+def test_remove_extra_item():
+    config = SocksConfig(
+        address="example.com",
+        port=1080,
+        extra={"version": "5"},
+    )
+
+    config.remove_extra_item(
+        "version"
+    )
+
+    assert config.extra == {}
 
 
 def test_to_uri_roundtrip():
