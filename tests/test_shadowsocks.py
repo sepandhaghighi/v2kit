@@ -67,12 +67,18 @@ def test_method_chaining():
         "example.org"
     ).update_port(
         443
-    )
+    ).set_extra_item(
+        "plugin",
+        "v2ray-plugin",
+    ).remove_extra_item(
+        "plugin"
+    ).clear_extra()
 
     assert config.encryption == "chacha20-ietf-poly1305"
     assert config.password == "secret"
     assert config.address == "example.org"
     assert config.port == 443
+    assert config.extra == {}
 
 
 @pytest.mark.parametrize(
@@ -182,6 +188,71 @@ def test_update_extra():
     )
 
     assert config.extra["plugin"] == "v2ray-plugin"
+
+
+def test_clear_extra():
+    config = ShadowsocksConfig(
+        encryption="aes-256-gcm",
+        password="password",
+        address="example.com",
+        port=8388,
+        extra={"plugin": "v2ray-plugin"},
+    )
+
+    config.clear_extra()
+
+    assert config.extra == {}
+
+
+def test_set_extra_item():
+    config = ShadowsocksConfig(
+        encryption="aes-256-gcm",
+        password="password",
+        address="example.com",
+        port=8388,
+    )
+
+    config.set_extra_item(
+        "plugin",
+        "v2ray-plugin",
+    )
+
+    assert config.extra["plugin"] == "v2ray-plugin"
+
+
+def test_get_extra_item():
+    config = ShadowsocksConfig(
+        encryption="aes-256-gcm",
+        password="password",
+        address="example.com",
+        port=8388,
+        extra={"plugin": "v2ray-plugin"},
+    )
+
+    assert config.get_extra_item(
+        "plugin"
+    ) == "v2ray-plugin"
+    assert config.get_extra_item("missing") is None
+    assert config.get_extra_item(
+        "missing",
+        "default",
+    ) == "default"
+
+
+def test_remove_extra_item():
+    config = ShadowsocksConfig(
+        encryption="aes-256-gcm",
+        password="password",
+        address="example.com",
+        port=8388,
+        extra={"plugin": "v2ray-plugin"},
+    )
+
+    config.remove_extra_item(
+        "plugin"
+    )
+
+    assert config.extra == {}
 
 
 def test_update_methods():
