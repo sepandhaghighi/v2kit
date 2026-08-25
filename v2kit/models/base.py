@@ -99,6 +99,53 @@ class BaseConfig(ABC):
         self._extra = extra.copy()
 
         return self
+    
+    def clear_extra(self) -> "BaseConfig":
+        """Clear extra data."""
+        self._extra.clear()
+
+        return self
+    
+    def set_extra_item(
+        self,
+        key: str,
+        value: object,
+    ) -> "BaseConfig":
+        """
+        Set an extra item.
+
+        :param key: Extra item key.
+        :param value: Extra item value.
+        """
+        self._extra[key] = value
+
+        return self
+    
+    def get_extra_item(
+        self,
+        key: str,
+        default: object = None,
+    ) -> object:
+        """
+        Get an extra item.
+
+        :param key: Extra item key.
+        :param default: Default value.
+        """
+        return self._extra.get(key, default)
+    
+    def remove_extra_item(
+        self,
+        key: str,
+    ) -> "BaseConfig":
+        """
+        Remove an extra item.
+
+        :param key: Extra item key.
+        """
+        self._extra.pop(key, None)
+
+        return self
 
     @abstractmethod
     def to_uri(self) -> str:
