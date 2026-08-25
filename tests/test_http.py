@@ -79,6 +79,59 @@ def test_update_extra():
     assert config.extra["foo"] == "bar"
 
 
+def test_clear_extra():
+    config = HttpConfig(
+        address="example.com",
+        port=1080,
+        extra={"foo": "bar"},
+    )
+
+    config.clear_extra()
+
+    assert config.extra == {}
+
+
+def test_set_extra_item():
+    config = HttpConfig(
+        address="example.com",
+        port=1080,
+    )
+
+    config.set_extra_item(
+        "foo",
+        "bar",
+    )
+
+    assert config.extra["foo"] == "bar"
+
+
+def test_get_extra_item():
+    config = HttpConfig(
+        address="example.com",
+        port=1080,
+        extra={"foo": "bar"},
+    )
+
+    assert config.get_extra_item("foo") == "bar"
+    assert config.get_extra_item("missing") is None
+    assert config.get_extra_item(
+        "missing",
+        "default",
+    ) == "default"
+
+
+def test_remove_extra_item():
+    config = HttpConfig(
+        address="example.com",
+        port=1080,
+        extra={"foo": "bar"},
+    )
+
+    config.remove_extra_item("foo")
+
+    assert config.extra == {}
+
+
 def test_method_chaining():
     config = HttpConfig(
         address="example.com",
@@ -93,12 +146,18 @@ def test_method_chaining():
         "user"
     ).update_password(
         "password"
-    )
+    ).set_extra_item(
+        "foo",
+        "bar",
+    ).remove_extra_item(
+        "foo"
+    ).clear_extra()
 
     assert config.address == "example.org"
     assert config.port == 8080
     assert config.username == "user"
     assert config.password == "password"
+    assert config.extra == {}
 
 
 @pytest.mark.parametrize(
