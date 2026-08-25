@@ -89,11 +89,27 @@ def test_method_chaining():
         port=443,
     )
 
-    config.update_network("ws").update_tls("tls").update_alter_id(1)
+    config.update_network(
+        "ws"
+    ).update_tls(
+        "tls"
+    ).update_alter_id(
+        1
+    ).update_extra(
+        {
+            "type": "none",
+        }
+    ).set_extra_item(
+        "host",
+        "cdn.example.com",
+    ).remove_extra_item(
+        "host"
+    ).clear_extra()
 
     assert config.network == "ws"
     assert config.tls == "tls"
     assert config.alter_id == 1
+    assert config.extra == {}
 
 
 @pytest.mark.parametrize(
@@ -175,3 +191,89 @@ def test_update_methods():
     assert config.network == "ws"
     assert config.tls == "tls"
     assert config.alter_id == 1
+
+
+def test_update_extra():
+    config = VMESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+    )
+
+    config.update_extra(
+        {
+            "type": "none",
+            "host": "cdn.example.com",
+        }
+    )
+
+    assert config.extra["type"] == "none"
+    assert config.extra["host"] == "cdn.example.com"
+
+
+def test_clear_extra():
+    config = VMESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+        extra={
+            "type": "none",
+            "host": "cdn.example.com",
+        },
+    )
+
+    config.clear_extra()
+
+    assert config.extra == {}
+
+
+def test_set_extra_item():
+    config = VMESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+    )
+
+    config.set_extra_item(
+        "type",
+        "none",
+    )
+
+    assert config.extra["type"] == "none"
+
+
+def test_get_extra_item():
+    config = VMESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+        extra={
+            "type": "none",
+        },
+    )
+
+    assert config.get_extra_item(
+        "type"
+    ) == "none"
+    assert config.get_extra_item("missing") is None
+    assert config.get_extra_item(
+        "missing",
+        "default",
+    ) == "default"
+
+
+def test_remove_extra_item():
+    config = VMESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+        extra={
+            "type": "none",
+        },
+    )
+
+    config.remove_extra_item(
+        "type"
+    )
+
+    assert config.extra == {}
