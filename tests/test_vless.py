@@ -61,11 +61,17 @@ def test_method_chaining():
         "example.org"
     ).update_port(
         8443
-    )
+    ).set_extra_item(
+        "security",
+        "tls",
+    ).remove_extra_item(
+        "security"
+    ).clear_extra()
 
     assert config.uuid == "2c4b4bca-e3ff-4ca8-a062-6f399ad3cf45"
     assert config.address == "example.org"
     assert config.port == 8443
+    assert config.extra == {}
 
 
 @pytest.mark.parametrize(
@@ -166,6 +172,67 @@ def test_update_extra():
     )
 
     assert config.extra["security"] == "tls"
+
+
+def test_clear_extra():
+    config = VLESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+        extra={"security": "tls"},
+    )
+
+    config.clear_extra()
+
+    assert config.extra == {}
+
+
+def test_set_extra_item():
+    config = VLESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+    )
+
+    config.set_extra_item(
+        "security",
+        "tls",
+    )
+
+    assert config.extra["security"] == "tls"
+
+
+def test_get_extra_item():
+    config = VLESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+        extra={"security": "tls"},
+    )
+
+    assert config.get_extra_item(
+        "security"
+    ) == "tls"
+    assert config.get_extra_item("missing") is None
+    assert config.get_extra_item(
+        "missing",
+        "default",
+    ) == "default"
+
+
+def test_remove_extra_item():
+    config = VLESSConfig(
+        uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
+        address="example.com",
+        port=443,
+        extra={"security": "tls"},
+    )
+
+    config.remove_extra_item(
+        "security"
+    )
+
+    assert config.extra == {}
 
 
 def test_update_methods():
