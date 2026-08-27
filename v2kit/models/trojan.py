@@ -65,10 +65,7 @@ class TrojanConfig(BaseConfig):
         """Get the config port."""
         return self._port
 
-    def update_password(
-        self,
-        password: str,
-    ) -> "TrojanConfig":
+    def update_password(self, password: str) -> "TrojanConfig":
         """
         Update password.
 
@@ -80,10 +77,7 @@ class TrojanConfig(BaseConfig):
 
         return self
 
-    def update_address(
-        self,
-        address: str,
-    ) -> "TrojanConfig":
+    def update_address(self, address: str) -> "TrojanConfig":
         """
         Update address.
 
@@ -95,10 +89,7 @@ class TrojanConfig(BaseConfig):
 
         return self
 
-    def update_port(
-        self,
-        port: int,
-    ) -> "TrojanConfig":
+    def update_port(self, port: int) -> "TrojanConfig":
         """
         Update port.
 
