@@ -66,10 +66,7 @@ class BaseConfig(ABC):
             else ""
         )
 
-    def update_label(
-        self,
-        label: Optional[str],
-    ):
+    def update_label(self, label: Optional[str]) -> "BaseConfig":
         """
         Update config label.
 
@@ -82,19 +79,13 @@ class BaseConfig(ABC):
 
         return self
 
-    def update_extra(
-        self,
-        extra: Dict[str, object],
-    ) -> "BaseConfig":
+    def update_extra(self, extra: Dict[str, object]) -> "BaseConfig":
         """
         Update extra data.
 
         :param extra: Extra dictionary.
         """
-        _validate_dict(
-            extra,
-            "Extra",
-        )
+        _validate_dict(extra,"Extra")
 
         self._extra = extra.copy()
 
@@ -134,10 +125,7 @@ class BaseConfig(ABC):
         """
         return self._extra.get(key, default)
     
-    def remove_extra_item(
-        self,
-        key: str,
-    ) -> "BaseConfig":
+    def remove_extra_item(self, key: str) -> "BaseConfig":
         """
         Remove an extra item.
 
@@ -165,7 +153,7 @@ class BaseConfig(ABC):
             f"label={self.label!r})"
         )
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: "BaseConfig") -> bool:
         """Check configs equality."""
         if not isinstance(other, BaseConfig):
             return False
