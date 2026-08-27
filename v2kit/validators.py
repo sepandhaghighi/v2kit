@@ -12,10 +12,7 @@ from .params import INVALID_UUID_MESSAGE, INVALID_PORT_MESSAGE, INVALID_URI_FORM
 from .params import UNSUPPORTED_PROTOCOL_MESSAGE
 
 
-def _validate_non_empty_string(
-    value: str,
-    field_name: str,
-) -> None:
+def _validate_non_empty_string(value: str, field_name: str) -> None:
     """
     Validate non-empty string fields.
 
@@ -115,10 +112,7 @@ def _validate_label(label: Optional[str]) -> None:
     _validate_non_empty_string(label, "Label")
 
 
-def _validate_dict(
-    value: dict,
-    field_name: str,
-) -> None:
+def _validate_dict(value: dict, field_name: str) -> None:
     """
     Validate dictionary fields.
 
