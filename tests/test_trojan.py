@@ -55,11 +55,23 @@ def test_method_chaining():
         port=443,
     )
 
-    config.update_password("new-password").update_address("example.org").update_port(8443)
+    config.update_password(
+        "new-password"
+    ).update_address(
+        "example.org"
+    ).update_port(
+        8443
+    ).set_extra_item(
+        "security",
+        "tls",
+    ).remove_extra_item(
+        "security"
+    ).clear_extra()
 
     assert config.password == "new-password"
     assert config.address == "example.org"
     assert config.port == 8443
+    assert config.extra == {}
 
 
 @pytest.mark.parametrize(
@@ -157,6 +169,67 @@ def test_update_extra():
     )
 
     assert config.extra["security"] == "tls"
+
+
+def test_clear_extra():
+    config = TrojanConfig(
+        password="password",
+        address="example.com",
+        port=443,
+        extra={"security": "tls"},
+    )
+
+    config.clear_extra()
+
+    assert config.extra == {}
+
+
+def test_set_extra_item():
+    config = TrojanConfig(
+        password="password",
+        address="example.com",
+        port=443,
+    )
+
+    config.set_extra_item(
+        "security",
+        "tls",
+    )
+
+    assert config.extra["security"] == "tls"
+
+
+def test_get_extra_item():
+    config = TrojanConfig(
+        password="password",
+        address="example.com",
+        port=443,
+        extra={"security": "tls"},
+    )
+
+    assert config.get_extra_item(
+        "security"
+    ) == "tls"
+    assert config.get_extra_item("missing") is None
+    assert config.get_extra_item(
+        "missing",
+        "default",
+    ) == "default"
+
+
+def test_remove_extra_item():
+    config = TrojanConfig(
+        password="password",
+        address="example.com",
+        port=443,
+        extra={"security": "tls"},
+    )
+
+    config.remove_extra_item(
+        "security"
+    )
+
+    assert config.extra == {}
 
 
 def test_update_methods():
