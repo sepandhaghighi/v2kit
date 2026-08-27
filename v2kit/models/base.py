@@ -85,18 +85,18 @@ class BaseConfig(ABC):
 
         :param extra: Extra dictionary.
         """
-        _validate_dict(extra,"Extra")
+        _validate_dict(extra, "Extra")
 
         self._extra = extra.copy()
 
         return self
-    
+
     def clear_extra(self) -> "BaseConfig":
         """Clear extra data."""
         self._extra.clear()
 
         return self
-    
+
     def set_extra_item(
         self,
         key: str,
@@ -111,7 +111,7 @@ class BaseConfig(ABC):
         self._extra[key] = value
 
         return self
-    
+
     def get_extra_item(
         self,
         key: str,
@@ -124,7 +124,7 @@ class BaseConfig(ABC):
         :param default: Default value.
         """
         return self._extra.get(key, default)
-    
+
     def remove_extra_item(self, key: str) -> "BaseConfig":
         """
         Remove an extra item.
