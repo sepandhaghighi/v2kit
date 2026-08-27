@@ -66,10 +66,7 @@ class VLESSConfig(BaseConfig):
         """Get the config port."""
         return self._port
 
-    def update_uuid(
-        self,
-        uuid: str,
-    ) -> "VLESSConfig":
+    def update_uuid(self, uuid: str) -> "VLESSConfig":
         """
         Update UUID.
 
@@ -81,10 +78,7 @@ class VLESSConfig(BaseConfig):
 
         return self
 
-    def update_address(
-        self,
-        address: str,
-    ) -> "VLESSConfig":
+    def update_address(self, address: str) -> "VLESSConfig":
         """
         Update address.
 
@@ -96,10 +90,7 @@ class VLESSConfig(BaseConfig):
 
         return self
 
-    def update_port(
-        self,
-        port: int,
-    ) -> "VLESSConfig":
+    def update_port(self, port: int) -> "VLESSConfig":
         """
         Update port.
 
