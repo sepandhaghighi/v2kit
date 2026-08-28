@@ -76,10 +76,7 @@ class SocksConfig(BaseConfig):
         """Get the config password."""
         return self._password
 
-    def update_address(
-        self,
-        address: str,
-    ) -> "SocksConfig":
+    def update_address(self, address: str) -> "SocksConfig":
         """
         Update address.
 
@@ -89,10 +86,7 @@ class SocksConfig(BaseConfig):
         self._address = address
         return self
 
-    def update_port(
-        self,
-        port: int,
-    ) -> "SocksConfig":
+    def update_port(self, port: int) -> "SocksConfig":
         """
         Update port.
 
@@ -102,10 +96,7 @@ class SocksConfig(BaseConfig):
         self._port = port
         return self
 
-    def update_username(
-        self,
-        username: Optional[str],
-    ) -> "SocksConfig":
+    def update_username(self, username: Optional[str]) -> "SocksConfig":
         """
         Update username.
 
@@ -115,10 +106,7 @@ class SocksConfig(BaseConfig):
         self._username = username
         return self
 
-    def update_password(
-        self,
-        password: Optional[str],
-    ) -> "SocksConfig":
+    def update_password(self, password: Optional[str]) -> "SocksConfig":
         """
         Update password.
 

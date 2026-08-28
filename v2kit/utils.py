@@ -14,9 +14,7 @@ def _encode_base64(data: str) -> str:
 
     :param data: Input string.
     """
-    return base64.b64encode(
-        data.encode(DEFAULT_ENCODING)
-    ).decode(DEFAULT_ENCODING)
+    return base64.b64encode(data.encode(DEFAULT_ENCODING)).decode(DEFAULT_ENCODING)
 
 
 def _decode_base64(data: str) -> str:
@@ -27,9 +25,7 @@ def _decode_base64(data: str) -> str:
     """
     padded = _add_base64_padding(data)
 
-    return base64.b64decode(
-        padded
-    ).decode(DEFAULT_ENCODING)
+    return base64.b64decode(padded).decode(DEFAULT_ENCODING)
 
 
 def _add_base64_padding(data: str) -> str:

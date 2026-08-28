@@ -78,10 +78,7 @@ def relabel(uri: str, label: str) -> str:
     return config.to_uri()
 
 
-def encode_subscription(
-    entries: Iterable[Union[str, BaseConfig]],
-    validate: bool = True,
-) -> str:
+def encode_subscription(entries: Iterable[Union[str, BaseConfig]], validate: bool = True) -> str:
     """
     Encode entries as V2Ray subscription.
 
@@ -107,10 +104,7 @@ def encode_subscription(
     return _encode_base64(subscription)
 
 
-def decode_subscription(
-    subscription: str,
-    validate: bool = True,
-) -> List[str]:
+def decode_subscription(subscription: str, validate: bool = True) -> List[str]:
     """
     Decode V2Ray subscription.
 
@@ -121,11 +115,7 @@ def decode_subscription(
 
     decoded = _decode_base64(subscription)
 
-    uris = [
-        uri.strip()
-        for uri in decoded.splitlines()
-        if uri.strip()
-    ]
+    uris = [uri.strip() for uri in decoded.splitlines() if uri.strip()]
 
     if validate:
         for uri in uris:

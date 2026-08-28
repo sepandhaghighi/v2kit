@@ -97,10 +97,7 @@ class HttpConfig(BaseConfig):
         self._port = port
         return self
 
-    def update_username(
-        self,
-        username: Optional[str],
-    ) -> "HttpConfig":
+    def update_username(self, username: Optional[str]) -> "HttpConfig":
         """
         Update username.
 
@@ -110,10 +107,7 @@ class HttpConfig(BaseConfig):
         self._username = username
         return self
 
-    def update_password(
-        self,
-        password: Optional[str],
-    ) -> "HttpConfig":
+    def update_password(self, password: Optional[str]) -> "HttpConfig":
         """
         Update password.
 

@@ -11,6 +11,7 @@ from .validators import _validate_non_empty_string
 from .models import VMESSConfig, VLESSConfig, TrojanConfig, ShadowsocksConfig, SocksConfig, HttpConfig
 from .utils import _decode_base64
 
+
 def _parse_extra(parsed_uri: ParseResult) -> dict:
     """
     Parse URI query parameters.

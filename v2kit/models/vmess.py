@@ -98,10 +98,7 @@ class VMESSConfig(BaseConfig):
         """Get the config tls."""
         return self._tls
 
-    def update_uuid(
-        self,
-        uuid: str,
-    ) -> "VMESSConfig":
+    def update_uuid(self, uuid: str) -> "VMESSConfig":
         """
         Update UUID.
 
@@ -113,10 +110,7 @@ class VMESSConfig(BaseConfig):
 
         return self
 
-    def update_address(
-        self,
-        address: str,
-    ) -> "VMESSConfig":
+    def update_address(self, address: str) -> "VMESSConfig":
         """
         Update address.
 
@@ -128,10 +122,7 @@ class VMESSConfig(BaseConfig):
 
         return self
 
-    def update_port(
-        self,
-        port: int,
-    ) -> "VMESSConfig":
+    def update_port(self, port: int) -> "VMESSConfig":
         """
         Update port.
 
@@ -143,10 +134,7 @@ class VMESSConfig(BaseConfig):
 
         return self
 
-    def update_network(
-        self,
-        network: str,
-    ) -> "VMESSConfig":
+    def update_network(self, network: str) -> "VMESSConfig":
         """
         Update network.
 
@@ -158,10 +146,7 @@ class VMESSConfig(BaseConfig):
 
         return self
 
-    def update_tls(
-        self,
-        tls: str,
-    ) -> "VMESSConfig":
+    def update_tls(self, tls: str) -> "VMESSConfig":
         """
         Update TLS.
 
@@ -173,10 +158,7 @@ class VMESSConfig(BaseConfig):
 
         return self
 
-    def update_alter_id(
-        self,
-        alter_id: int,
-    ) -> "VMESSConfig":
+    def update_alter_id(self, alter_id: int) -> "VMESSConfig":
         """
         Update AlterId.
 
@@ -207,11 +189,6 @@ class VMESSConfig(BaseConfig):
 
     def to_uri(self) -> str:
         """Convert VMESS config to URI."""
-        encoded = _encode_base64(
-            json.dumps(
-                self.to_dict(),
-                ensure_ascii=False,
-            )
-        )
+        encoded = _encode_base64(json.dumps(self.to_dict(), ensure_ascii=False))
         scheme = PROTOCOL_SCHEMES[self.protocol]
         return f"{scheme}://{encoded}"

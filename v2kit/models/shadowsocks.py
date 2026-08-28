@@ -77,10 +77,7 @@ class ShadowsocksConfig(BaseConfig):
         """Get the config port."""
         return self._port
 
-    def update_encryption(
-        self,
-        encryption: str,
-    ) -> "ShadowsocksConfig":
+    def update_encryption(self, encryption: str) -> "ShadowsocksConfig":
         """
         Update encryption method.
 
@@ -92,10 +89,7 @@ class ShadowsocksConfig(BaseConfig):
 
         return self
 
-    def update_password(
-        self,
-        password: str,
-    ) -> "ShadowsocksConfig":
+    def update_password(self, password: str) -> "ShadowsocksConfig":
         """
         Update password.
 
@@ -107,10 +101,7 @@ class ShadowsocksConfig(BaseConfig):
 
         return self
 
-    def update_address(
-        self,
-        address: str,
-    ) -> "ShadowsocksConfig":
+    def update_address(self, address: str) -> "ShadowsocksConfig":
         """
         Update address.
 
@@ -122,10 +113,7 @@ class ShadowsocksConfig(BaseConfig):
 
         return self
 
-    def update_port(
-        self,
-        port: int,
-    ) -> "ShadowsocksConfig":
+    def update_port(self, port: int) -> "ShadowsocksConfig":
         """
         Update port.
 
@@ -151,13 +139,8 @@ class ShadowsocksConfig(BaseConfig):
 
     def to_uri(self) -> str:
         """Convert config to URI."""
-        userinfo = (
-            f"{self.encryption}:{self.password}"
-        )
-
-        encoded = _encode_base64(
-            userinfo
-        )
+        userinfo = f"{self.encryption}:{self.password}"
+        encoded = _encode_base64(userinfo)
         scheme = PROTOCOL_SCHEMES[self.protocol]
         return (
             f"{scheme}://{encoded}@"
