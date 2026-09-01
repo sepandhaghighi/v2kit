@@ -23,7 +23,7 @@ def read_description() -> str:
 setup(
     name='v2kit',
     packages=['v2kit', 'v2kit.models'],
-    version='0.5',
+    version='0.6',
     description='V2Kit: A Lightweight Toolkit for V2Ray Config Manipulation',
     long_description=read_description(),
     long_description_content_type='text/markdown',
@@ -31,14 +31,14 @@ setup(
     author='Sepand Haghighi',
     author_email='me@sepand.tech',
     url='https://github.com/sepandhaghighi/v2kit',
-    download_url='https://github.com/sepandhaghighi/v2kit/tarball/v0.5',
+    download_url='https://github.com/sepandhaghighi/v2kit/tarball/v0.6',
     keywords='v2ray v2ray-config v2ray-tools vmess vless trojan shadowsocks proxy subscription network',
     project_urls={
         'Source': 'https://github.com/sepandhaghighi/v2kit'},
     install_requires=[],
     python_requires='>=3.8',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Natural Language :: English',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
