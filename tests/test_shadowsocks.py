@@ -169,10 +169,7 @@ def test_repr():
         port=8388,
     )
 
-    assert repr(config) == (
-        "ShadowsocksConfig(protocol=<Protocol.SHADOWSOCKS: "
-        "'shadowsocks'>, label=None)"
-    )
+    assert repr(config) == "ShadowsocksConfig(protocol=<Protocol.SHADOWSOCKS: 'shadowsocks'>, label=None)"
 
 
 def test_update_extra():
@@ -183,9 +180,7 @@ def test_update_extra():
         port=8388,
     )
 
-    config.update_extra(
-        {"plugin": "v2ray-plugin"}
-    )
+    config.update_extra({"plugin": "v2ray-plugin"})
 
     assert config.extra["plugin"] == "v2ray-plugin"
 
@@ -212,10 +207,7 @@ def test_set_extra_item():
         port=8388,
     )
 
-    config.set_extra_item(
-        "plugin",
-        "v2ray-plugin",
-    )
+    config.set_extra_item("plugin", "v2ray-plugin")
 
     assert config.extra["plugin"] == "v2ray-plugin"
 
@@ -229,14 +221,9 @@ def test_get_extra_item():
         extra={"plugin": "v2ray-plugin"},
     )
 
-    assert config.get_extra_item(
-        "plugin"
-    ) == "v2ray-plugin"
+    assert config.get_extra_item("plugin") == "v2ray-plugin"
     assert config.get_extra_item("missing") is None
-    assert config.get_extra_item(
-        "missing",
-        "default",
-    ) == "default"
+    assert config.get_extra_item("missing", "default") == "default"
 
 
 def test_remove_extra_item():
@@ -248,9 +235,7 @@ def test_remove_extra_item():
         extra={"plugin": "v2ray-plugin"},
     )
 
-    config.remove_extra_item(
-        "plugin"
-    )
+    config.remove_extra_item("plugin")
 
     assert config.extra == {}
 
@@ -263,18 +248,10 @@ def test_update_methods():
         port=8388,
     )
 
-    config.update_encryption(
-        "chacha20-ietf-poly1305"
-    )
-    config.update_password(
-        "secret"
-    )
-    config.update_address(
-        "example.org"
-    )
-    config.update_port(
-        443
-    )
+    config.update_encryption("chacha20-ietf-poly1305")
+    config.update_password("secret")
+    config.update_address("example.org")
+    config.update_port(443)
 
     assert config.encryption == "chacha20-ietf-poly1305"
     assert config.password == "secret"
