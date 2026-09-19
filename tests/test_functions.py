@@ -98,9 +98,7 @@ def test_relabel_vmess():
     assert is_vmess(result) is True
 
     encoded = result.split("://", 1)[1]
-    decoded = json.loads(
-        __import__("base64").b64decode(encoded + "==").decode()
-    )
+    decoded = json.loads(__import__("base64").b64decode(encoded + "==").decode())
 
     assert decoded["ps"] == "new-label"
 
@@ -124,10 +122,7 @@ def test_relabel_shadowsocks():
 
 
 def test_encode_subscription():
-    configs = [
-        VMESS_CONFIG,
-        VLESS_CONFIG,
-    ]
+    configs = [VMESS_CONFIG, VLESS_CONFIG]
 
     result = encode_subscription(configs)
 
@@ -136,10 +131,7 @@ def test_encode_subscription():
 
 
 def test_decode_subscription1():
-    configs = [
-        VMESS_CONFIG,
-        VLESS_CONFIG,
-    ]
+    configs = [VMESS_CONFIG, VLESS_CONFIG]
 
     encoded = encode_subscription(configs)
 
@@ -180,57 +172,34 @@ def test_encode_subscription_with_models():
 
 
 def test_encode_subscription_no_validation():
-    result = encode_subscription(
-        ["invalid-config"],
-        validate=False,
-    )
+    result = encode_subscription(["invalid-config"], validate=False)
 
     assert isinstance(result, str)
 
 
 def test_decode_subscription_no_validation():
-    encoded = _encode_base64(
-        "invalid-config"
-    )
+    encoded = _encode_base64("invalid-config")
 
-    result = decode_subscription(
-        encoded,
-        validate=False,
-    )
+    result = decode_subscription(encoded, validate=False)
 
     assert result == ["invalid-config"]
 
 
 def test_parse_vmess():
-    assert isinstance(
-        parse(VMESS_CONFIG),
-        VMESSConfig,
-    )
+    assert isinstance(parse(VMESS_CONFIG), VMESSConfig)
 
 
 def test_parse_vless():
-    assert isinstance(
-        parse(VLESS_CONFIG),
-        VLESSConfig,
-    )
+    assert isinstance(parse(VLESS_CONFIG), VLESSConfig)
 
 
 def test_parse_trojan():
-    assert isinstance(
-        parse(TROJAN_CONFIG),
-        TrojanConfig,
-    )
+    assert isinstance(parse(TROJAN_CONFIG), TrojanConfig)
 
 
 def test_parse_shadowsocks():
-    assert isinstance(
-        parse(SHADOWSOCKS_CONFIG),
-        ShadowsocksConfig,
-    )
+    assert isinstance(parse(SHADOWSOCKS_CONFIG), ShadowsocksConfig)
 
 
 def test_parse_socks():
-    assert isinstance(
-        parse(SOCKS_CONFIG),
-        SocksConfig,
-    )
+    assert isinstance(parse(SOCKS_CONFIG), SocksConfig)
