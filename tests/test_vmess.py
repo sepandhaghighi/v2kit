@@ -234,10 +234,7 @@ def test_set_extra_item():
         port=443,
     )
 
-    config.set_extra_item(
-        "type",
-        "none",
-    )
+    config.set_extra_item("type", "none")
 
     assert config.extra["type"] == "none"
 
@@ -252,14 +249,9 @@ def test_get_extra_item():
         },
     )
 
-    assert config.get_extra_item(
-        "type"
-    ) == "none"
+    assert config.get_extra_item("type") == "none"
     assert config.get_extra_item("missing") is None
-    assert config.get_extra_item(
-        "missing",
-        "default",
-    ) == "default"
+    assert config.get_extra_item("missing", "default") == "default"
 
 
 def test_remove_extra_item():
@@ -272,8 +264,6 @@ def test_remove_extra_item():
         },
     )
 
-    config.remove_extra_item(
-        "type"
-    )
+    config.remove_extra_item("type")
 
     assert config.extra == {}
