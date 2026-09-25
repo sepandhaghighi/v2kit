@@ -13,14 +13,9 @@ INVALID_VMESS = "vmess://invalid-base64"
 
 INVALID_SHADOWSOCKS = "ss://invalid-base64@example.com:8388#ss-test"
 
-VALID_VLESS = (
-    "vless://1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45@example.com:443"
-    "?security=tls#test"
-)
+VALID_VLESS = "vless://1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45@example.com:443?security=tls#test"
 
-VALID_UUID = (
-    "1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45"
-)
+VALID_UUID = "1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45"
 
 
 def test_validate_uri_non_string():
@@ -64,20 +59,14 @@ def test_relabel_non_string_label():
 
 
 def test_encode_subscription_invalid_config1():
-    configs = [
-        VALID_VLESS,
-        "invalid-config",
-    ]
+    configs = [VALID_VLESS, "invalid-config"]
 
     with pytest.raises(V2kitValidationError):
         encode_subscription(configs)
 
 
 def test_encode_subscription_invalid_config2():
-    configs = [
-        VALID_VLESS,
-        1,
-    ]
+    configs = [VALID_VLESS, 1]
 
     with pytest.raises(V2kitValidationError):
         encode_subscription(configs)
@@ -94,24 +83,16 @@ def test_decode_subscription_invalid_data():
 
 
 def test_decode_subscription_invalid_config():
-    invalid_subscription = (
-        "aW52YWxpZC1jb25maWc="
-    )
+    invalid_subscription = "aW52YWxpZC1jb25maWc="
 
     with pytest.raises(V2kitValidationError):
         decode_subscription(invalid_subscription)
 
 
 def test_exception_hierarchy():
-    assert issubclass(
-        V2kitValidationError,
-        V2kitError,
-    )
+    assert issubclass(V2kitValidationError, V2kitError)
 
-    assert issubclass(
-        V2kitParseError,
-        V2kitValidationError,
-    )
+    assert issubclass(V2kitParseError, V2kitValidationError)
 
 
 def test_parse_invalid_uri():

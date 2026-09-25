@@ -72,9 +72,7 @@ def test_update_extra():
         port=1080,
     )
 
-    config.update_extra(
-        {"foo": "bar"}
-    )
+    config.update_extra({"foo": "bar"})
 
     assert config.extra["foo"] == "bar"
 
@@ -97,10 +95,7 @@ def test_set_extra_item():
         port=1080,
     )
 
-    config.set_extra_item(
-        "foo",
-        "bar",
-    )
+    config.set_extra_item("foo", "bar")
 
     assert config.extra["foo"] == "bar"
 
@@ -114,10 +109,7 @@ def test_get_extra_item():
 
     assert config.get_extra_item("foo") == "bar"
     assert config.get_extra_item("missing") is None
-    assert config.get_extra_item(
-        "missing",
-        "default",
-    ) == "default"
+    assert config.get_extra_item("missing", "default") == "default"
 
 
 def test_remove_extra_item():

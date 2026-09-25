@@ -167,9 +167,7 @@ def test_update_extra():
         port=443,
     )
 
-    config.update_extra(
-        {"security": "tls"}
-    )
+    config.update_extra({"security": "tls"})
 
     assert config.extra["security"] == "tls"
 
@@ -194,10 +192,7 @@ def test_set_extra_item():
         port=443,
     )
 
-    config.set_extra_item(
-        "security",
-        "tls",
-    )
+    config.set_extra_item("security", "tls")
 
     assert config.extra["security"] == "tls"
 
@@ -210,14 +205,9 @@ def test_get_extra_item():
         extra={"security": "tls"},
     )
 
-    assert config.get_extra_item(
-        "security"
-    ) == "tls"
+    assert config.get_extra_item("security") == "tls"
     assert config.get_extra_item("missing") is None
-    assert config.get_extra_item(
-        "missing",
-        "default",
-    ) == "default"
+    assert config.get_extra_item("missing", "default") == "default"
 
 
 def test_remove_extra_item():
@@ -228,9 +218,7 @@ def test_remove_extra_item():
         extra={"security": "tls"},
     )
 
-    config.remove_extra_item(
-        "security"
-    )
+    config.remove_extra_item("security")
 
     assert config.extra == {}
 
