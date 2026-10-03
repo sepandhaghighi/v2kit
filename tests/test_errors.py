@@ -199,7 +199,7 @@ def test_socks_invalid_port1():
 
 
 def test_socks_invalid_port2():
-    with pytest.raises(V2kitValidationError,  match=r"Port must be int."):
+    with pytest.raises(V2kitValidationError, match=r"Port must be int."):
         SocksConfig(
             address="example.com",
             port=False,
