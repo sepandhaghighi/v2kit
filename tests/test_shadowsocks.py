@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pytest
+from v2kit import V2kitValidationError
 from v2kit import parse
 from v2kit import ShadowsocksConfig
 
@@ -82,17 +83,17 @@ def test_method_chaining():
 
 
 @pytest.mark.parametrize(
-    "kwargs",
+    "kwargs, expected_message",
     [
-        {"encryption": ""},
-        {"password": ""},
-        {"address": ""},
-        {"port": 0},
-        {"port": 1.2},
-        {"extra": 1},
+        ({"encryption": ""}, r"encryption cannot be empty\."),
+        ({"password": ""}, r"password cannot be empty\."),
+        ({"address": ""}, r"address cannot be empty\."),
+        ({"port": 0}, r"Invalid port: 0"),
+        ({"port": 1.2}, r"port must be int\."),
+        ({"extra": 1}, r"extra must be dict\."),
     ],
 )
-def test_invalid_values(kwargs):
+def test_invalid_values(kwargs, expected_message):
     params = {
         "encryption": "aes-256-gcm",
         "password": "password",
@@ -101,7 +102,7 @@ def test_invalid_values(kwargs):
     }
     params.update(kwargs)
 
-    with pytest.raises(ValueError):
+    with pytest.raises(V2kitValidationError, match=expected_message):
         ShadowsocksConfig(**params)
 
 

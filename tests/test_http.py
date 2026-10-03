@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pytest
+from v2kit import V2kitValidationError
 from v2kit import parse
 from v2kit import HttpConfig
 
