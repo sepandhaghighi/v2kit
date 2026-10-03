@@ -153,24 +153,24 @@ def test_method_chaining():
 
 
 @pytest.mark.parametrize(
-    "kwargs",
+    "kwargs, expected_message",
     [
-        {"address": ""},
-        {"port": 0},
-        {"port": 1.2},
-        {"username": ""},
-        {"password": ""},
-        {"extra": 1},
+        ({"address": ""}, r"address cannot be empty\."),
+        ({"port": 0}, r"Invalid port: 0"),
+        ({"port": 1.2}, r"port must be int\."),
+        ({"username": ""}, r"username cannot be empty\."),
+        ({"password": ""}, r"password cannot be empty\."),
+        ({"extra": 1}, r"extra must be dict\."),
     ],
 )
-def test_invalid_values(kwargs):
+def test_invalid_values(kwargs, expected_message):
     params = {
         "address": "example.com",
         "port": 1080,
     }
     params.update(kwargs)
 
-    with pytest.raises(ValueError):
+    with pytest.raises(V2kitValidationError, match=expected_message):
         HttpConfig(**params)
 
 
