@@ -85,12 +85,12 @@ def test_method_chaining():
 @pytest.mark.parametrize(
     "kwargs, expected_message",
     [
-        ({"encryption": ""}, r"encryption cannot be empty\."),
-        ({"password": ""}, r"password cannot be empty\."),
-        ({"address": ""}, r"address cannot be empty\."),
+        ({"encryption": ""}, r"Encryption cannot be empty."),
+        ({"password": ""}, r"Password cannot be empty."),
+        ({"address": ""}, r"Address cannot be empty."),
         ({"port": 0}, r"Invalid port: 0"),
-        ({"port": 1.2}, r"port must be int\."),
-        ({"extra": 1}, r"extra must be dict\."),
+        ({"port": 1.2}, r"Port must be int."),
+        ({"extra": 1}, r"Extra must be dict."),
     ],
 )
 def test_invalid_values(kwargs, expected_message):

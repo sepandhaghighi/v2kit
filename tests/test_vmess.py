@@ -117,21 +117,21 @@ def test_method_chaining():
     "kwargs, expected_message",
     [
         ({"uuid": "invalid"}, r"Invalid UUID: invalid"),
-        ({"uuid": 2}, r"uuid must be str\."),
-        ({"address": ""}, r"address cannot be empty\."),
+        ({"uuid": 2}, r"UUID must be str."),
+        ({"address": ""}, r"Address cannot be empty."),
         ({"port": 0}, r"Invalid port: 0"),
-        ({"port": 1.2}, r"port must be int\."),
+        ({"port": 1.2}, r"Port must be int."),
         (
             {"alter_id": -1},
-            r"AlterId must be a non-negative integer\.",
+            r"AlterId must be a non-negative integer.",
         ),
         (
             {"alter_id": 2.2},
-            r"AlterId must be a non-negative integer\.",
+            r"AlterId must be a non-negative integer.",
         ),
-        ({"network": 2}, r"network must be str\."),
-        ({"tls": 2}, r"tls must be str\."),
-        ({"extra": 1}, r"extra must be dict\."),
+        ({"network": 2}, r"Network must be str."),
+        ({"tls": 2}, r"TLS must be str."),
+        ({"extra": 1}, r"Extra must be dict."),
     ],
 )
 def test_invalid_values(kwargs, expected_message):
