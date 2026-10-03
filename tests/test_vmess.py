@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pytest
+from v2kit import V2kitValidationError
 from v2kit import parse
 from v2kit import VMESSConfig
 
@@ -113,21 +114,27 @@ def test_method_chaining():
 
 
 @pytest.mark.parametrize(
-    "kwargs",
+    "kwargs, expected_message",
     [
-        {"uuid": "invalid"},
-        {"uuid": 2},
-        {"address": ""},
-        {"port": 0},
-        {"port": 1.2},
-        {"alter_id": -1},
-        {"alter_id": 2.2},
-        {"network": 2},
-        {"tls": 2},
-        {"extra": 1}
+        ({"uuid": "invalid"}, r"Invalid UUID: invalid"),
+        ({"uuid": 2}, r"UUID must be str."),
+        ({"address": ""}, r"Address cannot be empty."),
+        ({"port": 0}, r"Invalid port: 0"),
+        ({"port": 1.2}, r"Port must be int."),
+        (
+            {"alter_id": -1},
+            r"AlterId must be a non-negative integer.",
+        ),
+        (
+            {"alter_id": 2.2},
+            r"AlterId must be a non-negative integer.",
+        ),
+        ({"network": 2}, r"Network must be str."),
+        ({"tls": 2}, r"TLS must be str."),
+        ({"extra": 1}, r"Extra must be dict."),
     ],
 )
-def test_invalid_values(kwargs):
+def test_invalid_values(kwargs, expected_message):
     params = {
         "uuid": "1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",
         "address": "example.com",
@@ -135,7 +142,7 @@ def test_invalid_values(kwargs):
     }
     params.update(kwargs)
 
-    with pytest.raises(ValueError):
+    with pytest.raises(V2kitValidationError, match=expected_message):
         VMESSConfig(**params)
 
 

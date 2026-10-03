@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pytest
+from v2kit import V2kitValidationError
 from v2kit import parse
 from v2kit import HttpConfig
 
@@ -153,24 +154,24 @@ def test_method_chaining():
 
 
 @pytest.mark.parametrize(
-    "kwargs",
+    "kwargs, expected_message",
     [
-        {"address": ""},
-        {"port": 0},
-        {"port": 1.2},
-        {"username": ""},
-        {"password": ""},
-        {"extra": 1},
+        ({"address": ""}, r"Address cannot be empty."),
+        ({"port": 0}, r"Invalid port: 0"),
+        ({"port": 1.2}, r"Port must be int."),
+        ({"username": ""}, r"Username cannot be empty."),
+        ({"password": ""}, r"Password cannot be empty."),
+        ({"extra": 1}, r"Extra must be dict."),
     ],
 )
-def test_invalid_values(kwargs):
+def test_invalid_values(kwargs, expected_message):
     params = {
         "address": "example.com",
         "port": 1080,
     }
     params.update(kwargs)
 
-    with pytest.raises(ValueError):
+    with pytest.raises(V2kitValidationError, match=expected_message):
         HttpConfig(**params)
 
 

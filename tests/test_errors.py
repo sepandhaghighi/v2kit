@@ -19,61 +19,61 @@ VALID_UUID = "1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45"
 
 
 def test_validate_uri_non_string():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"URI must be str."):
         _validate_uri(123)
 
 
 def test_validate_uri_empty():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"URI cannot be empty."):
         _validate_uri("")
 
 
 def test_validate_uri_missing_scheme():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Invalid URI format."):
         _validate_uri("invalid-config")
 
 
 def test_validate_uri_unsupported_protocol():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Unsupported protocol: ftp"):
         _validate_uri(INVALID_PROTOCOL)
 
 
 def test_validate_invalid_vmess():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Invalid URI format."):
         _validate_uri(INVALID_VMESS)
 
 
 def test_relabel_invalid_config():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Invalid URI format."):
         relabel("invalid", "label")
 
 
 def test_relabel_empty_label():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Label cannot be empty."):
         relabel(VALID_VLESS, "")
 
 
 def test_relabel_non_string_label():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Label must be str."):
         relabel(VALID_VLESS, 123)
 
 
 def test_encode_subscription_invalid_config1():
     configs = [VALID_VLESS, "invalid-config"]
 
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Invalid URI format."):
         encode_subscription(configs)
 
 
 def test_encode_subscription_invalid_config2():
     configs = [VALID_VLESS, 1]
 
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Items must be string or Config."):
         encode_subscription(configs)
 
 
 def test_decode_subscription_non_string():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Subscription must be str."):
         decode_subscription(123)
 
 
@@ -85,7 +85,7 @@ def test_decode_subscription_invalid_data():
 def test_decode_subscription_invalid_config():
     invalid_subscription = "aW52YWxpZC1jb25maWc="
 
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Invalid URI format."):
         decode_subscription(invalid_subscription)
 
 
@@ -96,27 +96,27 @@ def test_exception_hierarchy():
 
 
 def test_parse_invalid_uri():
-    with pytest.raises(V2kitParseError):
+    with pytest.raises(V2kitParseError, match=r"Invalid URI format."):
         parse("invalid")
 
 
 def test_parse_unsupported_protocol():
-    with pytest.raises(V2kitParseError):
+    with pytest.raises(V2kitParseError, match=r"Unsupported protocol: ftp"):
         parse(INVALID_PROTOCOL)
 
 
 def test_parse_invalid_vmess():
-    with pytest.raises(V2kitParseError):
+    with pytest.raises(V2kitParseError, match=r"Invalid URI format."):
         parse(INVALID_VMESS)
 
 
 def test_parse_invalid_shadowsocks():
-    with pytest.raises(V2kitParseError):
+    with pytest.raises(V2kitParseError, match=r"Invalid URI format."):
         parse(INVALID_SHADOWSOCKS)
 
 
 def test_vless_invalid_uuid():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Invalid UUID: invalid"):
         VLESSConfig(
             uuid="invalid",
             address="example.com",
@@ -125,7 +125,7 @@ def test_vless_invalid_uuid():
 
 
 def test_vless_invalid_port1():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Invalid port: 70000"):
         VLESSConfig(
             uuid=VALID_UUID,
             address="example.com",
@@ -134,7 +134,7 @@ def test_vless_invalid_port1():
 
 
 def test_vless_invalid_port2():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Port must be int."):
         VLESSConfig(
             uuid=VALID_UUID,
             address="example.com",
@@ -143,7 +143,7 @@ def test_vless_invalid_port2():
 
 
 def test_vless_empty_address():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Address cannot be empty."):
         VLESSConfig(
             uuid=VALID_UUID,
             address="",
@@ -152,7 +152,7 @@ def test_vless_empty_address():
 
 
 def test_vmess_invalid_alter_id1():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"AlterId must be a non-negative integer."):
         VMESSConfig(
             uuid=VALID_UUID,
             address="example.com",
@@ -162,7 +162,7 @@ def test_vmess_invalid_alter_id1():
 
 
 def test_vmess_invalid_alter_id2():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"AlterId must be a non-negative integer."):
         VMESSConfig(
             uuid=VALID_UUID,
             address="example.com",
@@ -172,7 +172,7 @@ def test_vmess_invalid_alter_id2():
 
 
 def test_trojan_empty_password():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Password cannot be empty."):
         TrojanConfig(
             password="",
             address="example.com",
@@ -181,7 +181,7 @@ def test_trojan_empty_password():
 
 
 def test_shadowsocks_empty_encryption():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Encryption cannot be empty."):
         ShadowsocksConfig(
             encryption="",
             password="secret",
@@ -191,7 +191,7 @@ def test_shadowsocks_empty_encryption():
 
 
 def test_socks_invalid_port1():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Invalid port: 70000"):
         SocksConfig(
             address="example.com",
             port=70000,
@@ -199,7 +199,7 @@ def test_socks_invalid_port1():
 
 
 def test_socks_invalid_port2():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Port must be int."):
         SocksConfig(
             address="example.com",
             port=False,
@@ -207,7 +207,7 @@ def test_socks_invalid_port2():
 
 
 def test_socks_empty_address():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Address cannot be empty."):
         SocksConfig(
             address="",
             port=1080,
@@ -215,7 +215,7 @@ def test_socks_empty_address():
 
 
 def test_socks_invalid_username():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Username cannot be empty."):
         SocksConfig(
             address="example.com",
             port=1080,
@@ -224,7 +224,7 @@ def test_socks_invalid_username():
 
 
 def test_socks_invalid_password():
-    with pytest.raises(V2kitValidationError):
+    with pytest.raises(V2kitValidationError, match=r"Password cannot be empty."):
         SocksConfig(
             address="example.com",
             port=1080,
