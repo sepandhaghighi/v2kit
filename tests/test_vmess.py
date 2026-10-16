@@ -116,22 +116,22 @@ def test_method_chaining():
 @pytest.mark.parametrize(
     "kwargs, expected_message",
     [
-        ({"uuid": "invalid"}, r"Invalid UUID: invalid"),
-        ({"uuid": 2}, r"UUID must be str."),
-        ({"address": ""}, r"Address cannot be empty."),
-        ({"port": 0}, r"Invalid port: 0"),
-        ({"port": 1.2}, r"Port must be int."),
+        ({"uuid": "invalid"}, "Invalid UUID: invalid"),
+        ({"uuid": 2}, "UUID must be str."),
+        ({"address": ""}, "Address cannot be empty."),
+        ({"port": 0}, "Invalid port: 0"),
+        ({"port": 1.2}, "Port must be int."),
         (
             {"alter_id": -1},
-            r"AlterId must be a non-negative integer.",
+            "AlterId must be a non-negative integer.",
         ),
         (
             {"alter_id": 2.2},
-            r"AlterId must be a non-negative integer.",
+            "AlterId must be a non-negative integer.",
         ),
-        ({"network": 2}, r"Network must be str."),
-        ({"tls": 2}, r"TLS must be str."),
-        ({"extra": 1}, r"Extra must be dict."),
+        ({"network": 2}, "Network must be str."),
+        ({"tls": 2}, "TLS must be str."),
+        ({"extra": 1}, "Extra must be dict."),
     ],
 )
 def test_invalid_values(kwargs, expected_message):
