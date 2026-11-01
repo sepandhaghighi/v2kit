@@ -112,6 +112,12 @@ def test_to_uri_roundtrip():
     assert parsed == config
 
 
+def test_percent_encoded_uuid():
+    uri = "vless://1c4b4bca%2De3ff-4ca8%2Da062-6f399ad3cf45@example.com:443?security=tls#test"
+    config = parse(uri)
+    assert config.uuid == "1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45"
+
+
 def test_encoded_label():
     config = VLESSConfig(
         uuid="1c4b4bca-e3ff-4ca8-a062-6f399ad3cf45",

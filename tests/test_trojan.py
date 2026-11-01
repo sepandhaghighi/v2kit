@@ -144,7 +144,7 @@ def test_to_uri_roundtrip():
     assert parsed == config
 
 
-def test_parse_trojan_percent_encoded_password():
+def test_percent_encoded_password():
     uri = "trojan://my%40password%3A123@example.com:443"
     config = parse(uri)
     assert config.password == "my@password:123"
