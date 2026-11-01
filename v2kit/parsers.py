@@ -79,7 +79,7 @@ def _parse_vless(uri: str) -> VLESSConfig:
     """
     parsed = urlparse(uri)
     return VLESSConfig(
-        uuid=parsed.username or "",
+        uuid=unquote(parsed.username or ""),
         address=parsed.hostname or "",
         port=parsed.port or 0,
         label=_parse_label(parsed),
@@ -95,7 +95,7 @@ def _parse_trojan(uri: str) -> TrojanConfig:
     """
     parsed = urlparse(uri)
     return TrojanConfig(
-        password=parsed.username or "",
+        password=unquote(parsed.username or ""),
         address=parsed.hostname or "",
         port=parsed.port or 0,
         label=_parse_label(parsed),
