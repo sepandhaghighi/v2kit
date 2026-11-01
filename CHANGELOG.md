@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Changed
+- VLESS parser bug fixed
+- Trojan parser bug fixed
 - Test system modified
 - Build system modified
 - `Python 3.15` added to `test.yml`
